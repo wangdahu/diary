@@ -1,0 +1,18 @@
+body { font-size: 12px; height:auto;}
+#main {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ui-dialog{ padding: 0;}
+.ui-dialog label, input { display:block; }
+.ui-dialog input.text { margin-bottom:12px; width:95%; padding: .4em; }
+.ui-dialog fieldset { padding:0; border:0; margin-top:5px; }
+.ui-dialog h1 { font-size: 1.2em; margin: .6em 0; }
+.ui-dialog div#users-contain { width: 350px; margin: 0px 0; }
+.ui-dialog div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+.ui-dialog div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+.ui-dialog .ui-state-error { padding: .3em; }
+.ui-dialog .validateTips { border: 1px solid transparent; padding: 0.3em; }
+.ui-dialog .ui-dialog-buttonpane { padding: .1em 1em .1em .1em}
