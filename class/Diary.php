@@ -5,9 +5,15 @@ class Diary{
     public $uid;
     public $corpId;
     public $workingTime; // 工作时间
-    public $dailySend; // 日报默认发送时间
-    public $weeklySend;
-    public $monthlySend;
+    public $dailyReport; // 日报默认汇报时间
+    public $dailyReportRemindWay; // 日报汇报的默认提醒方式
+    public $dailyRemindRemindWay; // 日报提醒的默认提醒方式
+    public $weeklyReport;
+    public $weeklyReportRemindWay;
+    public $weeklyRemindRemindWay;
+    public $monthlyReport;
+    public $monthlyReportRemindWay;
+    public $monthlyRemindRemindWay;
     public $dailyRemind; // 日报默认提醒时间
     public $weeklyRemind;
     public $monthlyRemind;
@@ -22,23 +28,29 @@ class Diary{
         $this->uid = 1;
         $this->corpId = 1;
         $this->workingTime = array(1,2,3,4,5);
-        $this->dailySend = "18:00";
-        $this->dailyRemind = "17:30";
-        $this->weeklySend = array(
+        $this->dailyReport = array('hour' => '18', 'minute' => '0');
+        $this->dailyRemind = array('hour' => '17', 'minute' => '30');
+        $this->weeklyReport = array(
             'w' => '4', // 周五
-            'time' => '11:30'
+            'hour' => '12',
+            'minute' => '0'
         );
         $this->weeklyRemind = array(
             'w' => '4', // 周五
-            'time' => '12:00'
+            'hour' => '11',
+            'minute' => '30'
         );
-        $this->monthlySend = array(
+        $this->monthlyReport = array(
             'date' => '20',
-            'time' => '18:00'
+            'hour' => '18',
+            'minute' => '0'
         );
         $this->monthlyRemind = array(
             'date' => '20',
-            'time' => '17:30'
+            'hour' => '17',
+            'minute' => '30'
         );
+        $this->dailyReportRemindWay = $this->weeklyReportRemindWay = $this->monthlyReportRemindWay = array('remind');
+        $this->dailyRemindRemindWay = $this->weeklyRemindRemindWay = $this->monthlyRemindRemindWay = array('remind');
     }
 }

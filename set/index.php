@@ -2,6 +2,13 @@
 $title = "汇报设置";
 $setDefault = 'report';
 
+$hours = range(0, 24);
+$minutes = range(0, 60, 5);
+$ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
+// 获取汇报设置
+include dirname(dirname(__FILE__))."/class/Set.php";
+$reportSet = Set::reportTime($diary);
+
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
@@ -16,11 +23,31 @@ $setDefault = 'report';
             </li>
             <li>
                 <label for="">汇报时间</label>
-                <p><img src="images/img_02.png" alt="" /></p>
+                <select name="subscribe_hour">
+                    <?php foreach($hours as $hour):?>
+                    <option <?php echo $reportSet['dailyReport']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                        <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
+                    </option>
+                    <?php endforeach;?>
+                </select>
+                <select name="subscribe_minute">
+                    <?php foreach($minutes as $minute):?>
+                    <option <?php echo $reportSet['dailyReport']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                        <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
+                    </option>
+                    <?php endforeach;?>
+                </select>
             </li>
             <li>
                 <label for="">汇报方式</label>
-                <p><span><input type="checkbox" class="checkall"> 邮件</span><span><input type="checkbox" class="checkall"> 短信</span><span><input type="checkbox" class="checkall"> 彩信</span><span><input type="checkbox" class="checkall"> 汇讯提醒</span></p>
+                <p>
+                    <?php foreach($ways as $key => $val):?>
+                    <label>
+                        <input type="checkbox" name="daily_way[]" class="checkall" <?php echo in_array($key, $reportSet['dailyReportRemindWay']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                        <?php echo $val; ?>
+                    </label>
+                    <?php endforeach;?>
+                </p>
             </li>
         </ul>
         <!--日报设置结束-->

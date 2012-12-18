@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 12 日 17:48
--- 服务器版本: 5.5.24-0ubuntu0.12.04.1
--- PHP 版本: 5.3.10-1ubuntu3.4
+-- 生成日期: 2012 年 12 月 19 日 01:11
+-- 服务器版本: 5.5.28-0ubuntu0.12.10.2
+-- PHP 版本: 5.4.6-1ubuntu1.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -60,10 +60,37 @@ CREATE TABLE IF NOT EXISTS `diary_info` (
   `corp_id` int(11) NOT NULL COMMENT '企业ID',
   `content` text NOT NULL COMMENT '内容',
   `uid` int(11) NOT NULL COMMENT '用户UID',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:日报，2:周报，3:月报',
+  `show_time` int(11) NOT NULL COMMENT '应显示时间',
   `report_time` int(11) NOT NULL COMMENT '汇报时间',
+  `fill_time` int(11) NOT NULL COMMENT '填写时间',
   PRIMARY KEY (`id`),
   KEY `corp_id` (`corp_id`,`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日志信息表' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='日志信息表' AUTO_INCREMENT=45 ;
+
+--
+-- 转存表中的数据 `diary_info`
+--
+
+INSERT INTO `diary_info` (`id`, `corp_id`, `content`, `uid`, `type`, `show_time`, `report_time`, `fill_time`) VALUES
+(27, 1, '11-15号就写好了的', 1, 1, 1355846400, 1355846400, 1355513451),
+(28, 1, '11-15号就写好了的', 1, 1, 1355846400, 1355846400, 1355513454),
+(29, 1, '也是十五好写的', 1, 1, 1355673600, 1355673600, 1355513726),
+(30, 1, '的法规的反感', 1, 1, 1355738400, 1355738400, 1355515354),
+(31, 1, '速度顶顶顶顶顶顶顶顶顶', 1, 1, 1355565600, 1355565600, 1355515450),
+(32, 1, '今天写的', 1, 1, 1355565600, 1355565600, 1355515462),
+(33, 1, '补交的日志', 1, 1, 1355565600, 1355565600, 1355515809),
+(34, 1, '补交的日志', 1, 1, 1355565600, 1355565600, 1355515811),
+(35, 1, '这才叫补交，你骗人', 1, 1, 1355479200, 1355479200, 1355515842),
+(36, 1, '这才叫补交，你骗人', 1, 1, 1355479200, 1355479200, 1355515842),
+(37, 1, '今天写的，咋样？', 1, 1, 1355652000, 1355652000, 1355673290),
+(38, 1, '今天写的，咋样？', 1, 1, 1355652000, 1355652000, 1355673294),
+(39, 1, '法规回复很风光好', 1, 1, 1355673599, 1355673599, 1355673599),
+(40, 1, '17号', 1, 1, 1355824800, 1355824800, 1355679998),
+(41, 1, '17号', 1, 1, 1355824800, 1355824800, 1355680000),
+(42, 1, '17号', 1, 1, 1355680024, 1355680024, 1355680024),
+(43, 1, '17号', 1, 1, 1355680026, 1355680026, 1355680026),
+(44, 1, '顶顶顶顶顶顶顶顶顶', 1, 1, 1355587200, 1355680570, 1355680570);
 
 -- --------------------------------------------------------
 
@@ -77,7 +104,21 @@ CREATE TABLE IF NOT EXISTS `diary_remind_set` (
   `weekly` varchar(255) NOT NULL COMMENT '周报提醒日期和时间和提醒方式',
   `monthly` varchar(255) NOT NULL COMMENT '月报提醒日期和时间和提醒方式',
   KEY `uid` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户日记提醒';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户日记提醒设置';
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `diary_report_set`
+--
+
+CREATE TABLE IF NOT EXISTS `diary_report_set` (
+  `uid` int(11) NOT NULL COMMENT '用户UID',
+  `daily` varchar(255) NOT NULL COMMENT '日报发送时期，时间，方式',
+  `weekly` varchar(255) NOT NULL COMMENT '周报发送时期，时间，方式',
+  `monthly` varchar(255) NOT NULL COMMENT '月报发送时期，时间，方式',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日记汇报设置';
 
 -- --------------------------------------------------------
 
@@ -96,20 +137,6 @@ CREATE TABLE IF NOT EXISTS `diary_send_object` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `diary_send_set`
---
-
-CREATE TABLE IF NOT EXISTS `diary_send_set` (
-  `uid` int(11) NOT NULL COMMENT '用户UID',
-  `daily` varchar(255) NOT NULL COMMENT '日报发送时期，时间，方式',
-  `weekly` varchar(255) NOT NULL COMMENT '周报发送时期，时间，方式',
-  `monthly` varchar(255) NOT NULL COMMENT '月报发送时期，时间，方式',
-  KEY `uid` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日记发送设置';
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `diary_set`
 --
 
@@ -117,8 +144,15 @@ CREATE TABLE IF NOT EXISTS `diary_set` (
   `uid` int(11) NOT NULL COMMENT '用户UID',
   `working_time` varchar(255) NOT NULL COMMENT '工作时间设置',
   `allow_underling` tinyint(1) NOT NULL DEFAULT '0' COMMENT '默认0不允许下属查看，1为允许下属查看',
-  KEY `uid` (`uid`)
+  UNIQUE KEY `uid` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日志设置';
+
+--
+-- 转存表中的数据 `diary_set`
+--
+
+INSERT INTO `diary_set` (`uid`, `working_time`, `allow_underling`) VALUES
+(1, '["1","2","3","4","5"]', 0);
 
 -- --------------------------------------------------------
 

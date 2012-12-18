@@ -1,16 +1,20 @@
 <?php
 $title = "日志设置";
 $setDefault = 'diary';
-$uid = $Diary->uid;
+$uid = $diary->uid;
+include dirname(dirname(__FILE__))."/class/Set.php";
+if(isset($_POST['working_time'])){
+    Set::saveWorkingTime($diary, $_POST['working_time']);
+}
 
 $list = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 $diarySetSql = "select `working_time` from `diary_set` where `uid` = $uid";
 
-$selected = Set::workingTime();
+$selected = Set::workingTime($diary, $diary->uid);
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
-<form method="post">
+<form method="post" id="working-time-form">
     <div class="content">
         <div class="set_bar mb25">
             <!--日报设置开始-->
@@ -18,9 +22,9 @@ $selected = Set::workingTime();
             <ul class="set_list">
                 <li>
                     <p>
-                        <?php foreach($list as $key => $val): ?>
+                        <?php foreach($list as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="diary[]" class="checkall" <?php echo in_array($key, $selected) ? checked : '';?> value="<?php echo $key;?>">
+                            <input type="checkbox" name="working_time[]" class="checkall" <?php echo in_array($key, $selected) ? checked : '';?> value="<?php echo $key;?>">
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -34,3 +38,10 @@ $selected = Set::workingTime();
     </div>
 </form>
 <?php include "views/layouts/footer.php"; ?>
+<script>
+    $(function(){
+        $("#working-time-form").submit(
+            alert(1);
+        );
+    });
+</script>
