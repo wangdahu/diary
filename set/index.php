@@ -4,10 +4,12 @@ $setDefault = 'report';
 
 $hours = range(0, 24);
 $minutes = range(0, 60, 5);
+$months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 // 获取汇报设置
 include dirname(dirname(__FILE__))."/class/Set.php";
 $reportSet = Set::reportTime($diary);
+$weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 
 ?>
 <?php include "views/layouts/header.php"; ?>
@@ -60,11 +62,39 @@ $reportSet = Set::reportTime($diary);
             </li>
             <li>
                 <label for="">汇报时间</label>
-                <p><span><input type="radio" name="" id="" /> 周一</span><span><input type="radio" name="" id="" /> 周二</span><span><input type="radio" name="" id="" /> 周三</span><span><input type="radio" name="" id="" /> 周四</span><span><input type="radio" name="" id="" /> 周五</span><span><input type="radio" name="" id="" /> 周六</span><span><input type="radio" name="" id="" /> 周日</span><img src="images/img_02.png" alt="" /></p>
+                <p>
+                    <?php foreach($weeks as $key => $val):?>
+                    <label>
+                        <input type="radio" name="daily_way[]" class="checkall" <?php echo $key == $reportSet['weeklyReport']['w'] ? checked : ''; ?> value="<?php echo $key;?>" >
+                        <?php echo $val; ?>
+                    </label>
+                    <?php endforeach;?>
+                    <select name="subscribe_hour">
+                        <?php foreach($hours as $hour):?>
+                        <option <?php echo $reportSet['weeklyReport']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                            <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
+                        </option>
+                        <?php endforeach;?>
+                    </select>
+                    <select name="subscribe_minute">
+                        <?php foreach($minutes as $minute):?>
+                        <option <?php echo $reportSet['weeklyReport']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                            <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
+                        </option>
+                        <?php endforeach;?>
+                    </select>
+                </p>
             </li>
             <li>
                 <label for="">汇报方式</label>
-                <p><span><input type="checkbox" class="checkall"> 邮件</span><span><input type="checkbox" class="checkall"> 短信</span><span><input type="checkbox" class="checkall"> 彩信</span><span><input type="checkbox" class="checkall"> 汇讯提醒</span></p>
+                <p>
+                    <?php foreach($ways as $key => $val):?>
+                    <label>
+                        <input type="checkbox" name="weekly_way[]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReportRemindWay']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                        <?php echo $val; ?>
+                    </label>
+                    <?php endforeach;?>
+                </p>
             </li>
         </ul>
         <!--周报设置结束-->
@@ -77,13 +107,40 @@ $reportSet = Set::reportTime($diary);
             </li>
             <li>
                 <label for="">汇报时间</label>
-                <p><span><select name="" id="">
-                            <option value="">10</option>
-                        </select>日</span><img src="images/img_02.png" alt="" /></p>
+                <p>
+                    <select name="" id="">
+                        <?php foreach($months as $month):?>
+                        <option <?php echo $reportSet['monthlyReport']['date'] == $month ? selected : ''; ?> value="<?php echo $month?>">
+                            <?php echo str_pad($month, 2, 0, STR_PAD_LEFT);?>
+                        </option>
+                        <?php endforeach;?>
+                    </select>日
+                    <select name="subscribe_hour">
+                        <?php foreach($hours as $hour):?>
+                        <option <?php echo $reportSet['monthlyReport']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                            <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
+                        </option>
+                        <?php endforeach;?>
+                    </select>
+                    <select name="subscribe_minute">
+                        <?php foreach($minutes as $minute):?>
+                        <option <?php echo $reportSet['monthlyReport']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                            <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
+                        </option>
+                        <?php endforeach;?>
+                    </select>
+                </p>
             </li>
             <li>
                 <label for="">汇报方式</label>
-                <p><span><input type="checkbox" class="checkall"> 邮件</span><span><input type="checkbox" class="checkall"> 短信</span><span><input type="checkbox" class="checkall"> 彩信</span><span><input type="checkbox" class="checkall"> 汇讯提醒</span></p>
+                <p>
+                    <?php foreach($ways as $key => $val):?>
+                    <label>
+                        <input type="checkbox" name="monthly_way[]" class="checkall" <?php echo in_array($key, $reportSet['monthlyReportRemindWay']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                        <?php echo $val; ?>
+                    </label>
+                    <?php endforeach;?>
+                </p>
             </li>
         </ul>
         <!--月报设置结束-->

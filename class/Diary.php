@@ -31,12 +31,12 @@ class Diary{
         $this->dailyReport = array('hour' => '18', 'minute' => '0');
         $this->dailyRemind = array('hour' => '17', 'minute' => '30');
         $this->weeklyReport = array(
-            'w' => '4', // 周五
+            'w' => '5', // 周五
             'hour' => '12',
             'minute' => '0'
         );
         $this->weeklyRemind = array(
-            'w' => '4', // 周五
+            'w' => '5', // 周五
             'hour' => '11',
             'minute' => '30'
         );
