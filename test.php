@@ -1,4 +1,3 @@
 <?php
-include "class/Db.php";
-
+phpinfo();
 
