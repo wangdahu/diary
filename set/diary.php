@@ -31,17 +31,10 @@ $selected = Set::workingTime($diary, $diary->uid);
                 </li>
             </ul>
         </div>
-        <div>
+        <div class="form-action">
             <button type="submit">确定</button>
             <button type="reset">取消</button>
         </div>
     </div>
 </form>
 <?php include "views/layouts/footer.php"; ?>
-<script>
-    $(function(){
-        $("#working-time-form").submit(
-            alert(1);
-        );
-    });
-</script>

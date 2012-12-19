@@ -37,19 +37,26 @@ class Set{
         $sql = "select * from `diary_report_set` where `uid` = $uid";
         $reportSet = array();
         if($result = $diary->db->query($sql)){
-            $row = $result->fetch_row();
+            $row = $result->fetch_object();
             if($row){
-                return json_decode($row[0], true);
+                $reportSet['dailyReport'] = json_decode($row->daily, true);
+                $reportSet['weeklyReport'] = json_decode($row->weekly, true);
+                $reportSet['monthlyReport'] = json_decode($row->monthly, true);
             }else{
                 $reportSet['dailyReport'] = $diary->dailyReport;
                 $reportSet['weeklyReport'] = $diary->weeklyReport;
                 $reportSet['monthlyReport'] = $diary->monthlyReport;
-                $reportSet['dailyReportRemindWay'] = $diary->dailyReportRemindWay;
-                $reportSet['weeklyReportRemindWay'] = $diary->weeklyReportRemindWay;
-                $reportSet['monthlyReportRemindWay'] = $diary->monthlyReportRemindWay;
             }
         }
         return $reportSet;
     }
 
+    /**
+     * 保存时间和提醒方式
+     */
+    public static function saveReportTime($diary, $daily, $weekly, $monthly){
+        $uid = $diary->uid;
+        $sql = "replace into `diary_report_set` (`uid`, `daily`, `weekly`, `monthly`) values ($uid, '".json_encode($daily)."', '".json_encode($weekly)."', '".json_encode($monthly)."')";
+        return $diary->db->query($sql);
+    }
 }

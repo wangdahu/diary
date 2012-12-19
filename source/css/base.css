@@ -89,3 +89,6 @@ tr{display:table-row;vertical-align:inherit;border-color:inherit;}
 /* 设置*/
 .set_list li p label{margin-right:12px; width: auto;}
 .set_list li p label input{margin-bottom:3px;}
+
+/* 提交 */
+form .form-action{ margin-left: 115px;}
