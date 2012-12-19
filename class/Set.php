@@ -30,7 +30,7 @@ class Set{
     }
 
     /**
-     * 查询工作时间
+     * 查询汇报设置时间
      */
     public static function reportTime($diary){
         $uid = $diary->uid;
@@ -52,11 +52,43 @@ class Set{
     }
 
     /**
-     * 保存时间和提醒方式
+     * 保存汇报的时间和提醒方式
      */
     public static function saveReportTime($diary, $daily, $weekly, $monthly){
         $uid = $diary->uid;
         $sql = "replace into `diary_report_set` (`uid`, `daily`, `weekly`, `monthly`) values ($uid, '".json_encode($daily)."', '".json_encode($weekly)."', '".json_encode($monthly)."')";
         return $diary->db->query($sql);
     }
+
+    /**
+     * 查询提醒时间设置
+     */
+    public static function remindTime($diary){
+        $uid = $diary->uid;
+        $sql = "select * from `diary_remind_set` where `uid` = $uid";
+        $remindSet = array();
+        if($result = $diary->db->query($sql)){
+            $row = $result->fetch_object();
+            if($row){
+                $remindSet['dailyRemind'] = json_decode($row->daily, true);
+                $remindSet['weeklyRemind'] = json_decode($row->weekly, true);
+                $remindSet['monthlyRemind'] = json_decode($row->monthly, true);
+            }else{
+                $remindSet['dailyRemind'] = $diary->dailyRemind;
+                $remindSet['weeklyRemind'] = $diary->weeklyRemind;
+                $remindSet['monthlyRemind'] = $diary->monthlyRemind;
+            }
+        }
+        return $remindSet;
+    }
+
+    /**
+     * 保存提醒的时间和提醒方式
+     */
+    public static function saveRemindTime($diary, $daily, $weekly, $monthly){
+        $uid = $diary->uid;
+        $sql = "replace into `diary_remind_set` (`uid`, `daily`, `weekly`, `monthly`) values ($uid, '".json_encode($daily)."', '".json_encode($weekly)."', '".json_encode($monthly)."')";
+        return $diary->db->query($sql);
+    }
+
 }

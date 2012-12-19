@@ -12,7 +12,6 @@ $months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 // 获取汇报设置
 $reportSet = Set::reportTime($diary);
-// echo "<pre>"; var_dump($reportSet);exit;
 $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 
 ?>
@@ -96,7 +95,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="weeklyReport[way]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReport']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="weeklyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReport']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
