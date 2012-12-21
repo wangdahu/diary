@@ -1,6 +1,9 @@
 <?php
+$currentModule = 'my';
 $title = "周报";
 $type = 'weekly';
+
+// 当前周的周一时间戳
 $mondayTime = date('w') == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
 // 向前向后翻天
 $forward = isset($_GET['forward']) ? $_GET['forward'] : 0;

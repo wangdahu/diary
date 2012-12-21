@@ -43,7 +43,7 @@
             <ul class="nav">
                 <li><a href="/diary/index.php/my/index" class="<?php echo $currentModule == 'my' ? 'current' : ''?>">我的日志</a></li>
                 <li><a href="/diary/index.php/team/index" class="<?php echo $currentModule == 'team' ? 'current' : ''?>">团队日志</a></li>
-                <li><a href="/diary/index.php/set/index" class="<?php echo $currentModule == 'set' ? 'current' : ''?>">日志设置</a></li>
+                <li><a href="/diary/index.php/set/diary" class="<?php echo $currentModule == 'set' ? 'current' : ''?>">日志设置</a></li>
             </ul>
             <!--导航结束-->
         </div>

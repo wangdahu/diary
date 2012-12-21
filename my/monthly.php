@@ -1,4 +1,5 @@
 <?php
+$currentModule = 'my';
 $title = "月报";
 $type = 'monthly';
 

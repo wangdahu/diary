@@ -1,5 +1,6 @@
 <?php
 $title = "我的日志";
+$currentModule = 'team';
 
 $uid = $diary->uid;
 $corpId = $diary->corpId;
@@ -18,41 +19,29 @@ if($forward){
 $startTime = strtotime($currentDate);
 $endTime = $startTime + 86400;
 
-// 该企业该用户在选择时间内的日报
-$rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `report_time` between $startTime and $endTime order by id desc";
-$result = $diary->db->query($rowsSql);
-$dailys = array();
-while($row = $result->fetch_array(MYSQLI_ASSOC)){
-    $dailys[] = $row;
-};
-$num = count($dailys);
-
+include dirname(dirname(__FILE__))."/class/Set.php";
+include dirname(dirname(__FILE__))."/class/User.php";
+// 汇报给我的和我订阅的用户
+$teamShowObject = Set::teamShowObject($diary, 1);
 ?>
 
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/team/top.php"; ?>
-
 <div class="content">
-    <!--今日工作开始-->
-    <div class="content_bar mb25">
-        <h2 class="content_tit clearfix">
-            <p>今日工作：<em><?php echo $num;?> 项</em></p>
-        </h2>
-        <?php foreach($dailys as $daily):?>
-        <div class="c_t mt10"></div>
-        <div class="c_c">
-            <div class="date"><?php echo date('y-m-d H:i', $daily['fill_time']);?></div>
-            <div class="c_c_c">
-                <p><?php echo nl2br($daily['content']); ?></p>
-            </div>
-            <?php if($daily['report_time'] > $daily['fill_time']):?>
-            <a href="javascript:" class="delete" title="可编辑可删除" data-id="<?php echo $daily['id'];?>"></a>
-            <?php endif;?>
-        </div>
-        <div class="c_b"></div>
-        <?php endforeach;?>
+    <div class="set_bar mb25">
+        <!--标签设置开始-->
+        <ul class="dy">
+            <?php foreach($teamShowObject as $uid): ?>
+            <?php $user = User::getInfo($uid);?>
+            <li>
+                <div class="pic">
+                    <a href="/diary/index.php/my/index&uid=<?php echo $uid;?>"><img src="<?php echo $user['photo']; ?>" alt="" /></a>
+                </div>
+                <p><a href="#"><?php echo $user['username']?></a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
+            <?php endforeach;?>
+        </ul>
+        <!--标签设置结束-->
     </div>
-    <!--今日工作结束-->
 </div>
 <script>
     $(function(){

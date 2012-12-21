@@ -1,24 +1,73 @@
 <?php
+$currentModule = 'set';
 $title = "订阅设置";
 $setDefault = 'subscribe';
+
+
+include dirname(dirname(__FILE__))."/class/Set.php";
+if($_POST){
+    $daily_object['user'] = explode(',', $_POST['daily_user_object']);
+    $daily_object['dept'] = explode(',', $_POST['daily_dept_object']);
+    $weekly_object['user'] = explode(',', $_POST['weekly_user_object']);
+    $weekly_object['dept'] = explode(',', $_POST['weekly_dept_object']);
+    $monthly_object['user'] = explode(',', $_POST['monthly_user_object']);
+    $monthly_object['dept'] = explode(',', $_POST['monthly_dept_object']);
+    Set::saveSubscribeObject($diary, $daily_object, $weekly_object, $monthly_object);
+}
+$subscribeObject = Set::subscribeObject($diary, $diary->uid);
 
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
 
 <div class="content">
-    <div class="set_bar mb25">
-        <!--标签设置开始-->
-        <h2 class="pt25 clearfix"><a href="#" class="tjdy fl mr15" title="添加订阅"></a><a href="#" class="qxdy fl" title="全部取消"></a></h2>
-        <ul class="dy">
-            <li><div class="pic"><img src="../../../../diary/source/images/img_01.png" alt="" /></div><p><a href="#">张三</a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
-            <li><div class="pic"><img src="../../../../diary/source/images/img_01.png" alt="" /></div><p><a href="#">张三</a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
-            <li><div class="pic"><img src="../../../../diary/source/images/img_01.png" alt="" /></div><p><a href="#">张三</a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
-            <li><div class="pic"><img src="../../../../diary/source/images/img_01.png" alt="" /></div><p><a href="#">张三</a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
-            <li><div class="pic"><img src="../../../../diary/source/images/img_01.png" alt="" /></div><p><a href="#">张三</a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
-            <li><div class="pic"><img src="../../../../diary/source/images/img_01.png" alt="" /></div><p><a href="#">张三</a>（产品部-产品经理）<br />已订阅，<a href="#">取消订阅</a></p></li>
-        </ul>
-        <!--标签设置结束-->
-    </div>
+    <form id="report-set-form" method="post">
+        <div class="set_bar mb25">
+            <!--日报设置开始-->
+            <h2 class="pt25">日报</h2>
+            <ul class="set_list">
+                <li>
+                    <label><a href="#">选择汇报对象</a></label>
+                    <p><textarea name="daily" id="daily" class="set_textarea"><?php echo implode(',', $subscribeObject['daily_object']['user']).",[".implode('],[', $subscribeObject['daily_object']['dept'])."]";?></textarea></p>
+                </li>
+                <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $subscribeObject['daily_object']['user']); ?>"/>
+                <input type="hidden" name="daily_dept_object" id="daily_dept_object" value="<?php echo implode(',', $subscribeObject['daily_object']['dept']); ?>"/>
+            </ul>
+            <!--日报设置结束-->
+            <!--周报设置开始-->
+            <h2>周报</h2>
+            <ul class="set_list">
+                <li>
+                    <label><a href="#">选择汇报对象</a></label>
+                    <p><textarea name="weekly" id="weekly" class="set_textarea"><?php echo implode(',', $subscribeObject['weekly_object']['user']).",[".implode('],[', $subscribeObject['weekly_object']['dept'])."]";?></textarea></p>
+                </li>
+                <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $subscribeObject['weekly_object']['user']); ?>"/>
+                <input type="hidden" name="weekly_dept_object" id="weekly_dept_object" value="<?php echo implode(',', $subscribeObject['weekly_object']['dept']); ?>"/>
+            </ul>
+            <!--周报设置结束-->
+            <!--月报设置开始-->
+            <h2>月报</h2>
+            <ul class="set_list">
+                <li>
+                    <label><a href="#">选择汇报对象</a></label>
+                    <p><textarea name="monthly" id="monthly" class="set_textarea"><?php echo implode(',', $subscribeObject['monthly_object']['user']).",[".implode('],[', $subscribeObject['monthly_object']['dept'])."]";?></textarea></p>
+                </li>
+                <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $subscribeObject['monthly_object']['user']); ?>"/>
+                <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $subscribeObject['monthly_object']['dept']); ?>"/>
+            </ul>
+            <!--月报设置结束-->
+        </div>
+        <div class="form-action">
+            <button type="submit">确定</button>
+            <button type="reset">取消</button>
+        </div>
+    </form>
 </div>
 <?php include "views/layouts/footer.php"; ?>
+<script>
+    $(function(){
+        $('.set_textarea').change(function(){
+            $("#" + this.id + "_object").val(this.value);
+        });
+    });
+</script>

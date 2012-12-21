@@ -1,4 +1,5 @@
 <?php
+$currentModule = 'set';
 $title = "标签设置";
 $setDefault = 'tag';
 

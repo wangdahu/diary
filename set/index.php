@@ -1,9 +1,17 @@
 <?php
+$currentModule = 'set';
 $title = "汇报设置";
 $setDefault = 'report';
 include dirname(dirname(__FILE__))."/class/Set.php";
 if($_POST){
     Set::saveReportTime($diary, $_POST['dailyReport'], $_POST['weeklyReport'], $_POST['monthlyReport']);
+    $daily_users = explode(',', $_POST['daily_user_object']);
+    $daily_depts = explode(',', $_POST['daily_dept_object']);
+    $weekly_users = explode(',', $_POST['weekly_user_object']);
+    $weekly_depts = explode(',', $_POST['weekly_dept_object']);
+    $monthly_users = explode(',', $_POST['monthly_user_object']);
+    $monthly_depts = explode(',', $_POST['monthly_dept_object']);
+    Set::saveReportObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
 }
 
 $hours = range(0, 24);
@@ -12,6 +20,7 @@ $months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 // 获取汇报设置
 $reportSet = Set::reportTime($diary);
+$reportObject = Set::reportObject($diary);
 $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 
 ?>
@@ -25,8 +34,10 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="" id="" class="set_textarea"></textarea></p>
+                    <p><textarea name="daily" id="daily" class="set_textarea"><?php echo implode(',', $reportObject['daily_object']['user']).",[".implode('],[', $reportObject['daily_object']['dept'])."]";?></textarea></p>
                 </li>
+                <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $reportObject['daily_object']['user']);?>"/>
+                <input type="hidden" name="daily_dept_object" id="daily_dept_object" value="<?php echo implode(',', $reportObject['daily_object']['dept']);?>"/>
                 <li>
                     <label>汇报时间</label>
                     <select name="dailyReport[hour]">
@@ -63,8 +74,10 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="" id="" class="set_textarea"></textarea></p>
+                    <p><textarea name="weekly" id="weekly" class="set_textarea"><?php echo implode(',', $reportObject['weekly_object']['user']).",[".implode('],[', $reportObject['weekly_object']['dept'])."]";?></textarea></p>
                 </li>
+                <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $reportObject['weekly_object']['user']);?>"/>
+                <input type="hidden" name="weekly_dept_object" id="weekly_dept_object" value="<?php echo implode(',', $reportObject['weekly_object']['dept']);?>"/>
                 <li>
                     <label>汇报时间</label>
                     <p>
@@ -109,8 +122,10 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="" id="" class="set_textarea"></textarea></p>
+                    <p><textarea name="monthly" id="monthly" class="set_textarea"><?php echo implode(',', $reportObject['monthly_object']['user']).",[".implode('],[', $reportObject['monthly_object']['dept'])."]";?></textarea></p>
                 </li>
+                <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $reportObject['monthly_object']['user']);?>"/>
+                <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $reportObject['monthly_object']['dept']);?>"/>
                 <li>
                     <label>汇报时间</label>
                     <p>
@@ -159,3 +174,10 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
     </form>
 </div>
 <?php include "views/layouts/footer.php"; ?>
+<script>
+    $(function(){
+        $('.set_textarea').change(function(){
+            $("#" + this.id + "_object").val(this.value);
+        });
+    });
+</script>

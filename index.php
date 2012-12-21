@@ -1,18 +1,17 @@
 <?php
 $pathInfo = substr($_SERVER['PATH_INFO'], 1);
-$currentModule = 'my';
 if($pathInfo){
-    $pathArr = explode('/', $pathInfo);
-    if(!file_exists($pathInfo.".php")){
-        if(!file_exists($pathInfo."/index.php")){
+    $pathArr = explode('&', $pathInfo);
+    $filePath = $pathArr[0];
+    if(!file_exists($filePath.".php")){
+        if(!file_exists($filePath."/index.php")){
             die('访问错误');
         }else{
-            $file = $pathInfo."/index.php";
+            $file = $filePath."/index.php";
         }
     }else{
-        $file = $pathInfo.".php";
+        $file = $filePath.".php";
     }
-    $currentModule = $pathArr[0];
 }else{
     $file = "my/index.php";
 }
