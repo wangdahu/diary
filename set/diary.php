@@ -1,5 +1,4 @@
 <?php
-$currentModule = 'set';
 $title = "日志设置";
 $setDefault = 'diary';
 $uid = $diary->uid;

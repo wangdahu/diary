@@ -6,6 +6,7 @@ class User{
             'photo' => '../../source/images/img_01.png',
             'username' => $uid,
             'dept_name' => $uid,
+            'corp_id' => 1,
         );
     }
 }

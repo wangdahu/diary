@@ -1,5 +1,4 @@
 <?php
-$currentModule = 'set';
 $title = "提醒设置";
 $setDefault = 'remind';
 

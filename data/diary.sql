@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 22 日 01:33
+-- 生成日期: 2012 年 12 月 23 日 01:02
 -- 服务器版本: 5.5.28-0ubuntu0.12.10.2
 -- PHP 版本: 5.4.6-1ubuntu1.1
 
@@ -89,7 +89,7 @@ INSERT INTO `diary_info` (`id`, `corp_id`, `content`, `uid`, `type`, `show_time`
 (40, 1, '17号', 1, 1, 1355824800, 1355824800, 1355679998),
 (41, 1, '17号', 1, 1, 1355824800, 1355824800, 1355680000),
 (42, 1, '17号', 1, 1, 1355680024, 1355680024, 1355680024),
-(43, 1, '17号', 1, 1, 1355680026, 1355680026, 1355680026),
+(43, 1, '17号', 8, 1, 1355680026, 1355680026, 1355680026),
 (44, 1, '顶顶顶顶顶顶顶顶顶', 1, 1, 1355587200, 1355680570, 1355680570),
 (45, 1, 'dfgdfgdf', 1, 1, 1356019200, 1356098335, 1356098335);
 
@@ -232,19 +232,56 @@ INSERT INTO `diary_set` (`uid`, `working_time`, `allow_underling`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `diary_subscribe_object` (
-  `uid` int(11) NOT NULL COMMENT '用户UID',
-  `daily_object` text NOT NULL COMMENT '日报订阅对象',
-  `weekly_object` text NOT NULL COMMENT '周报订阅对像',
-  `monthly_object` text NOT NULL COMMENT '月报订阅对象',
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日记订阅对象';
+  `uid` int(11) NOT NULL COMMENT '订阅者',
+  `from_uid` int(11) NOT NULL COMMENT '订阅的用户uid',
+  `from_dept` int(11) NOT NULL COMMENT '订阅的部门ID',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:日报，2:周报，3:月报',
+  KEY `uid` (`uid`),
+  KEY `from_uid` (`from_uid`),
+  KEY `from_dept` (`from_dept`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日记订阅对象列表';
 
 --
 -- 转存表中的数据 `diary_subscribe_object`
 --
 
-INSERT INTO `diary_subscribe_object` (`uid`, `daily_object`, `weekly_object`, `monthly_object`) VALUES
-(1, '{"user":["1","2","3","7","8","9","27","28","29"],"dept":["2","3","4"]}', '{"user":["1","2","3"],"dept":["2","3","4"]}', '{"user":["1","2","3"],"dept":["2","3","4"]}');
+INSERT INTO `diary_subscribe_object` (`uid`, `from_uid`, `from_dept`, `type`) VALUES
+(1, 5, 0, 1),
+(1, 8, 0, 1),
+(1, 1, 0, 1),
+(1, 2, 0, 1),
+(1, 3, 0, 1),
+(1, 4, 0, 1),
+(1, 0, 5, 1),
+(1, 0, 8, 1),
+(1, 0, 1, 1),
+(1, 0, 2, 1),
+(1, 0, 3, 1),
+(1, 0, 4, 1),
+(1, 5, 0, 2),
+(1, 8, 0, 2),
+(1, 1, 0, 2),
+(1, 2, 0, 2),
+(1, 3, 0, 2),
+(1, 4, 0, 2),
+(1, 0, 5, 2),
+(1, 0, 8, 2),
+(1, 0, 1, 2),
+(1, 0, 2, 2),
+(1, 0, 3, 2),
+(1, 0, 4, 2),
+(1, 5, 0, 3),
+(1, 8, 0, 3),
+(1, 1, 0, 3),
+(1, 2, 0, 3),
+(1, 3, 0, 3),
+(1, 4, 0, 3),
+(1, 0, 5, 3),
+(1, 0, 8, 3),
+(1, 0, 1, 3),
+(1, 0, 2, 3),
+(1, 0, 3, 3),
+(1, 0, 4, 3);
 
 -- --------------------------------------------------------
 

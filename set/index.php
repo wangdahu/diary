@@ -1,5 +1,4 @@
 <?php
-$currentModule = 'set';
 $title = "汇报设置";
 $setDefault = 'report';
 include dirname(dirname(__FILE__))."/class/Set.php";

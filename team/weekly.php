@@ -27,8 +27,11 @@ for($i = 6; $i >= 0; $i--){
     $time = $startTime + 86400*$i;
     $weekDate[$weekarray[$i]] = date('y.m.d', $time);
 }
-$corpId = $diary->corpId;
-$uid = $diary->uid;
+
+$uid = (int) $_GET['uid'];
+include dirname(dirname(__FILE__))."/class/User.php";
+$user = User::getInfo($uid);
+$corpId = $user['corp_id'];
 
 // 该企业该用户在选择时间内的周报
 $rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
@@ -42,7 +45,7 @@ $num = count($dailys);
 
 ?>
 <?php include "views/layouts/header.php"; ?>
-<?php include "views/my/top.php"; ?>
+<?php include "views/team/view-top.php"; ?>
 <div class="content">
     <!--今日工作开始-->
     <?php foreach($weekDate as $k => $v):?>
