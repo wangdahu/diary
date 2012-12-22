@@ -3,7 +3,7 @@ $title = "订阅设置";
 $setDefault = 'subscribe';
 
 
-include dirname(dirname(__FILE__))."/class/Set.php";
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if($_POST){
     $daily_users = explode(',', $_POST['daily_user_object']);
     $daily_depts = explode(',', $_POST['daily_dept_object']);
@@ -11,7 +11,7 @@ if($_POST){
     $weekly_depts = explode(',', $_POST['weekly_dept_object']);
     $monthly_users = explode(',', $_POST['monthly_user_object']);
     $monthly_depts = explode(',', $_POST['monthly_dept_object']);
-    Set::saveSubscribeObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
+    DiarySet::saveSubscribeObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
 }
 
 $subscribeObject = Set::subscribeObject($diary, $diary->uid);

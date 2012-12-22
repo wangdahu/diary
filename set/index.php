@@ -1,16 +1,16 @@
 <?php
 $title = "汇报设置";
 $setDefault = 'report';
-include dirname(dirname(__FILE__))."/class/Set.php";
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if($_POST){
-    Set::saveReportTime($diary, $_POST['dailyReport'], $_POST['weeklyReport'], $_POST['monthlyReport']);
+    DiarySet::saveReportTime($diary, $_POST['dailyReport'], $_POST['weeklyReport'], $_POST['monthlyReport']);
     $daily_users = explode(',', $_POST['daily_user_object']);
     $daily_depts = explode(',', $_POST['daily_dept_object']);
     $weekly_users = explode(',', $_POST['weekly_user_object']);
     $weekly_depts = explode(',', $_POST['weekly_dept_object']);
     $monthly_users = explode(',', $_POST['monthly_user_object']);
     $monthly_depts = explode(',', $_POST['monthly_dept_object']);
-    Set::saveReportObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
+    DiarySet::saveReportObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
 }
 
 $hours = range(0, 24);
@@ -18,8 +18,8 @@ $minutes = range(0, 60, 5);
 $months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 // 获取汇报设置
-$reportSet = Set::reportTime($diary);
-$reportObject = Set::reportObject($diary);
+$reportSet = DiarySet::reportTime($diary);
+$reportObject = DiarySet::reportObject($diary);
 $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 
 ?>

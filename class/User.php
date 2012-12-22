@@ -5,7 +5,7 @@ class User{
         return array(
             'photo' => '../../source/images/img_01.png',
             'username' => $uid,
-            'dept_name' => $uid,
+            'dept_name' => '技术部',
             'corp_id' => 1,
         );
     }

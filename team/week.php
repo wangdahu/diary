@@ -19,11 +19,14 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
+// 查看的年份和周
+$object = date('Y-W', $endTime);
+$type = "weekly";
 
-include dirname(dirname(__FILE__))."/class/Set.php";
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 include dirname(dirname(__FILE__))."/class/User.php";
 // 周报汇报给我的和我订阅的用户
-$teamShowObject = Set::teamShowObject($diary, 2);
+$teamShowObject = DiarySet::teamShowObject($diary, 2);
 ?>
 
 <?php include "views/layouts/header.php"; ?>

@@ -1,5 +1,5 @@
 <?php
-$title = "周报";
+$title = "周报-团队日志";
 $type = 'weekly';
 
 // 当前周的周一时间戳
@@ -16,10 +16,13 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
+// 查看的年份和周
+$object = date('Y-W', $endTime);
+
 $weekDate = array();
 // 用户设置的工作时间
-include dirname(dirname(__FILE__))."/class/Set.php";
-$selected = Set::workingTime($diary, $diary->uid);
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
+$selected = DiarySet::workingTime($diary, $diary->uid);
 
 $weekarray = array("一","二","三","四","五","六","日");
 // 当前周的所有工作天
@@ -47,7 +50,7 @@ $num = count($dailys);
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
 <div class="content">
-    <!--今日工作开始-->
+    <!--本周工作开始-->
     <?php foreach($weekDate as $k => $v):?>
     <div class="content_bar mb25">
         <div>
@@ -74,6 +77,7 @@ $num = count($dailys);
 
     </div>
     <?php endforeach;?>
-    <!--今日工作结束-->
+    <!--本周工作结束-->
+    <?php include "comment.php"; ?>
 </div>
 <?php include "views/layouts/footer.php"; ?>

@@ -2,15 +2,15 @@
 $title = "日志设置";
 $setDefault = 'diary';
 $uid = $diary->uid;
-include dirname(dirname(__FILE__))."/class/Set.php";
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if(isset($_POST['working_time'])){
-    Set::saveWorkingTime($diary, $_POST['working_time']);
+    DiarySet::saveWorkingTime($diary, $_POST['working_time']);
 }
 
 $list = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 $diarySetSql = "select `working_time` from `diary_set` where `uid` = $uid";
 
-$selected = Set::workingTime($diary, $diary->uid);
+$selected = DiarySet::workingTime($diary, $diary->uid);
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>

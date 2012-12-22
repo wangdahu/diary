@@ -1,5 +1,5 @@
 <?php
-class Daily{
+class DiaryDaily{
     /**
      * 查找某段时间的日报
      */

@@ -3,7 +3,7 @@
  * 查询设置的不同类别的设置
  *
  */
-class Set{
+class DiarySet{
     /**
      * 查询工作时间
      */

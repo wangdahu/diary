@@ -18,8 +18,8 @@ if($forward){
 $endTime = $startTime + 7*86400 - 1;
 $weekDate = array();
 // 用户设置的工作时间
-include dirname(dirname(__FILE__))."/class/Set.php";
-$selected = Set::workingTime($diary, $diary->uid);
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
+$selected = DiarySet::workingTime($diary, $diary->uid);
 
 $weekarray = array("一","二","三","四","五","六","日");
 // 当前周的所有工作天

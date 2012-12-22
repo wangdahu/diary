@@ -17,12 +17,16 @@ if($forward){
     $currentDate = date('Y-m-d',time());
 }
 $startTime = strtotime($currentDate);
-$endTime = $startTime + 86400;
+$endTime = $startTime + 86400 - 1;
 
-include dirname(dirname(__FILE__))."/class/Set.php";
+// 查看的日期
+$object = date('Y-m-d', $endTime);
+$type = "daily";
+
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 include dirname(dirname(__FILE__))."/class/User.php";
 // 日报汇报给我的和我订阅的用户
-$teamShowObject = Set::teamShowObject($diary, 1);
+$teamShowObject = DiarySet::teamShowObject($diary, 1);
 ?>
 
 <?php include "views/layouts/header.php"; ?>

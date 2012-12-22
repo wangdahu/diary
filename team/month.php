@@ -12,19 +12,23 @@ if($forward){
     $backwardMonths = $forward - 1;
     $currentMonth = date('y年m月', mktime(0, 0, 0, date("m")-$forward, 1, date("Y")));
     $startTime = mktime(0,0,0,date("m")-$forward,1,date("Y"));
-    $endTime = mktime(0,0,0,date("m")-$forward+1,1,date("Y"));
+    $endTime = mktime(0,0,0,date("m")-$forward+1,1,date("Y")) - 1;
 }else{
     $forwardMonths = 1;
     $backwardMonths = -1;
     $currentMonth = date('y年m月');
     $startTime = mktime(0,0,0,date("m")-$forward,1,date("Y"));
-    $endTime = mktime(0,0,0,date("m")+1,1,date("Y"));
+    $endTime = mktime(0,0,0,date("m")+1,1,date("Y")) - 1;
 }
 
-include dirname(dirname(__FILE__))."/class/Set.php";
+// 查看的年份和月
+$object = date('Y-m', $endTime);
+$type = "monthly";
+
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 include dirname(dirname(__FILE__))."/class/User.php";
 // 月报汇报给我的和我订阅的用户
-$teamShowObject = Set::teamShowObject($diary, 3);
+$teamShowObject = DiarySet::teamShowObject($diary, 3);
 ?>
 
 <?php include "views/layouts/header.php"; ?>

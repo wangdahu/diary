@@ -2,9 +2,9 @@
 $title = "提醒设置";
 $setDefault = 'remind';
 
-include dirname(dirname(__FILE__))."/class/Set.php";
+include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if($_POST){
-    Set::saveRemindTime($diary, $_POST['dailyRemind'], $_POST['weeklyRemind'], $_POST['monthlyRemind']);
+    DiarySet::saveRemindTime($diary, $_POST['dailyRemind'], $_POST['weeklyRemind'], $_POST['monthlyRemind']);
 }
 
 $hours = range(0, 24);
@@ -13,7 +13,7 @@ $months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 
 // 获取提醒设置
-$remindSet = Set::remindTime($diary);
+$remindSet = DiarySet::remindTime($diary);
 // echo "<pre>"; var_dump($remindSet);exit;
 $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 

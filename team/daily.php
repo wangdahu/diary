@@ -1,5 +1,5 @@
 <?php
-$title = "团队日志";
+$title = "日报-团队日志";
 $type = 'daily';
 $weekarray = array("日","一","二","三","四","五","六");
 
@@ -17,6 +17,8 @@ if($forward){
 $startTime = strtotime($currentDate);
 $endTime = $startTime + 86400 - 1;
 
+// 查看的日期
+$object = date('Y-m-d', $endTime);
 
 $uid = (int) $_GET['uid'];
 include dirname(dirname(__FILE__))."/class/User.php";
@@ -58,5 +60,6 @@ $num = count($dailys);
         <?php endforeach;?>
     </div>
     <!--今日工作结束-->
+    <?php include "comment.php"; ?>
 </div>
 <?php include "views/layouts/footer.php"; ?>
