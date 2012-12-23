@@ -92,3 +92,8 @@ tr{display:table-row;vertical-align:inherit;border-color:inherit;}
 
 /* 提交 */
 form .form-action{ margin-left: 115px;}
+
+/* margin */
+.mg5 {margin-left: 5px;}
+.mg10 {margin-left: 10px;}
+.mg15 {margin-left: 15px;}

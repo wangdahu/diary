@@ -1,6 +1,8 @@
 <?php
 include dirname(dirname(__FILE__))."/class/DiaryComment.php";
+include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
 $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
+DiaryViewRecord::addRecord($diary, $type, $uid, $object);
 ?>
 <!--评论开始-->
 <div class="content_bar">
@@ -19,7 +21,7 @@ $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
                 <h2>
                     <a href="javascript:;"><?php echo $user['username']; ?>（<?php echo $user['dept_name']; ?>）</a>
                     <span>
-                        <?php echo date('Y-m-d H:i', $comment['add_time']); ?>
+                        <?php echo date('y-m-d H:i', $comment['add_time']); ?>
                     </span>
                 </h2>
                 <p><?php echo nl2br($comment['content']); ?></p>

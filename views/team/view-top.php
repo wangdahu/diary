@@ -24,6 +24,22 @@
     </div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
+    <p class="fl">
+        <?php
+             if($type == 'daily') {
+                 $forward = $forwardDays - 1;
+                 $backUrl = "index?forward=$forward";
+             }else if($type == 'weekly') {
+                 $forward = $forwardWeeks - 1;
+                 $backUrl = "week?forward=$forward";
+             }else {
+                 $forward = $forwardMonths - 1;
+                 $backUrl = "month?forward=$forward";
+             }
+        ?>
+        <a href="<?php echo $backUrl; ?>" class="a_01 mg10">返回</a>
+    </p>
+    <a href="javascript:" class="fr dc mg10">组织架构</a>
     <div class="data fr clearfix">
         <a href="daily?uid=<?php echo $uid;?>" class="<?php echo $type == 'daily' ? 'cur' : ''?>">今日</a>
         <a href="weekly?uid=<?php echo $uid;?>" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>

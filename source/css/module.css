@@ -19,7 +19,7 @@ body{background:#bfc0c5;}
 .topBarInner .app_icon02{background:url(../images/topBar_ico_02.png) 8px 0 no-repeat;}
 .topBarInner .app_icon03{background:url(../images/topBar_ico_03.png) 8px 0 no-repeat;}
 /*----------- 导航 ----------*/
-.nav{float:right;overflow:hidden;margin-right:15px;background:url(../images/nav_bg.png) right center no-repeat;}
+.nav{float:right;overflow:hidden;margin-right:15px;}
 .nav li{width:100px;float:left;font:400 14px/40px "宋体";text-align:center;}
 .nav li a{color:#f3f3f3;display:block;height:40px;text-decoration:none;}
 .nav li a:hover{background:#2a2f35;text-decoration:none;}
@@ -101,7 +101,7 @@ body{background:#bfc0c5;}
 .set_bar h2 .tjdy{width:80px;height:25px;display:block;background:url(../images/btn.png) 0 -211px no-repeat;margin-bottom:5px;}
 .set_bar h2 .qxdy{width:80px;height:25px;display:block;background:url(../images/btn.png) 0 -246px no-repeat;margin-bottom:5px;}
 .dy{overflow:hidden;padding:12px 0 0 0;}
-.dy li{float:left;width:246px;height:60px;background:url(../images/bg_05.png) 0 -94px no-repeat;padding:12px;margin:8px;}
+.dy li{float:left;width:246px;height:60px;background:url(../images/bg_05.png) 0 -94px no-repeat;padding:12px;margin:7px;}
 .dy li:hover{background:url(../images/bg_05.png) 0 0 no-repeat;}
 .dy li p{line-height:28px;}
 

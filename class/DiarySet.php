@@ -121,7 +121,7 @@ class DiarySet{
                 }
             }
         };
-        $subscribe['daily_object']['user'] = $subscribe['daily_object']['dept'] = $subscribe['weekly_object']['user'] = $subscribe['weekly_object']['dept'] = $subscribe['monthly_object']['user'] = $subscribe['monthly_object']['dept'] = array(5,8,1,2,3,4);
+        // $subscribe['daily_object']['user'] = $subscribe['daily_object']['dept'] = $subscribe['weekly_object']['user'] = $subscribe['weekly_object']['dept'] = $subscribe['monthly_object']['user'] = $subscribe['monthly_object']['dept'] = array(5,8,1,2,3,4);
         return $subscribe;
     }
 
@@ -241,7 +241,8 @@ class DiarySet{
         $deptId = $diary->deptId;
         // 订阅对象
         $subscribeObject = self::subscribeObject($diary);
-        $reportObject = self::reportObject($diary);
+        // $reportObject = self::reportObject($diary);
+        $reportObject = array();
         $merge_data = array_merge_recursive($reportObject, $subscribeObject);
         if($type == 1){
             $teamShowUser = array_unique($merge_data['daily_object']['user']);
