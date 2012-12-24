@@ -1,7 +1,9 @@
 <?php
 include dirname(dirname(__FILE__))."/class/DiaryComment.php";
 include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
+$showObject = $forward < 0 ? false : true;
 ?>
+<?php if($showObject):?>
 <div class="content">
     <div class="set_bar mb25">
         <!--标签设置开始-->
@@ -26,7 +28,7 @@ include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
                 <p>
                     <a href="<?php echo $url;?>">
                         <?php echo $user['username']; ?></a>（<?php echo $user['dept_name']; ?>）<br />
-                    已订阅，<a href="javascript:;" class="js-cancel" data-id="<?php echo $uid;?>" data-username="<?php echo $user['username']; ?>">取消订阅
+                    已汇报
                     </a>
                     <span style="color:red;"><?php echo DiaryComment::checkUserObjectComment($diary, $uid, $type, $object) ? '评论' : '';?></span>
                 </p>
@@ -36,22 +38,4 @@ include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
         <!--标签设置结束-->
     </div>
 </div>
-<script>
-    $(function(){
-        $(".js-cancel").click(function(){
-            var username = $(this).attr("data-username"),
-            uid = $(this).attr("data-id"),
-            type = '<?php echo $setDefault;?>';
-            if(confirm("确定要取消对”"+username+"“的订阅？")){
-                $.post('cancelSubscribe', {uid: uid, type: type}, function(json){
-                    if(json){
-                        location.reload();
-                    }else{
-                        alert('操作失败');
-                    }
-                }, 'json');
-            }
-            return false;
-        });
-    });
-</script>
+<?php endif;?>

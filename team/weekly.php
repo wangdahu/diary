@@ -16,6 +16,13 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
+$showDiary = $forward < 0 ? false : true;
+$uid = (int) $_GET['uid'];
+?>
+<?php include "views/layouts/header.php"; ?>
+<?php include "views/team/view-top.php"; ?>
+<?php if($showDiary):?>
+<?php
 // 查看的年份和周
 $object = date('Y-W', $endTime);
 
@@ -31,7 +38,6 @@ for($i = 6; $i >= 0; $i--){
     $weekDate[$weekarray[$i]] = date('y.m.d', $time);
 }
 
-$uid = (int) $_GET['uid'];
 include dirname(dirname(__FILE__))."/class/User.php";
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
@@ -47,8 +53,6 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 $num = count($dailys);
 
 ?>
-<?php include "views/layouts/header.php"; ?>
-<?php include "views/team/view-top.php"; ?>
 <div class="content">
     <!--本周工作开始-->
     <?php foreach($weekDate as $k => $v):?>
@@ -80,4 +84,5 @@ $num = count($dailys);
     <!--本周工作结束-->
     <?php include "comment.php"; ?>
 </div>
+<?php endif;?>
 <?php include "views/layouts/footer.php"; ?>

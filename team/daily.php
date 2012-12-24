@@ -5,6 +5,7 @@ $weekarray = array("日","一","二","三","四","五","六");
 
 // 向前向后翻天
 $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
+$showDiary = $froward < 0 ? false : true;
 if($forward){
     $forwardDays = $forward + 1;
     $backwardDays = $forward - 1;
@@ -17,10 +18,16 @@ if($forward){
 $startTime = strtotime($currentDate);
 $endTime = $startTime + 86400 - 1;
 
+$uid = (int) $_GET['uid'];
+?>
+
+<?php include "views/layouts/header.php"; ?>
+<?php include "views/team/view-top.php"; ?>
+<?php if($froward):?>
+<?php
 // 查看的日期
 $object = date('Y-m-d', $endTime);
 
-$uid = (int) $_GET['uid'];
 include dirname(dirname(__FILE__))."/class/User.php";
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
@@ -33,12 +40,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $dailys[] = $row;
 };
 $num = count($dailys);
-
 ?>
-
-<?php include "views/layouts/header.php"; ?>
-<?php include "views/team/view-top.php"; ?>
-
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
@@ -62,4 +64,5 @@ $num = count($dailys);
     <!--今日工作结束-->
     <?php include "comment.php"; ?>
 </div>
+<?php endif;?>
 <?php include "views/layouts/footer.php"; ?>
