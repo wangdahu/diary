@@ -100,6 +100,6 @@ $num = count($dailys);
                 allFields.val("").removeClass("ui-state-error");
             }
         });
-        $(".js-write-dialy").button().click(function(){$("#dialog-form").dialog("open");});
+        $(".write-daily").button().click(function(){$("#dialog-form").dialog("open");});
     });
 </script>

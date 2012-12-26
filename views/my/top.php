@@ -16,6 +16,6 @@
         <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>
         <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">本月</a>
     </div>
-    <a href="javascript:" class="a_02 fr mr10 js-write-dialy"></a>
+    <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
 </div>
 <!--功能操作结束-->
