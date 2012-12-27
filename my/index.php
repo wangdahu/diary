@@ -97,7 +97,7 @@ $num = count($dailys);
                 }
             },
             close: function() {
-                allFields.val("").removeClass("ui-state-error");
+                $(this).dialog("close");
             }
         });
         $(".write-daily").button().click(function(){$("#dialog-form").dialog("open");});

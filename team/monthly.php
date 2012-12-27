@@ -32,6 +32,9 @@ include dirname(dirname(__FILE__))."/class/User.php";
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
 
+// 查询当月的月报
+
+
 // 查看当前第一天和最后一天是星期几，补全最开始和结尾的格子
 $maxDays = date('t', $startTime);
 // 今天的日
@@ -54,10 +57,13 @@ if($firstDayWeekth == 0){ // 星期天
 }
 $currentWeek = floor(($currentTime - $firstTime)/(7*86400));
 if($firstDayWeekth != 1){
+    // 上月第一天的时间戳
+    $currentMonthPrev = mktime(0, 0, 0, date("m")-$forward-1, 1, date("Y"));
+    $prevMonth = date('m', $currentMonthPrev);
     // 计算上月最后一周
-    $weekArr = array('', '一','二','三','四','五');
+    $weekArr = array($prevMonth.'月末周', '第一周','第二周','第三周','第四周','第五周');
 }else{
-    $weekArr = array('一','二','三','四','五');
+    $weekArr = array('第一周','第二周','第三周','第四周','第五周');
 }
 ?>
 <div class="content">
@@ -96,10 +102,10 @@ if($firstDayWeekth != 1){
                 <tbody>
                     <?php for($w = 0; $w < 5; $w++):?>
                     <tr>
-                        <td class="<?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?>">第<?php echo $weekArr[$w]?>周</td>
+                        <td class="<?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?>"><?php echo $weekArr[$w]?></td>
                         <?php for($i = 0; $i < 7; $i++): ?>
                               <?php $j = date('j', $firstTime + 7*$w*86400 + $i*86400); ?>
-                        <td class="<?php echo $j == $currentMonthDate ? 'td_blue' : td_grey; ?>">
+                        <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : td_grey; ?>">
                             <?php echo $j;?>
                         </td>
                         <?php endfor;?>

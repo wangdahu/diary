@@ -43,7 +43,10 @@ $defaultColorId = rand(1,20);
                     <tr>
                         <td><div class="color-list" style="float: left; margin-right: 5px; background-color: <?php echo $colorList[$tag['color_id']]?>"></div><?php echo $tag['tag'];?></td>
                         <td><?php echo $tag['count'];?></td>
-                        <td class="td-right"><a href="javascript:;">编辑</a> <a href="javascript:;">删除</a></td>
+                        <td class="td-right">
+                            <a href="javascript:;" class="js-edit-tag" data-color="<?php echo $colorList[$tag['color_id']]; ?>" data-tag="<?php echo $tag['tag']; ?>" data-color_id="<?php echo $tag['color_id']; ?>" data-id="<?php echo $tag['id']; ?>">编辑</a>
+                            <a href="javascript:;">删除</a>
+                        </td>
                     </tr>
                     <?php endforeach;?>
                 </tbody>
@@ -55,7 +58,7 @@ $defaultColorId = rand(1,20);
 </div>
 <?php include "views/layouts/footer.php"; ?>
 <div id="dialog-form" title="添加标签">
-    <form>
+    <form method="post">
         <fieldset>
             <input id="tag" name="tag" size="35" maxlength="40" placeholder="输入标签名称" style="line-height: 24px;"/>
             <div style="margin: 10px -3px ; ">
@@ -63,13 +66,14 @@ $defaultColorId = rand(1,20);
                     <div class="default-color" style="background-color: <?php echo $colorList[$defaultColorId];?>;"></div><span>选择颜色</span>
                 </div>
                 <input name="color_id" id="color_id" type="hidden" value="<?php echo $defaultColorId;?>" />
+                <input name="id" id="id" type="hidden" value="" />
                 <div class="show-color-list">
                     <table>
                         <?php for($row = 0; $row < 2; $row++):?>
                         <tr>
                             <?php for($col = 1; $col < 11; $col++):?>
                             <td>
-                                <div class="<?php echo $defaultColorId == ($row*10 + $col) ? 'color-selected' : ''?>">
+                                <div>
                                     <div class="color-list" data-id="<?php echo $row*10 + $col;?>" style="background-color: <?php echo $colorList[$row*10 + $col]?>;"></div>
                                 </div>
                             </td>
@@ -89,27 +93,54 @@ $defaultColorId = rand(1,20);
             height: 210,
             width: 330,
             modal: true,
+            open: function(){
+                $("#dialog-form").keypress(function(e) {
+                    if (e.keyCode == $.ui.keyCode.ENTER) {
+                        $(this).parent().find("button:eq(0)").trigger("click");
+                    }
+                });
+            },
             buttons: {
                 "确定": function(){
                     var tag = $("#tag").val(),
-                    color_id = $("#color_id").val();
+                    color_id = $("#color_id").val(),
+                    id = $("#id").val();
                     if(!tag.length){
                         alert('请填写标签内容');
                         return false;
                     }
-                    $.post('createTag', {tag:tag, color_id:color_id}, function(json){
-                        location.reload();
-                    }), 'json';
+                    $.post('createTag', {tag:tag, color_id:color_id, id: id}, function(json){
+                        if(json != 0){
+                            location.reload();
+                        }else{
+                            alert('标签重复！');
+                            $("#tag").select();
+                            return false;
+                        }
+                    });
                 },
                 "取消": function() {
                     $(this).dialog("close");
                 }
             },
             close: function() {
-                allFields.val("").removeClass("ui-state-error");
+                $(".default-color").css('background-color', $(this).css("background-color"));
+                $("#color_id").val($(this).attr("data-id"));
+                $(this).dialog("close");
             }
         });
-        $(".js-add-tag").button().click(function(){$("#dialog-form").dialog("open");});
+
+        // 添加
+        $(".js-add-tag").click(function(){$("#dialog-form").dialog("open");});
+        // 编辑
+        $(".js-edit-tag").click(function(){
+            $("#dialog-form").attr('title', '编辑标签');
+            $("#color_id").val($(this).attr('data-color_id'));
+            $("#tag").val($(this).attr('data-tag'));
+            $("#id").val($(this).attr('data-id'));
+            $(".default-color").css('background-color', $(this).attr("data-color"));
+            $("#dialog-form").dialog("open");
+        });
 
         $(".select-color").click(function(){
             $(this).hide();
