@@ -11,18 +11,6 @@ $defaultColorId = rand(1,20);
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
-<style>
-    .tag {border: 1px solid #ccc; width: 850px; padding: 0 auto 15px auto; text-align:left;}
-    .tag thead tr {background-color: #ccc; height: 30px; font-weight: bold;}
-    .tag tbody tr {height: 28px;}
-    .tag td {padding-left: 10px;}
-    .tag .td-right {text-align: right; padding-right: 20px;}
-    form .default-color {margin: 9px 5px; float: left; width: 12px; height: 12px;}
-    .color-list { width: 12px; height: 12px; background-color: #ccc; padding: 1px; margin: -1px;}
-    form .show-color-list {margin: 9px 2px; border: 1px solid #ccc; width: 230px; display: none;}
-    form .show-color-list td{padding: 5px;}
-    form .show-color-list .color-selected {border: 1px solid #ccc; padding: 2px; margin: -2px;}
-</style>
 <div class="content">
     <div class="set_bar mb25" style="margin-left: -10px;">
         <!--标签设置开始-->
@@ -45,7 +33,7 @@ $defaultColorId = rand(1,20);
                         <td><?php echo $tag['count'];?></td>
                         <td class="td-right">
                             <a href="javascript:;" class="js-edit-tag" data-color="<?php echo $colorList[$tag['color_id']]; ?>" data-tag="<?php echo $tag['tag']; ?>" data-color_id="<?php echo $tag['color_id']; ?>" data-id="<?php echo $tag['id']; ?>">编辑</a>
-                            <a href="javascript:;">删除</a>
+                            <a href="javascript:;" class="js-delete-tag" data-id="<?php echo $tag['id']?>" data-tag="<?php echo $tag['tag']?>">删除</a>
                         </td>
                     </tr>
                     <?php endforeach;?>
@@ -109,7 +97,7 @@ $defaultColorId = rand(1,20);
                         alert('请填写标签内容');
                         return false;
                     }
-                    $.post('createTag', {tag:tag, color_id:color_id, id: id}, function(json){
+                    $.post('operateTag', {tag:tag, color_id:color_id, id: id}, function(json){
                         if(json != 0){
                             location.reload();
                         }else{
@@ -140,6 +128,21 @@ $defaultColorId = rand(1,20);
             $("#id").val($(this).attr('data-id'));
             $(".default-color").css('background-color', $(this).attr("data-color"));
             $("#dialog-form").dialog("open");
+        });
+        // 删除
+        $(".js-delete-tag").click(function(){
+            var id = $(this).attr('data-id'),
+            tag = $(this).attr('data-tag');
+            if(confirm("确定要删除标签“"+tag+"”？")){
+                $.post('operateTag', {tag:tag, id:id, action:'delete'}, function(json){
+                    if(json != 0){
+                        location.reload();
+                    }else{
+                        alert('删除失败！');
+                    }
+                });
+            }
+            return false;
         });
 
         $(".select-color").click(function(){

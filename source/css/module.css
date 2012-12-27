@@ -51,11 +51,12 @@ body{background:#bfc0c5;}
 .c_t_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
 .c_c_1{width:802px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;position:relative;}
-.c_c_c{width:80%;line-height:20px;}
+.c_c_c{width:100%;line-height:20px;}
 .c_c_c h2{line-height:30px;}
 .c_c_c h2 a{color:#3f3f3f;}
 .zhan{position:absolute;right:12px;bottom:8px;font:700 14px/22px "宋体";}
-.delete{width:18px;height:18px;position:absolute;right:12px;top:4px;background:url(../images/ico_03.png) 0 0 no-repeat;}
+.delete{width:18px;height:18px;position:absolute;background:url(../images/ico_03.png) 0 0 no-repeat;}
+.add_tag{width:16px;height:16px;position:absolute;background:url(../images/ico_04.png) 0 0 no-repeat;}
 .date{float: right; padding-right: 30px; padding-top:3px;}
 /*----------- 评论 ----------*/
 .content_tit p.p_icon{padding-left:16px;background:url(../images/icon_01.png) -6px 0 no-repeat;}

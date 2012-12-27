@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 27 日 10:13
--- 服务器版本: 5.5.24-0ubuntu0.12.04.1
--- PHP 版本: 5.3.10-1ubuntu3.4
+-- 生成日期: 2012 年 12 月 28 日 01:36
+-- 服务器版本: 5.5.28-0ubuntu0.12.10.2
+-- PHP 版本: 5.4.6-1ubuntu1.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -101,6 +101,18 @@ CREATE TABLE IF NOT EXISTS `diary_daily_tag` (
   KEY `diary_id` (`diary_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日记标签表';
 
+--
+-- 转存表中的数据 `diary_daily_tag`
+--
+
+INSERT INTO `diary_daily_tag` (`diary_id`, `tag_id`) VALUES
+(5, 2),
+(6, 2),
+(8, 4),
+(13, 2),
+(23, 2),
+(148, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -118,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `diary_info` (
   `fill_time` int(11) NOT NULL COMMENT '填写时间',
   PRIMARY KEY (`id`),
   KEY `corp_id` (`corp_id`,`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='日志信息表' AUTO_INCREMENT=149 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='日志信息表' AUTO_INCREMENT=151 ;
 
 --
 -- 转存表中的数据 `diary_info`
@@ -246,7 +258,9 @@ INSERT INTO `diary_info` (`id`, `corp_id`, `content`, `uid`, `type`, `show_time`
 (145, 1, '过很多风光好的风光好', 1, 1, 1356451200, 1356196580, 1356196580),
 (146, 1, '的法规和对方光焕发的', 1, 1, 1356451200, 1356196582, 1356196582),
 (147, 1, '的法规和地方很多风光好', 1, 1, 1356364800, 1356196585, 1356196585),
-(148, 1, '读过很多风光好的风光好', 1, 1, 1355932800, 1356196592, 1356196592);
+(148, 1, '读过很多风光好的风光好', 1, 1, 1355932800, 1356196592, 1356196592),
+(149, 1, '送的反思的反思的反思的反思对方送的反思的反思的反思对方的三分三的反思大方的送的反思对方', 1, 1, 1356537600, 1356620418, 1356620418),
+(150, 1, '速度加快三分的三分三就堪萨斯的快速地方\n送的反思的反思对方\n送的反思的反思的反思对方的反思的反思的反思的的反思反思对方\n的三分三的反思的反思的反思对方\n的三分三的反思的反思的反思对方送的反思的反思的反思对方对方的三分三的反思的反思对方送的反思发的反思的反思对方的三分东西方对方送\n的三分三的反思对方', 1, 1, 1356537600, 1356620441, 1356620441);
 
 -- --------------------------------------------------------
 
@@ -458,14 +472,21 @@ CREATE TABLE IF NOT EXISTS `diary_tag` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `tag` (`tag`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- 转存表中的数据 `diary_tag`
 --
 
 INSERT INTO `diary_tag` (`id`, `tag`, `uid`, `color_id`) VALUES
-(1, '公共', 1, 14);
+(1, '公共', 1, 14),
+(2, '方法', 1, 10),
+(3, '广告', 1, 2),
+(4, '呵呵00', 1, 18),
+(5, '一样', 1, 16),
+(6, '往往', 1, 16),
+(7, '让人', 1, 9),
+(9, '得到', 1, 16);
 
 -- --------------------------------------------------------
 

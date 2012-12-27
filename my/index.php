@@ -29,6 +29,8 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 };
 $num = count($dailys);
 
+include dirname(dirname(__FILE__))."/class/DiaryDaily.php";
+$userTags = DiaryDaily::getUserTags($diary);
 ?>
 
 <?php include "views/layouts/header.php"; ?>
@@ -43,9 +45,47 @@ $num = count($dailys);
         <?php foreach($dailys as $daily):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
-            <div class="date"><?php echo date('填写y-m-d H:i:s', $daily['fill_time']), date('汇报y-m-d H:i:s', $daily['report_time']);?></div>
             <div class="c_c_c">
-                <p><?php echo nl2br($daily['content']); ?></p>
+                <div>
+                    <p><?php echo nl2br($daily['content']); ?></p>
+                </div>
+                <br />
+                <div style="float: right; margin-top: -20px;">
+                    <?php $tagList = array(); $tagList = DiaryDaily::getDailyTag($diary, $daily['id']);?>
+                    <span>
+                        <?php foreach($tagList as $tag):?>
+                        <span style="margin: 3px;padding:2px; background-color: <?php echo $tag['color']?>">
+                            <?php echo $tag['tag'];?>
+                        </span>
+                        <?php endforeach;?>
+                    </span>
+                    <span style="margin: 0 24px 0 4px;"><a href="javascript:;" style="padding: 0 4px;" class="add_tag"></a><span>
+                    <span style="margin: 0 4px 0 24px;">
+                        <a href="javascript:;" style="padding: 0 4px;" data-id="<?php echo $daily['id'];?>" class="js-del-all delete"></a>
+                    </span>
+                    <span style="padding-left: 25px;">
+                        <?php echo date('y-m-d H:i', $daily['fill_time']);?>
+                    </span>
+                </div>
+                <div style="border: 1px #ccc solid; width: 200px; line-height: 24px;">
+                    <?php foreach($userTags as $tag):?>
+                    <div>
+                        <label>
+                            <div style="float: left;margin: 5px 5px 5px 10px;"><input type="checkbox"/></div>
+                            <div class="color-list" style="float: left; margin: 5px 3px; background-color: <?php echo $tag['color'];?>">
+                            </div>
+                            <div ><?php echo $tag['tag']?></div>
+                        </label>
+                    </div>
+                    <?php endforeach;?>
+                    <div style="line-height: 30px;">
+                        <div style="border-top: 1px solid #ccc"></div>
+                        <div style="margin-left: 30px;"><a href="javascript:;" data-id="<?php echo $daily['id'];?>" class="js-del-all">删除所有标签</a></div>
+                        <div style="border-top: 1px solid #ccc"></div>
+                        <div style="margin-left: 30px;"><a href="javascript:;">添加标签</a></div>
+                        <div style="margin-left: 30px;"><a href="javascript:;">管理标签</a></div>
+                    </div>
+                </div>
             </div>
             <?php if($daily['report_time'] > $daily['fill_time']):?>
             <a href="javascript:" class="delete" title="可编辑可删除" data-id="<?php echo $daily['id'];?>"></a>
@@ -101,5 +141,20 @@ $num = count($dailys);
             }
         });
         $(".write-daily").button().click(function(){$("#dialog-form").dialog("open");});
+
+        // 删除某日志的所有标签
+        $(".js-del-all").click(function(){
+            var id = $(this).attr('data-id');
+            if(confirm("确定要删除这条日志的所有标签？")){
+                $.post('/diary/index.php/set/operateTag', {id:id, action:'del-diary-all-tag'}, function(json){
+                    if(json != 0){
+                        location.reload();
+                    }else{
+                        return false;
+                    }
+                });
+            }
+            return false;
+        });
     });
 </script>
