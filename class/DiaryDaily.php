@@ -65,7 +65,7 @@ class DiaryDaily{
             $tagSql = "select t.*,c.`color` from `diary_tag` as t left join `diary_tag_color` as c on `t`.`color_id` = `c`.`id` where t.`id` = ".$row['tag_id'];
             $tagResult = $diary->db->query($tagSql);
             if($tagInfo = $tagResult->fetch_assoc()) {
-                $tagList[] = $tagInfo + $row;
+                $tagList[$row['tag_id']] = $tagInfo + $row;
             }
         }
         return $tagList;
