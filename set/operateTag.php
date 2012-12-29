@@ -11,13 +11,22 @@ if($_POST){
             echo addDiaryTag($diary, $_POST);
         }
     }else {
-        echo saveTag($diary, $_POST);
+        if($_POST['diary_id']){
+            $_POST['tag_id'] = saveTag($diary, $_POST);
+            if($_POST['tag_id']){
+                echo addDiaryTag($diary, $_POST);
+            }else{
+                echo 0;
+            }
+        }else{
+            echo saveTag($diary, $_POST);
+        }
     }
 }
 
 
 /**
- * 删除日志单个标签
+ * 添加日志单个标签
  */
 function addDiaryTag($diary, $post) {
     $diary_id = (int) $post['diary_id'];

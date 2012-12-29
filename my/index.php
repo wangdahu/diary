@@ -31,6 +31,11 @@ $num = count($dailys);
 
 include dirname(dirname(__FILE__))."/class/DiaryDaily.php";
 $userTags = DiaryDaily::getUserTags($diary);
+// 获取颜色列表
+$colorList = DiaryDaily::getColorList($diary);
+$tagList = DiaryDaily::getTagList($diary);
+
+$defaultColorId = rand(1,20);
 ?>
 
 <?php include "views/layouts/header.php"; ?>
@@ -57,10 +62,15 @@ $userTags = DiaryDaily::getUserTags($diary);
         $tagIds = array_keys($tagList);
     ?>
                     <span id="tag-list-<?php echo $daily['id'];?>">
-                        <?php foreach($tagList as $tag):?>
-                        <span id="tag-<?php echo $tag['id'];?>" style="margin: 3px;padding:2px; background-color: <?php echo $tag['color']?>">
-                            <?php echo $tag['tag'];?>
-                        </span>
+                        <?php foreach($userTags as $tag):?>
+                        <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
+                            <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                                <span style="margin:4px;">
+                                    <?php echo $tag['tag'];?>
+                                </span>
+                            </div>
+                            <div class="js-del_tag" style="float: left; display:none;"><a href="javascript:;">next</a></div>
+                        </div>
                         <?php endforeach;?>
                     </span>
                     <span style="margin: 0 24px 0 4px;"><a href="javascript:;" style="padding: 0 4px;" class="add_tag"></a><span>
@@ -71,12 +81,12 @@ $userTags = DiaryDaily::getUserTags($diary);
                         <?php echo date('y-m-d H:i', $daily['fill_time']);?>
                     </span>
                 </div>
-                <div style="border: 1px #ccc solid; width: 200px; line-height: 24px;">
+                <div class="js-all-tag" style="border: 1px #ccc solid; width: 200px; line-height: 24px; z-index: 333">
                     <?php foreach($userTags as $tag):?>
                     <div>
                         <label>
                             <div style="float: left;margin: 5px 5px 5px 10px;">
-                                <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
+                                <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
                             </div>
                             <div class="color-list" style="float: left; margin: 5px 3px; background-color: <?php echo $tag['color'];?>">
                             </div>
@@ -84,15 +94,7 @@ $userTags = DiaryDaily::getUserTags($diary);
                         </label>
                     </div>
                     <?php endforeach;?>
-                    <div style="line-height: 30px;">
-                        <div style="border-top: 1px solid #ccc"></div>
-                        <div style="margin-left: 30px;">
-                            <a href="javascript:;" data-diary_id="<?php echo $daily['id'];?>" class="js-del-all">删除所有标签</a>
-                        </div>
-                        <div style="border-top: 1px solid #ccc"></div>
-                        <div style="margin-left: 30px;"><a href="javascript:;">添加标签</a></div>
-                        <div style="margin-left: 30px;"><a href="javascript:;">管理标签</a></div>
-                    </div>
+                    <?php include "tag.php"; ?>
                 </div>
             </div>
             <?php if($daily['report_time'] > $daily['fill_time']):?>
@@ -104,6 +106,7 @@ $userTags = DiaryDaily::getUserTags($diary);
     </div>
     <!--今日工作结束-->
 </div>
+
 <script>
     $(function(){
         $(".delete").click(function(){
@@ -112,44 +115,11 @@ $userTags = DiaryDaily::getUserTags($diary);
     });
 </script>
 <?php include "views/layouts/footer.php"; ?>
-
-<div id="dialog-form" title="写日志">
-    <form>
-        <fieldset>
-            <textarea cols="60" rows="12" id="daily_content"></textarea>
-        </fieldset>
-    </form>
-</div>
+<?php include "views/set/addTag.php"; ?>
+<?php include "views/my/createDaily.php"; ?>
 
 <script>
     $(function() {
-        $("#dialog-form").dialog({
-            autoOpen: false,
-            height: 300,
-            width: 530,
-            modal: true,
-            buttons: {
-                "写日志": function(){
-                    var content = $("#daily_content").val();
-                    if(!content.length){
-                        alert('请填写日志内容');
-                        return false;
-                    }
-                    var currentTime = <?php echo $startTime; ?>;
-                    $.post('createDaily', {content:content, currentTime:currentTime}, function(json){
-                        location.reload();
-                    }), 'json';
-                },
-                "取消": function() {
-                    $(this).dialog("close");
-                }
-            },
-            close: function() {
-                $(this).dialog("close");
-            }
-        });
-        $(".write-daily").button().click(function(){$("#dialog-form").dialog("open");});
-
         // 删除某日志的所有标签
         $(".js-del-all").click(function(){
             var diary_id = $(this).attr('data-diary_id');
@@ -165,22 +135,45 @@ $userTags = DiaryDaily::getUserTags($diary);
             return false;
         });
 
+        $(".js-tag").mouseover(function(){
+            $(this).find('.js-del_tag').toggle();
+        }).mouseout(function(){
+            $(this).find('.js-del_tag').toggle();
+        });
+
+        $(".js-del_tag").click(function(){
+            var js_tag = $(this).closest('.js-tag'),
+            diary_id = js_tag.attr('data-diary_id'),
+            tag_id = js_tag.attr('data-tag_id');
+            var tag_input = js_tag.parent().parent().next().find("#tag_"+tag_id);
+            $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
+                if(json != 0) {
+                    tag_input.attr('checked', false);
+                    js_tag.remove();
+                }else {
+                    alert('操作失败');
+                    return false;
+                }
+            });
+            return false;
+        });
+
         // 删除/添加 某日志的某个标签
         $(".js-operate_tag").change(function(){
             var diary_id = $(this).attr('data-diary_id'),
             tag_id = $(this).attr('data-tag_id'),
             action = !!$(this).attr('checked') ? 'add-diary-tag' : 'del-diary-tag';
+            var len = $(this).closest('.js-all-tag').find(':checked').length;
+            if(len > 5){
+                $(this).attr('checked', false);
+                alert('单个日志不能超过五个标签哦');
+                return false;
+            }
             var color = $(this).parent().next().css('background-color'),
             tag = $(this).parent().next().next().html();
-            console.log(tag);
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:action}, function(json) {
                 if(json != 0) {
-                    if(action == 'add-diary-tag') {
-                        var tag_span = '<span id="tag-'+tag_id+'" style="margin: 3px;padding:2px; background-color: '+color+'">'+tag+'</span>';
-                        $('#tag-list-'+diary_id).append(tag_span);
-                    }else if(action == 'del-diary-tag') {
-                        $('#tag-'+tag_id).remove();
-                    }
+                    $('#tag-list-'+diary_id).find('#diary_tag_'+tag_id).toggle();
                 }else {
                     alert('操作失败');
                     return false;

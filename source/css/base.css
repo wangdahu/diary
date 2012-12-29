@@ -120,3 +120,5 @@ form .default-color {margin: 9px 5px; float: left; width: 12px; height: 12px;}
 form .show-color-list {margin: 9px 2px; border: 1px solid #ccc; width: 230px; display: none;}
 form .show-color-list td{padding: 5px;}
 form .show-color-list .color-selected {border: 1px solid #ccc; padding: 2px; margin: -2px;}
+
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
