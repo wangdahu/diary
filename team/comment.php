@@ -3,13 +3,14 @@ include dirname(dirname(__FILE__))."/class/DiaryComment.php";
 include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
 $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
 DiaryViewRecord::addRecord($diary, $type, $uid, $object);
+$viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
+$viewCount = count($viewRecord);
 ?>
 <!--评论开始-->
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
-        <p class="p_icon">评论</p>
-        <span class="fr">评论（<?php echo count($commentList); ?>）</span>
-        <a href="#" class="fr">汇报：12人 已阅：6人</a>
+        <p class="p_icon">评论（<?php echo count($commentList); ?>）</p>
+        <a href="javascript:;" class="fr js-view_record">汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人</a>
     </h2>
     <?php foreach($commentList as $comment): ?>
     <?php $user = User::getInfo($comment['uid']);?>
@@ -59,7 +60,7 @@ DiaryViewRecord::addRecord($diary, $type, $uid, $object);
                 $('#content').select();
                 return false;
             }
-            $.post('createComment', form.serialize(), function(json){
+            $.post('/diary/index.php/team/createComment', form.serialize(), function(json){
                 if(json){
                     location.reload();
                 }else{
@@ -67,6 +68,10 @@ DiaryViewRecord::addRecord($diary, $type, $uid, $object);
                 }
             }), 'json';
             return false;
+        });
+
+        $('.js-view_record').click(function(){
+
         });
     });
 </script>

@@ -63,14 +63,18 @@ tr{display:table-row;vertical-align:inherit;border-color:inherit;}
 
 .select-color {margin-left: 2px; width:98px;height:30px;background:url(../images/select-normal.png) no-repeat;}
 .select-color:hover {margin-left: 2px; width:98px;height:30px;background:url(../images/select-hover.png) no-repeat; cursor: pointer;}
-.write-daily:active{width:88px;height:28px;text-align:center;background:url(../images/daily_active.png) no-repeat;display:block;}
-.write-daily{width:88px;height:27px;text-align:center;background:url(../images/daily_normal.png) no-repeat;display:block;}
-.write-daily:hover{width:88px;height:27px;text-align:center;background:url(../images/daily_hover.png) no-repeat;display:block;}
-.write-weekly:active{width:88px;height:30px;text-align:center;background:url(../images/weekly_active.png) no-repeat;display:block;}
-.write-weekly{width:88px;height:30px;text-align:center;background:url(../images/weekly_normal.png) no-repeat;display:block;}
-.write-weekly:hover{width:88px;height:30px;text-align:center;background:url(../images/weekly_hover.png) no-repeat;display:block;}
-.write-monthly:active{width:88px;height:30px;text-align:center;background:url(../images/monthly_active.png) no-repeat;display:block;}.write-monthly{width:88px;height:30px;text-align:center;background:url(../images/monthly_normal.png) no-repeat;display:block;}
-.write-monthly:hover{width:88px;height:30px;text-align:center;background:url(../images/monthly_hover.png) no-repeat;display:block;}
+.write-daily:active{ margin-top: -5px; width:88px;height:28px;background:url(../images/daily_active.png) no-repeat;display:block;}
+.write-daily{ margin-top: -5px; width:88px;height:27px;background:url(../images/daily_normal.png) no-repeat;display:block;}
+.write-daily:hover{ margin-top: -5px; width:88px;height:27px;background:url(../images/daily_hover.png) no-repeat;display:block;}
+.write-weekly:active{ margin-top: -5px; width:88px;height:30px;background:url(../images/weekly_active.png) no-repeat;display:block;}
+.write-weekly{ margin-top: -5px; width:88px;height:30px;background:url(../images/weekly_normal.png) no-repeat;display:block;}
+.write-weekly:hover{ margin-top: -5px; width:88px;height:30px;background:url(../images/weekly_hover.png) no-repeat;display:block;}
+.write-monthly:active{ margin-top: -5px; width:88px;height:30px;background:url(../images/monthly_active.png) no-repeat;display:block;}.write-monthly{width:88px;height:30px;text-align:center;background:url(../images/monthly_normal.png) no-repeat;display:block;}
+.write-monthly:hover{ margin-top: -5px; width:88px;height:30px;background:url(../images/monthly_hover.png) no-repeat;display:block;}
+.pay-diary { margin-top: -5px; width:88px;height:30px;background:url(../images/pay_normal.png) no-repeat;display:block;}
+.pay-diary:hover { margin-top: -5px; width:88px;height:30px;background:url(../images/pay_hover.png) no-repeat;display:block;}
+.pay-disabled { margin-top: -5px; width:88px;height:30px;background:url(../images/pay_disabled.png) no-repeat;display:block;}
+
 .a_01:hover,.a_02:hover{color:#3d3d3d;text-decoration:none;}
 
 /*分页*/
@@ -122,3 +126,7 @@ form .show-color-list td{padding: 5px;}
 form .show-color-list .color-selected {border: 1px solid #ccc; padding: 2px; margin: -2px;}
 
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+/* 选择标签浮动层 */
+.all-tag-floor { position:absolute; margin-left: 480px; display: none; border: 1px #ccc solid; width: 240px; line-height: 24px; z-index: 1; background: white; zoom: 1;』
+

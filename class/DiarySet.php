@@ -231,7 +231,6 @@ class DiarySet{
         $diary->db->commit();
     }
 
-    
     /**
      * 获取当前用户在团队日志中显示的人员对象
      * @param $type 1:日报， 2:周报， 3:月报
@@ -244,19 +243,40 @@ class DiarySet{
         // $reportObject = self::reportObject($diary);
         $reportObject = array();
         $merge_data = array_merge_recursive($reportObject, $subscribeObject);
-        if($type == 1){
-            $teamShowUser = array_unique($merge_data['daily_object']['user']);
-            $teamShowDept = array_unique($merge_data['daily_object']['dept']);
-        }elseif($type == 2){
-            $teamShowUser = array_unique($merge_data['weekly_object']['user']);
-            $teamShowDept = array_unique($merge_data['weekly_object']['dept']);
-        }else{
-            $teamShowUser = array_unique($merge_data['monthly_object']['user']);
-            $teamShowDept = array_unique($merge_data['monthly_object']['dept']);
-        }
+        $objectType = $type == 1 ? 'daily_object' : ($type == 2 ? 'weekly_object' : 'monthly_object');
+        $teamShowUser = array_unique($merge_data[$objectType]['user']);
+        $teamShowDept = array_unique($merge_data[$objectType]['dept']);
         foreach($teamShowDept as $dept){
             // 获取部门下的所有人
         }
         return $teamShowUser;
+    }
+
+    /**
+     * 获取订阅我的日志的所有对象
+     */
+    public static function subscribeMy($diary, $type) {
+        $from_uid = $diary->uid;
+        $from_dept = $diary->deptId;
+        $sql = "select `uid` from `diary_subscribe_object` where `type` = $type and (`from_uid` = $from_uid or `from_dept` = $from_dept)";
+        $uids = array();
+        $result = $diary->db->query($sql);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $uids[] = (int)$row['uid'];
+        }
+        return $uids;
+    }
+
+    /**
+     * 获取要汇报和已订阅我的所有对象
+     */
+    public static function getAllObject($diary, $type) {
+        $reportObject = self::reportObject($diary); // 我汇报的对象
+        $subscribeMy = self::subscribeMy($diary, $type);
+        $objectType = $type == 1 ? 'daily_object' : ($type == 2 ? 'weekly_object' : 'monthly_object');
+        $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
+        $allDepts = array_unique(array_merge($reportObject[$objectType]['dept'], $subscribeMy));
+
+        return $allUsers;
     }
 }

@@ -11,11 +11,11 @@ $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
 if($forward){
     $forwardDays = $forward + 1;
     $backwardDays = $forward - 1;
-    $currentDate = date('Y-m-d',time() - $forward*86400);
+    $object = $currentDate = date('Y-m-d',time() - $forward*86400);
 }else{
     $forwardDays = 1;
     $backwardDays = -1;
-    $currentDate = date('Y-m-d',time());
+    $currentDate = $currentDate = date('Y-m-d',time());
 }
 $startTime = strtotime($currentDate);
 $endTime = $startTime + 86400 - 1;
@@ -36,6 +36,30 @@ $colorList = DiaryDaily::getColorList($diary);
 $tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
+
+// 判断是否为补交/未汇报/已汇报
+if($forward < 0) { // 未来
+    $isReported = $allowPay = false;
+}else if($forward == 0) { // 今天
+    // 是否已过汇报时间
+    include dirname(dirname(__FILE__))."/class/DiarySet.php";
+    $reportTime = DiarySet::reportTime($diary);
+    $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
+    $isReported = $allowPay = false;
+    if(time() > strtotime($currentDate." ".$dailyTime)){ // 未到汇报时间
+        include dirname(dirname(__FILE__))."/class/DiaryReport.php";
+        $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+        $allowPay  = $isReported ? false : true;
+    }
+}else{ // 过去
+    include dirname(dirname(__FILE__))."/class/DiaryReport.php";
+    $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+    $allowPay = $isReported ? false : true;
+}
+if($isReported){
+    // 查询汇报总人数
+    $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
+}
 ?>
 
 <?php include "views/layouts/header.php"; ?>
@@ -46,14 +70,44 @@ $defaultColorId = rand(1,20);
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
+            <?php if($allowPay):?>
+            <?php if($num):?>
+            <a href="javascript:" class="fr mr10 pay-diary js-pay_daily"></a>
+            <?php else:?>
+            <a class="fr mr10 pay-disabled"></a>
+            <?php endif;?>
+            <?php endif;?>
+            <?php if(!$isReported):?>
+            <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
+            <?php endif;?>
         </h2>
-        <?php foreach($dailys as $daily):?>
+        <?php if(!$num):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
             <div class="c_c_c">
                 <div>
+                    <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
+                        <strong>还未填写任何日志内容</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="c_b"></div>
+        <?php else:?>
+        <?php foreach($dailys as $daily):?>
+        <div class="c_t mt10"></div>
+        <div class="c_c">
+            <div class="c_c_c">
+                <?php if($isReported):?>
+                <div>
                     <p><?php echo nl2br($daily['content']); ?></p>
                 </div>
+                <?php else:?>
+                <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                    <p><?php echo nl2br($daily['content']); ?></p>
+                    <div style="display:none;"><?php echo $daily['content'];?></div>
+                </div>
+                <?php endif;?>
                 <br />
                 <div style="float: right; margin-top: -20px;">
     <?php
@@ -69,11 +123,15 @@ $defaultColorId = rand(1,20);
                                     <?php echo $tag['tag'];?>
                                 </span>
                             </div>
-                            <div class="js-del_tag" style="float: left; display:none;"><a href="javascript:;">next</a></div>
+                            <div class="js-del_tag" style="float: left; display:none;">
+                                <a href="javascript:;">next</a>
+                            </div>
                         </div>
                         <?php endforeach;?>
                     </span>
-                    <span style="margin: 0 24px 0 4px;"><a href="javascript:;" style="padding: 0 4px;" class="add_tag"></a><span>
+                    <span style="margin: 0 24px 0 4px;">
+                        <a href="javascript:;" style="padding: 0 4px;" class="add_tag js-opterate_tag"></a>
+                    </span>
                     <span style="margin: 0 4px 0 24px;">
                         <a href="javascript:;" style="padding: 0 4px;" data-diary_id="<?php echo $daily['id'];?>" class="js-del-all delete"></a>
                     </span>
@@ -81,7 +139,7 @@ $defaultColorId = rand(1,20);
                         <?php echo date('y-m-d H:i', $daily['fill_time']);?>
                     </span>
                 </div>
-                <div class="js-all-tag" style="border: 1px #ccc solid; width: 200px; line-height: 24px; z-index: 333">
+                <div class="js-all-tag all-tag-floor" style="">
                     <?php foreach($userTags as $tag):?>
                     <div>
                         <label>
@@ -103,8 +161,15 @@ $defaultColorId = rand(1,20);
         </div>
         <div class="c_b"></div>
         <?php endforeach;?>
+        <?php endif;?>
     </div>
     <!--今日工作结束-->
+    <?php if($isReported):
+          // 查询汇报总人数
+          $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
+          include dirname(dirname(__FILE__))."/class/User.php";
+          include dirname(dirname(__FILE__))."/team/comment.php";
+    endif;?>
 </div>
 
 <script>
@@ -135,12 +200,18 @@ $defaultColorId = rand(1,20);
             return false;
         });
 
+        // 单个标签操作
         $(".js-tag").mouseover(function(){
             $(this).find('.js-del_tag').toggle();
         }).mouseout(function(){
             $(this).find('.js-del_tag').toggle();
         });
 
+        $('.js-opterate_tag').click(function(){
+            $(this).parent().parent().next().toggle();
+        });
+
+        // 标签列表的标签操作
         $(".js-del_tag").click(function(){
             var js_tag = $(this).closest('.js-tag'),
             diary_id = js_tag.attr('data-diary_id'),
@@ -181,5 +252,17 @@ $defaultColorId = rand(1,20);
             });
             return false;
         });
+
+        // 补交
+        $('.js-pay_daily').click(function() {
+            var type = '<?php echo $type;?>';
+            var currentDate = '<?php echo $currentDate; ?>';
+            $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
+                if(json != 0) {
+                    location.reload();
+                }
+            });
+        });
+
     });
 </script>

@@ -38,7 +38,7 @@ body{background:#bfc0c5;}
 .data{border:1px solid #a3a3a3;border-right:none;}
 .data a{float:left;width:52px;border-right:1px solid #a3a3a3;display:block;line-height:23px;text-align:center;text-decoration:none;color:#757575;}
 .data a:hover{background:#a3a3a3;}
-.data a.cur{background:#a3a3a3;color:#fff;}
+.data a.cur{background:#F58400;color:#fff;}
 /*----------- 今日工作 ----------*/
 .content_bar{padding:0 10px;}
 .content_tit{border-bottom:1px solid #dadada;line-height:22px;padding:10px 0 6px;}

@@ -76,6 +76,13 @@
 
         // 添加
         $(".js-add-tag").click(function(){
+            var len = $(this).closest('.js-all-tag').find(':checked').length;
+            console.log(len);
+            if(len > 5){
+                $(this).attr('checked', false);
+                alert('单个日志不能超过五个标签哦');
+                return false;
+            }
             if($(this).attr('data-daily_id')){
                 $('#daily_id').val($(this).attr('data-daily_id'));
             }

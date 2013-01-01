@@ -53,7 +53,7 @@ if($firstDayWeekth != 1){
     <!--本月总结开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
-            <p>今月工作：<em>20项</em></p>
+            <p>月报</p>
         </h2>
         <div class="c_t mt10"></div>
         <div class="c_c">
@@ -102,7 +102,7 @@ if($firstDayWeekth != 1){
     <!--日历结束-->
 </div>
 <?php include "views/layouts/footer.php"; ?>
-    
+
 <div id="dialog-form" title="写月报">
     <form>
         <fieldset>
@@ -142,4 +142,3 @@ if($firstDayWeekth != 1){
         $(".write-dialy").button().click(function(){$("#dialog-form").dialog("open");});
     });
 </script>
-

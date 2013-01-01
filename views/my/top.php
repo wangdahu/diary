@@ -1,3 +1,17 @@
+<?php
+if($isReported){
+    $url = "../../../../diary/source/images/already-report.png";
+    $reportStatus = "已汇报";
+}else{
+    if((!$forward && !$allowPay) || $forward < 0){
+        $url = "../../../../diary/source/images/wait-report.png";
+        $reportStatus = "等待汇报";
+    }else{
+        $url = "../../../../diary/source/images/no-report.png";
+        $reportStatus = "未汇报";
+    }
+}
+?>
 <!--功能操作开始-->
 <div class="todo clearfix">
     <a href="" class="a_01 fl">刷新</a>
@@ -11,11 +25,11 @@
     <div class="pags fl clearfix"><a href="monthly?forward=<?php echo $forwardMonths;?>" class="up" title="上一月"></a><a href="monthly?forward=<?php echo $backwardMonths;?>" class="down" title="下一月"></a></div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
+    <p class="fl mg10" title="<?php echo $reportStatus;?>"><img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /></p>
     <div class="data fr clearfix">
         <a href="index" class="<?php echo $type == 'daily' ? 'cur' : ''?>">今日</a>
         <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>
         <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">本月</a>
     </div>
-    <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
 </div>
 <!--功能操作结束-->
