@@ -2,6 +2,7 @@
 $title = "周报";
 $type = 'weekly';
 
+include dirname(dirname(__FILE__))."/class/DiaryDaily.php";
 // 当前周的周一时间戳
 $mondayTime = date('w') == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
 // 向前向后翻天
@@ -16,12 +17,15 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
+// 当前时间为 当前年的多少周
+$currentDate = date('Y-W', $endTime);
+
 $weekDate = array();
 // 用户设置的工作时间
 include dirname(dirname(__FILE__))."/class/DiarySet.php";
 $selected = DiarySet::workingTime($diary, $diary->uid);
-
 $weekarray = array("一","二","三","四","五","六","日");
+
 // 当前周的所有工作天
 for($i = 6; $i >= 0; $i--){
     $time = $startTime + 86400*$i;
@@ -31,46 +35,128 @@ $corpId = $diary->corpId;
 $uid = $diary->uid;
 
 // 该企业该用户在选择时间内的周报
-$rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
-$result = $diary->db->query($rowsSql);
+$weeklySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 2 and `show_time` between $startTime and $endTime";
+$result = $diary->db->query($weeklySql);
+while($row = $result->fetch_assoc()){
+    $weeklys = $row;
+};
+
+// 该企业该用户在选择时间内的日报
+$dailySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
+$result = $diary->db->query($dailySql);
 
 $dailys = array();
 while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $dailys[date('y.m.d', $row['show_time'])][] = $row;
 };
-$num = count($dailys);
+
+$showCommit = false;
+// 判断是否为补交/未汇报/已汇报
+if($forward < 0) { // 未来
+    $isReported = $allowPay = false;
+}else if($forward == 0) { // 本周
+    $isReported = $allowPay = false;
+    // 是否已过汇报时间
+    $reportTime = DiarySet::reportTime($diary);
+    $w = date('w') ? date('w') : 7; // 周日转换成7
+    $weeklyTime = $reportTime['weeklyReport']['hour'].":".$reportTime['weeklyReport']['minute'];
+    if($w > $reportTime['weeklyReport']['w'] || ($w == $reportTime['weeklyReport']['w'] && time() > strtotime(date('Y-m-d')." ".$weeklyTime))) { // 已过汇报时间
+        include dirname(dirname(__FILE__))."/class/DiaryReport.php";
+        $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+        $allowPay  = $isReported ? false : true;
+        $showCommit = true;
+    }
+}else{ // 过去
+    $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+    $allowPay = $isReported ? false : true;
+    $showCommit = true;
+}
+
+if($isReported){
+    // 查询汇报总人数
+    $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
+}
 
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/my/top.php"; ?>
-<div class="content">
-    <!--今日工作开始-->
-    <?php foreach($weekDate as $k => $v):?>
-    <div class="content_bar mb25">
-        <div>
-            <div style="background: #ccc; height:30px;">
-                <p style="line-height:30px;">
-                <strong><?php echo "周".$k." ".$v; ?></strong>
-                <span>工作：<?php echo count($dailys[$v]);?>项</span>
-                </p>
-            </div>
-            <?php if($dailys[$v]): foreach($dailys[$v] as $date => $daily):?>
-            <div class="c_t_1 mt10"></div>
-            <div class="c_c_1" >
-                <div class="date"><?php echo date('填写y-m-d H:i:s', $daily['fill_time']), date('汇报y-m-d H:i:s', $daily['report_time']);?></div>
-                <div class="c_c_c">
-                    <p><?php echo nl2br($daily['content']); ?></p>
-                </div>
-                <?php if($daily['report_time'] > $daily['fill_time']):?>
-                <a href="javascript:" class="delete" title="可编辑可删除" data-id="<?php echo $daily['id'];?>"></a>
-                <?php endif;?>
-            </div>
-            <div class="c_b_1"></div>
-            <?php endforeach; endif;?>
-        </div>
-
-    </div>
-    <?php endforeach;?>
-    <!--今日工作结束-->
-</div>
+<?php include "views/team/weekly.php"; ?>
 <?php include "views/layouts/footer.php"; ?>
+<?php
+$date_keys = array_keys($dailys);
+foreach($dailys as $date => $daily){
+    foreach($daily as $k => $one){
+        $tagStr = '';
+        $tagNameList = DiaryDaily::getDailyTagName($diary, $one['id']);
+        foreach($tagNameList as $tagName){
+            $tagStr .= '【'.$tagName.'】';
+        }
+        $dailys[$date][$k]['tagStr'] = $tagStr;
+        $dailys[$date][$k]['filltime'] = date('H:i', $one['fill_time']);
+    }
+}
+?>
+<div id="dialog-form" title="写周报">
+    <form>
+        <fieldset>
+            <textarea cols="60" rows="12" id="weekly_content"></textarea>
+        </fieldset>
+        <div class="mt10">插入日报：
+            <?php foreach($weekarray as $k => $w):?>
+            <span class="ml10 p3 <?php echo $dailys[$date_keys[$k]] ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;">
+                <?php echo '周'.$w?>
+                <div style="display: none;">
+                    <br/>
+                    <?php echo '周'.$w.' '.$date_keys[$k]?>
+                    <br/>
+                    <?php foreach($dailys[$date_keys[$k]] as $one):?>
+                    <?php echo $one['filltime'].' '.$one['tagStr']?>
+                    <br/>
+                    <?php echo $one['content']?>
+                    <br/>
+                    <?php endforeach;?>
+                </div>
+            </span>
+            <?php endforeach;?>
+        </div>
+    </form>
+    <div></div>
+</div>
+
+<script>
+    $(function() {
+        $("#dialog-form").dialog({
+            autoOpen: false,
+            height: 315,
+            width: 520,
+            modal: true,
+            buttons: {
+                "写周报": function(){
+                    var content = $("#weekly_content").val();
+                    if(!content.length){
+                        alert('请填写日志内容');
+                        return false;
+                    }
+                    var currentTime = <?php echo $startTime; ?>;
+                    $.post('createDaily', {content:content, currentTime:currentTime}, function(json){
+                        location.reload();
+                    }), 'json';
+                },
+                "取消": function() {
+                    $(this).dialog("close");
+                }
+            },
+            close: function() {
+                allFields.val("").removeClass("ui-state-error");
+            }
+        });
+        $(".write-weekly").button().click(function(){$("#dialog-form").dialog("open");});
+
+        $('.js-insert-daily').click(function(){
+            var html = $(this).find('div').html().trim();
+            $('#weekly_content').append(html);
+            console.log($(this).find('div').html());
+        });
+    });
+</script>
+

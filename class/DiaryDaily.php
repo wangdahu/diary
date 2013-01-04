@@ -70,4 +70,18 @@ class DiaryDaily{
         }
         return $tagList;
     }
+
+    public static function getDailyTagName($diary, $daily_id) {
+        $sql = "select * from `diary_daily_tag` where `diary_id` = $daily_id";
+        $result = $diary->db->query($sql);
+        $tagList = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $tagSql = "select * from `diary_tag` where `id` = ".$row['tag_id'];
+            $tagResult = $diary->db->query($tagSql);
+            if($tagInfo = $tagResult->fetch_assoc()) {
+                $tagList[] = $tagInfo['tag'];
+            }
+        }
+        return $tagList;
+    }
 }

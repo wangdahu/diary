@@ -35,6 +35,7 @@ tr{display:table-row;vertical-align:inherit;border-color:inherit;}
 .pl10{padding-left:10px;}
 .pr10{padding-right:10px;}
 .pl13{padding-left:13px;}
+.p3{padding: 3px;}
 
 /*字体*/
 .f14{font-size:14px;}
@@ -66,14 +67,15 @@ tr{display:table-row;vertical-align:inherit;border-color:inherit;}
 .write-daily:active{ margin-top: -5px; width:88px;height:28px;background:url(../images/daily_active.png) no-repeat;display:block;}
 .write-daily{ margin-top: -5px; width:88px;height:27px;background:url(../images/daily_normal.png) no-repeat;display:block;}
 .write-daily:hover{ margin-top: -5px; width:88px;height:27px;background:url(../images/daily_hover.png) no-repeat;display:block;}
-.write-weekly:active{ margin-top: -5px; width:88px;height:30px;background:url(../images/weekly_active.png) no-repeat;display:block;}
-.write-weekly{ margin-top: -5px; width:88px;height:30px;background:url(../images/weekly_normal.png) no-repeat;display:block;}
-.write-weekly:hover{ margin-top: -5px; width:88px;height:30px;background:url(../images/weekly_hover.png) no-repeat;display:block;}
-.write-monthly:active{ margin-top: -5px; width:88px;height:30px;background:url(../images/monthly_active.png) no-repeat;display:block;}.write-monthly{width:88px;height:30px;text-align:center;background:url(../images/monthly_normal.png) no-repeat;display:block;}
-.write-monthly:hover{ margin-top: -5px; width:88px;height:30px;background:url(../images/monthly_hover.png) no-repeat;display:block;}
-.pay-diary { margin-top: -5px; width:88px;height:30px;background:url(../images/pay_normal.png) no-repeat;display:block;}
-.pay-diary:hover { margin-top: -5px; width:88px;height:30px;background:url(../images/pay_hover.png) no-repeat;display:block;}
-.pay-disabled { margin-top: -5px; width:88px;height:30px;background:url(../images/pay_disabled.png) no-repeat;display:block;}
+.write-weekly:active{ margin-top: -5px; width:88px;height:27px;background:url(../images/weekly_active.png) no-repeat;display:block;}
+.write-weekly{ margin-top: -5px; width:88px;height:27px;background:url(../images/weekly_normal.png) no-repeat;display:block;}
+.write-weekly:hover{ margin-top: -5px; width:88px;height:27px;background:url(../images/weekly_hover.png) no-repeat;display:block;}
+.write-monthly:active{ margin-top: -5px; width:88px;height:27px;background:url(../images/monthly_active.png) no-repeat;display:block;}
+.write-monthly{ margin-top: -5px;width:88px;height:27px;text-align:center;background:url(../images/monthly_normal.png) no-repeat;display:block;}
+.write-monthly:hover{ margin-top: -5px; width:88px;height:27px;background:url(../images/monthly_hover.png) no-repeat;display:block;}
+.pay-diary { margin-top: -5px; width:88px;height:27px;background:url(../images/pay_normal.png) no-repeat;display:block;}
+.pay-diary:hover { margin-top: -5px; width:88px;height:27px;background:url(../images/pay_hover.png) no-repeat;display:block;}
+.pay-disabled { margin-top: -5px; width:88px;height:27px;background:url(../images/pay_disabled.png) no-repeat;display:block;}
 
 .a_01:hover,.a_02:hover{color:#3d3d3d;text-decoration:none;}
 

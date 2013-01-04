@@ -23,7 +23,7 @@ $uid = (int) $_GET['uid'];
 
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
-<?php if($froward):?>
+<?php if($forward):?>
 <?php
 // 查看的日期
 $object = date('Y-m-d', $endTime);
