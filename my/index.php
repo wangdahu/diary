@@ -37,6 +37,7 @@ $tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
 
+$showCommit = false;
 // 判断是否为补交/未汇报/已汇报
 if($forward < 0) { // 未来
     $isReported = $allowPay = false;
@@ -46,17 +47,19 @@ if($forward < 0) { // 未来
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
     $isReported = $allowPay = false;
-    if(time() > strtotime($currentDate." ".$dailyTime)){ // 未到汇报时间
+    if(time() > strtotime($currentDate." ".$dailyTime)){ // 已过汇报时间
         include dirname(dirname(__FILE__))."/class/DiaryReport.php";
         $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
         $allowPay  = $isReported ? false : true;
+        $showCommit = true;
     }
 }else{ // 过去
     include dirname(dirname(__FILE__))."/class/DiaryReport.php";
     $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
     $allowPay = $isReported ? false : true;
+    $showCommit = true;
 }
-if($isReported){
+if($showCommit){
     // 查询汇报总人数
     $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
 }
@@ -72,7 +75,7 @@ if($isReported){
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
             <?php if($allowPay):?>
             <?php if($num):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_daily"></a>
+            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
             <?php else:?>
             <a class="fr mr10 pay-disabled"></a>
             <?php endif;?>
@@ -164,7 +167,7 @@ if($isReported){
         <?php endif;?>
     </div>
     <!--今日工作结束-->
-    <?php if($isReported):
+    <?php if($showCommit):
           // 查询汇报总人数
           $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
           include dirname(dirname(__FILE__))."/class/User.php";
@@ -251,17 +254,6 @@ if($isReported){
                 }
             });
             return false;
-        });
-
-        // 补交
-        $('.js-pay_daily').click(function() {
-            var type = '<?php echo $type;?>';
-            var currentDate = '<?php echo $currentDate; ?>';
-            $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
-                if(json != 0) {
-                    location.reload();
-                }
-            });
         });
 
     });

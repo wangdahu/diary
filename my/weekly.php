@@ -23,6 +23,7 @@ $currentDate = date('Y-W', $endTime);
 $weekDate = array();
 // 用户设置的工作时间
 include dirname(dirname(__FILE__))."/class/DiarySet.php";
+include dirname(dirname(__FILE__))."/class/DiaryReport.php";
 $selected = DiarySet::workingTime($diary, $diary->uid);
 $weekarray = array("一","二","三","四","五","六","日");
 
@@ -61,7 +62,6 @@ if($forward < 0) { // 未来
     $w = date('w') ? date('w') : 7; // 周日转换成7
     $weeklyTime = $reportTime['weeklyReport']['hour'].":".$reportTime['weeklyReport']['minute'];
     if($w > $reportTime['weeklyReport']['w'] || ($w == $reportTime['weeklyReport']['w'] && time() > strtotime(date('Y-m-d')." ".$weeklyTime))) { // 已过汇报时间
-        include dirname(dirname(__FILE__))."/class/DiaryReport.php";
         $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
         $allowPay  = $isReported ? false : true;
         $showCommit = true;
@@ -72,7 +72,7 @@ if($forward < 0) { // 未来
     $showCommit = true;
 }
 
-if($isReported){
+if($showCommit){
     // 查询汇报总人数
     $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
 }
@@ -157,6 +157,18 @@ foreach($dailys as $date => $daily){
             $('#weekly_content').append(html);
             console.log($(this).find('div').html());
         });
+
+        // 补交
+        $('.js-pay_weekly').click(function() {
+            var type = '<?php echo $type;?>';
+            var currentDate = '<?php echo $currentDate; ?>';
+            $.post('/diary/index.php/my/payWeekly', {currentDate:currentDate, type:type}, function(json) {
+                if(json != 0) {
+                    location.reload();
+                }
+            });
+        });
+
     });
 </script>
 

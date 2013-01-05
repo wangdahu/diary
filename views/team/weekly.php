@@ -4,8 +4,8 @@
         <h2 class="content_tit clearfix">
             <p>周报</p>
             <?php if($allowPay):?>
-            <?php if($num):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_daily"></a>
+            <?php if($weeklys):?>
+            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
             <?php else:?>
             <a class="fr mr10 pay-disabled"></a>
             <?php endif;?>
@@ -32,8 +32,8 @@
         <div class="c_c">
             <div class="c_c_c">
                 <div>
-                    <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
-                        <strong><?php echo $weeklys['content']; ?></strong>
+                    <p >
+                        <?php echo nl2br($weeklys['content']); ?>
                     </p>
                 </div>
             </div>

@@ -33,3 +33,16 @@ if($isReported){
     </div>
 </div>
 <!--功能操作结束-->
+<script>
+    // 补交
+    $('.js-pay_diary').live('click', function() {
+        var type = '<?php echo $type;?>';
+        var currentDate = '<?php echo $currentDate; ?>';
+        $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
+            if(json != 0) {
+                // location.reload();
+            }
+        });
+    });
+</script>
+

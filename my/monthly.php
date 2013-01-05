@@ -22,6 +22,7 @@ if($forward){
 $object = date('Y-m', $endTime);
 $uid = $diary->uid;
 
+$showCommit = false;
 // 判断是否为补交/未汇报/已汇报
 if($forward < 0) { // 未来
     $isReported = $allowPay = false;
@@ -31,17 +32,19 @@ if($forward < 0) { // 未来
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
     $isReported = $allowPay = false;
-    if(time() > strtotime($object."-".$dailyTime)){ // 未到汇报时间
+    if(time() > strtotime($object."-".$dailyTime)){ // 已过汇报时间
         include dirname(dirname(__FILE__))."/class/DiaryReport.php";
         $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
         $allowPay  = $isReported ? false : true;
+        $showCommit = true;
     }
 }else{ // 过去
     include dirname(dirname(__FILE__))."/class/DiaryReport.php";
     $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
     $allowPay = $isReported ? false : true;
+    $showCommit = true;
 }
-if($isReported){
+if($showCommit){
     // 查询汇报总人数
     $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
 }
