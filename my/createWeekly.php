@@ -11,12 +11,14 @@ function saveDaily($diary, $content, $currentTime, $id) {
     $corpId = $diary->corpId;
     $uid = $diary->uid;
     // 该用户设置的汇报时间
-    $setSql = "select `daily` from `diary_report_set` where `uid` = $uid";
-    $result = $diary->db->query($setSql);
-    if($row = $result->fetch_row()) {
-        $reportTime = $currentTime; // 需要修改
-    }else {
-        $reportTime = strtotime(date('Y-m-d', $currentTime)." ".$diary->dailyReport['hour'].":".$diary->dailyReport['minute']);
+    $setSql = "select `daily` from `diary_send_set` where `uid` = $uid";
+    if($result = $diary->db->query($setSql)) {
+        $row = $result->fetch_row();
+        if($row) {
+            $reportTime = $currentTime; // 需要修改
+        }else {
+            $reportTime = strtotime(date('Y-m-d', $currentTime)." ".$diary->dailySend);
+        }
     }
     if($reportTime < time()) { // 已过汇报时间，为补交,马上汇报
         $reportTime = $fillTime = time();

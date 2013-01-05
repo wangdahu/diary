@@ -96,7 +96,7 @@ foreach($dailys as $date => $daily){
     }
 }
 ?>
-<div id="dialog-form" title="写周报">
+<div id="weekly-dialog-form" title="写周报">
     <form>
         <fieldset>
             <textarea cols="60" rows="12" id="weekly_content"></textarea>
@@ -125,7 +125,7 @@ foreach($dailys as $date => $daily){
 
 <script>
     $(function() {
-        $("#dialog-form").dialog({
+        $("#weekly-dialog-form").dialog({
             autoOpen: false,
             height: 315,
             width: 520,
@@ -138,7 +138,7 @@ foreach($dailys as $date => $daily){
                         return false;
                     }
                     var currentTime = <?php echo $startTime; ?>;
-                    $.post('createDaily', {content:content, currentTime:currentTime}, function(json){
+                    $.post('createWeekly', {content:content, currentTime:currentTime}, function(json){
                         location.reload();
                     }), 'json';
                 },
@@ -150,7 +150,7 @@ foreach($dailys as $date => $daily){
                 allFields.val("").removeClass("ui-state-error");
             }
         });
-        $(".write-weekly").button().click(function(){$("#dialog-form").dialog("open");});
+        $(".write-weekly").button().click(function(){$("#weekly-dialog-form").dialog("open");});
 
         $('.js-insert-daily').click(function(){
             var html = $(this).find('div').html().trim();
