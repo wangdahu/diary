@@ -37,10 +37,10 @@ if($isReported){
     // 补交
     $('.js-pay_diary').live('click', function() {
         var type = '<?php echo $type;?>';
-        var currentDate = '<?php echo $currentDate; ?>';
+        var currentDate = '<?php echo $object; ?>';
         $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
             if(json != 0) {
-                // location.reload();
+                location.reload();
             }
         });
     });

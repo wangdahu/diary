@@ -31,11 +31,16 @@
         <div class="c_t mt10"></div>
         <div class="c_c">
             <div class="c_c_c">
+                <?php if($isReported):?>
                 <div>
-                    <p >
-                        <?php echo nl2br($weeklys['content']); ?>
-                    </p>
+                    <p><?php echo nl2br($weeklys['content']); ?></p>
                 </div>
+                <?php else:?>
+                <div data-weekly_id="<?php echo $weeklys['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                    <p><?php echo nl2br($weeklys['content']); ?></p>
+                    <div style="display:none;"><?php echo $weeklys['content'];?></div>
+                </div>
+                <?php endif;?>
             </div>
         </div>
         <div class="c_b"></div>
@@ -83,7 +88,8 @@
         <?php endforeach; endif;?>
     </div>
     <!--今日工作结束-->
-    <?php if($showCommit):?>
-     <?php include dirname(dirname(dirname(__FILE__)))."/team/comment.php"; ?>
-    <?php endif;?>
+    <?php if($showCommit):
+          include dirname(dirname(dirname(__FILE__)))."/class/User.php";
+          include dirname(dirname(dirname(__FILE__)))."/team/comment.php";
+    endif;?>
 </div>

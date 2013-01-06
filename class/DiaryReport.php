@@ -20,6 +20,22 @@ class DiaryReport {
     }
 
     /**
+     * 汇报列表
+     */
+    public static function getReportList($diary, $type, $date, $uid = null){
+        if(!$uid){
+            $uid = $diary->uid;
+        }
+        $list = array();
+        $sql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$type' and `date` = '$date'";
+        $result = $diary->db->query($sql);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $list[] = $row;
+        }
+        return $list;
+    }
+
+    /**
      * 汇报总人数
      */
     public static function getReportCount($diary, $type, $date, $uid = null){

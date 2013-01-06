@@ -11,13 +11,13 @@ $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
 if($forward){
     $forwardDays = $forward + 1;
     $backwardDays = $forward - 1;
-    $object = $currentDate = date('Y-m-d',time() - $forward*86400);
+    $object = date('Y-m-d',time() - $forward*86400);
 }else{
     $forwardDays = 1;
     $backwardDays = -1;
-    $currentDate = $currentDate = date('Y-m-d',time());
+    $object = date('Y-m-d',time());
 }
-$startTime = strtotime($currentDate);
+$startTime = strtotime($object);
 $endTime = $startTime + 86400 - 1;
 
 // 该企业该用户在选择时间内的日报
@@ -47,21 +47,21 @@ if($forward < 0) { // 未来
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
     $isReported = $allowPay = false;
-    if(time() > strtotime($currentDate." ".$dailyTime)){ // 已过汇报时间
+    if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
         include dirname(dirname(__FILE__))."/class/DiaryReport.php";
-        $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+        $isReported = DiaryReport::checkReport($diary, $type, $object);
         $allowPay  = $isReported ? false : true;
-        $showCommit = true;
+        $showCommit = $isReported;
     }
 }else{ // 过去
     include dirname(dirname(__FILE__))."/class/DiaryReport.php";
-    $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+    $isReported = DiaryReport::checkReport($diary, $type, $object);
     $allowPay = $isReported ? false : true;
     $showCommit = true;
 }
 if($showCommit){
     // 查询汇报总人数
-    $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
+    $reportCount = DiaryReport::getReportCount($diary, $type, $object);
 }
 ?>
 
@@ -158,9 +158,6 @@ if($showCommit){
                     <?php include "tag.php"; ?>
                 </div>
             </div>
-            <?php if($daily['report_time'] > $daily['fill_time']):?>
-            <a href="javascript:" class="delete" title="可编辑可删除" data-id="<?php echo $daily['id'];?>"></a>
-            <?php endif;?>
         </div>
         <div class="c_b"></div>
         <?php endforeach;?>
@@ -168,8 +165,6 @@ if($showCommit){
     </div>
     <!--今日工作结束-->
     <?php if($showCommit):
-          // 查询汇报总人数
-          $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
           include dirname(dirname(__FILE__))."/class/User.php";
           include dirname(dirname(__FILE__))."/team/comment.php";
     endif;?>

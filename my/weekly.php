@@ -18,7 +18,7 @@ if($forward){
 }
 $endTime = $startTime + 7*86400 - 1;
 // 当前时间为 当前年的多少周
-$currentDate = date('Y-W', $endTime);
+$object = date('Y-W', $endTime);
 
 $weekDate = array();
 // 用户设置的工作时间
@@ -62,19 +62,14 @@ if($forward < 0) { // 未来
     $w = date('w') ? date('w') : 7; // 周日转换成7
     $weeklyTime = $reportTime['weeklyReport']['hour'].":".$reportTime['weeklyReport']['minute'];
     if($w > $reportTime['weeklyReport']['w'] || ($w == $reportTime['weeklyReport']['w'] && time() > strtotime(date('Y-m-d')." ".$weeklyTime))) { // 已过汇报时间
-        $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+        $isReported = DiaryReport::checkReport($diary, $type, $object);
         $allowPay  = $isReported ? false : true;
         $showCommit = true;
     }
 }else{ // 过去
-    $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+    $isReported = DiaryReport::checkReport($diary, $type, $object);
     $allowPay = $isReported ? false : true;
     $showCommit = true;
-}
-
-if($showCommit){
-    // 查询汇报总人数
-    $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
 }
 
 ?>
@@ -100,6 +95,7 @@ foreach($dailys as $date => $daily){
     <form>
         <fieldset>
             <textarea cols="60" rows="12" id="weekly_content"></textarea>
+            <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
         </fieldset>
         <div class="mt10">插入日报：
             <?php foreach($weekarray as $k => $w):?>
@@ -132,13 +128,14 @@ foreach($dailys as $date => $daily){
             modal: true,
             buttons: {
                 "写周报": function(){
-                    var content = $("#weekly_content").val();
+                    var content = $("#weekly_content").val(),
+                    id = $("#daily-dialog-form").find("#daily_id").val();
                     if(!content.length){
                         alert('请填写日志内容');
                         return false;
                     }
                     var currentTime = <?php echo $startTime; ?>;
-                    $.post('createWeekly', {content:content, currentTime:currentTime}, function(json){
+                    $.post('createWeekly', {content:content, currentTime:currentTime, id:id}, function(json){
                         location.reload();
                     }), 'json';
                 },
@@ -150,7 +147,13 @@ foreach($dailys as $date => $daily){
                 allFields.val("").removeClass("ui-state-error");
             }
         });
-        $(".write-weekly").button().click(function(){$("#weekly-dialog-form").dialog("open");});
+        $(".write-weekly").button().click(function(){
+            if($('.js-edit_diary').length){
+                $(".js-edit_diary").click();
+            }else{
+                $("#weekly-dialog-form").dialog("open");
+            }
+        });
 
         $('.js-insert-daily').click(function(){
             var html = $(this).find('div').html().trim();
@@ -158,17 +161,12 @@ foreach($dailys as $date => $daily){
             console.log($(this).find('div').html());
         });
 
-        // 补交
-        $('.js-pay_weekly').click(function() {
-            var type = '<?php echo $type;?>';
-            var currentDate = '<?php echo $currentDate; ?>';
-            $.post('/diary/index.php/my/payWeekly', {currentDate:currentDate, type:type}, function(json) {
-                if(json != 0) {
-                    location.reload();
-                }
-            });
+        $(".js-edit_diary").click(function(){
+            var content = $(this).find("div").html();
+            $("#weekly_content").html(content);
+            $("#weekly-dialog-form").find("#weekly_id").val($(this).attr('data-weekly_id'));
+            $("#weekly-dialog-form").dialog("open");
         });
 
     });
 </script>
-

@@ -5,6 +5,10 @@ $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
 DiaryViewRecord::addRecord($diary, $type, $uid, $object);
 $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
 $viewCount = count($viewRecord);
+
+// 查询汇报总人数
+$reportList = DiaryReport::getReportList($diary, $type, $object);
+$reportCount = count($reportList);
 ?>
 <!--评论开始-->
 <div class="content_bar">
@@ -51,8 +55,63 @@ $viewCount = count($viewRecord);
         <div class="c_b"></div>
     </div>
 </form>
+<div id="commit-dialog-form" title="汇报统计">
+    <div>
+        <h3>日报</h3>
+    </div>
+    <table>
+        <tr>
+            <td>汇报（<?php echo $reportCount; ?>）</td>
+            <td>是否查阅</td>
+            <td>查阅时间</td>
+        </tr>
+        <?php foreach($viewList as $view):?>
+        <?php $user = User::getInfo($comment['uid']);?>
+        <tr>
+            <td><?php echo $user['username']; ?>（<?php echo $user['dept_name']; ?>）</td>
+            <td></td>
+        </tr>
+        <?php endforeach;?>
+    </table>
+</div>
+
 <script>
-    $(function(){
+    $(function() {
+        $("#commit-dialog-form").dialog({
+            autoOpen: false,
+            height: 300,
+            width: 530,
+            modal: true,
+            open: function(){
+                $("#daily_content").select();
+            },
+            buttons: {
+                "写日志": function(){
+                    var content = $("#daily_content").val(),
+                    id = $("#daily-dialog-form").find("#daily_id").val();
+                    if(!content.length){
+                        alert('请填写日志内容');
+                        return false;
+                    }
+                    var currentTime = <?php echo $startTime; ?>;
+                    $.post('createDaily', {content:content, currentTime:currentTime, id: id}, function(json){
+                        location.reload();
+                    }), 'json';
+                },
+                "取消": function() {
+                    $(this).dialog("close");
+                }
+            },
+            close: function() {
+                $(this).dialog("close");
+            }
+        });
+
+        $('.js-view_record').click(function(){
+            console.log(111);
+            $("#commit-dialog-form").dialog("open");
+        });
+
         $("#comment-form").submit(function(){
             var form = $(this), content = $('#content').val();
             if(!content.length){
@@ -70,9 +129,7 @@ $viewCount = count($viewRecord);
             return false;
         });
 
-        $('.js-view_record').click(function(){
 
-        });
     });
 </script>
 <!--发表评论结束-->
