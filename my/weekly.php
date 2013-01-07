@@ -17,9 +17,9 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
-// 当前时间为 当前年的多少周
-$object = date('Y-W', $endTime);
 
+// 当前时间为 当前年的多少周
+$object = date('Y-W', $startTime);
 $weekDate = array();
 // 用户设置的工作时间
 include dirname(dirname(__FILE__))."/class/DiarySet.php";

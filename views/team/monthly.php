@@ -48,10 +48,15 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 // 当前月历中哪些天有评论
 $firstDate = date('Y-m-d', $firstTime);
 $lastDate = date('Y-m-d', $lastTime);
-// echo "<pre>"; var_dump($lastDate);exit;
-
 include dirname(dirname(dirname(__FILE__)))."/class/DiaryComment.php";
-DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
+$dateObject = DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
+$weekObject = DiaryComment::getWhichDate($diary, $uid, 'weekly', date('Y-W', strtotime($firstDate)), date('Y-W', strtotime($lastDate)));
+
+// 查询有内容的天并未汇报
+include dirname(dirname(dirname(__FILE__)))."/class/DiaryDaily.php";
+$noReportDaily = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 1, $uid);
+$noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $uid);
+
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -121,13 +126,31 @@ DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
                 <tbody>
                     <?php for($w = 0; $w < $maxWeek; $w++):?>
                     <tr>
-                        <td class="<?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?>">
-                            <?php echo $weekArr[$w]?>
+                        <?php
+                             $thisWeek = date('Y-W',($firstTime + 7*$w*86400));
+                             $weekForward = DiaryDaily::getForward($firstTime + 7*$w*86400, 2);
+                        ?>
+                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'comment' : ''?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report' : '';?>">
+
+                            <a href="diary/index.php/my/index?forward=<?php echo $weekForward;?>">
+                                <div>
+                                    <?php echo $weekArr[$w]; ?>
+                                </div>
+                            </a>
                         </td>
                         <?php for($i = 0; $i < 7; $i++): ?>
-                              <?php $j = date('j', $firstTime + 7*$w*86400 + $i*86400); ?>
-                        <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : td_grey; ?>">
-                            <?php echo $j;?>
+                              <?php
+                                   $thisTime = $firstTime + 7*$w*86400 + $i*86400;
+                                   $j = date('j', $thisTime);
+                                   $thisDate = date('Y-m-d', $thisTime);
+                                   $dateForward = DiaryDaily::getForward($firstTime + 7*$w*86400 + $i*86400);
+                              ?>
+                        <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : td_grey; ?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>">
+                            <a href="diary/index.php/my/index?forward=<?php echo $dateForward;?>">
+                                <div>
+                                    <?php echo $j;?>
+                                </div>
+                            </a>
                         </td>
                         <?php endfor;?>
                     </tr>

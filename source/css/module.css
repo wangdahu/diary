@@ -113,3 +113,6 @@ body{background:#bfc0c5;}
 .calendar tbody td.td_l{width:130px;border:1px solid #aaa;}
 .calendar tbody td.td_grey{background:#f2f2f2;}
 .calendar tbody td.td_blue{background:#5bc3ff;border:1px solid #46b0ed;}
+.calendar tbody td.td_white{background:white;}
+.calendar tbody td.comment {background:url(../images/comment.png) right top no-repeat;}
+.calendar tbody td.no-report {background:url(../images/has-no-report.png) left top no-repeat;}

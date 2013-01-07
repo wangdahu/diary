@@ -54,7 +54,7 @@ if($forward < 0) { // 未来
 
 // 获取本月的所有周报
 $weeklys = array();
-$weeklySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 2 and `show_time` between $startTime and $endTime order by `show_time` asc";
+$weeklySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 2 and `show_time` between $firstTime and $lastTime order by `show_time` asc";
 
 $result = $diary->db->query($weeklySql);
 while($row = $result->fetch_array(MYSQLI_ASSOC)){

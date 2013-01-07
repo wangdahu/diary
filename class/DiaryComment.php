@@ -31,7 +31,12 @@ class DiaryComment{
      * 获取时间段内哪些时间点有评论
      */
     public static function getWhichDate($diary, $to_uid, $type, $firstDate, $lastDate){
-        $sql = "select * from `diary_commit` where `to_uid` = $to_uid and `type` = '$type' and (`object` between '$firstDate' and '$lastDate' )";
-        echo "<pre>"; var_dump($sql);
+        $sql = "select * from `diary_comment` where `to_uid` = $to_uid and `type` = '$type' and (`object` between '$firstDate' and '$lastDate' ) group by `object`";
+        $result = $diary->db->query($sql);
+        $list = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $list[] = $row['object'];
+        }
+        return $list;
     }
 }

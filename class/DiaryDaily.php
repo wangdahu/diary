@@ -1,19 +1,9 @@
 <?php
 class DiaryDaily{
-    /**
-     * 查找某段时间的日报
-     */
-    public static function findDaily($startTime, $endTime){
-
-    }
 
     /**
-     * 获取这月的周末列表
+     * 获取颜色列表
      */
-    public static function getWeekly($month){
-
-    }
-
     public static function getColorList($diary){
         $sql = "select * from `diary_tag_color`";
         $result = $diary->db->query($sql);
@@ -57,6 +47,9 @@ class DiaryDaily{
         return $list;
     }
 
+    /**
+     * 获取日报的tag信息
+     */
     public static function getDailyTag($diary, $daily_id) {
         $sql = "select * from `diary_daily_tag` where `diary_id` = $daily_id";
         $result = $diary->db->query($sql);
@@ -71,6 +64,9 @@ class DiaryDaily{
         return $tagList;
     }
 
+    /**
+     * 获取日报的tag名列表
+     */
     public static function getDailyTagName($diary, $daily_id) {
         $sql = "select * from `diary_daily_tag` where `diary_id` = $daily_id";
         $result = $diary->db->query($sql);
@@ -83,5 +79,43 @@ class DiaryDaily{
             }
         }
         return $tagList;
+    }
+
+    /**
+     * 获取有内容但为汇报的日报
+     */
+    public static function noReportDaily($diary, $firstTime, $lastTime, $type, $uid = null) {
+        $uid = $uid ? $uid :$diary->uid;
+        $uninStr = '%Y-%m-%d';
+        $sql = "select FROM_UNIXTIME(`show_time`, '$uninStr') as new_time from `diary_info` where `type` = $type and `uid` = $uid and (`show_time` between $firstTime and $lastTime) group by `new_time`";
+        $result = $diary->db->query($sql);
+        $infoList = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $infoList[] = $type == 1 ? $row['new_time'] : date('Y-W', strtoTime($row['new_time']));
+        }
+
+        $typeArr = array(1=>'daily', 2=>'weekly', 3=> 'monthly');
+        $firstDate = $type == 1 ? date('Y-m-d', $firstTime) : date('Y-W', $firstTime);
+        $lastDate = $type == 1 ? date('Y-m-d', $lastTime) : date('Y-W', $lastTime);
+
+        if($infoList){
+            $reportList = array();
+            $reportSql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$typeArr[$type]' and (`date` between '$firstDate' and '$lastDate') group by `date`";
+            $reportResult = $diary->db->query($reportSql);
+            while($reportRow = $reportResult->fetch_array(MYSQLI_ASSOC)) {
+                $reportList[] = $reportRow['date'];
+            }
+            return array_values(array_diff($infoList,$reportList));
+        }
+        return $infoList;
+    }
+
+    /**
+     * 获取当前时间点到今天或本周的forward值
+     */
+    public static function getForward($time, $type = 1){
+        $now = strtotime('today');
+        $forward = ceil(($time - $now)/($type == 1 ? 86400 : 86400*7));
+        return $forward;
     }
 }
