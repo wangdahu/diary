@@ -36,8 +36,9 @@ if($isReported){
 <script>
     // 补交
     $('.js-pay_diary').live('click', function() {
-        var type = '<?php echo $type;?>';
-        var currentDate = '<?php echo $object; ?>';
+        var type = '<?php echo $type;?>',
+        currentDate = '<?php echo $object; ?>';
+    console.log(type, currentDate);
         $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
             if(json != 0) {
                 location.reload();

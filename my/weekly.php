@@ -147,20 +147,26 @@ foreach($dailys as $date => $daily){
                 allFields.val("").removeClass("ui-state-error");
             }
         });
+
+        // 新增和编辑周报
         $(".write-weekly").button().click(function(){
             if($('.js-edit_diary').length){
                 $(".js-edit_diary").click();
             }else{
+                $("#weekly_content").html('');
+                $("#weekly_id").val(0);
                 $("#weekly-dialog-form").dialog("open");
             }
         });
 
+        // 插入日报
         $('.js-insert-daily').click(function(){
             var html = $(this).find('div').html().trim();
             $('#weekly_content').append(html);
             console.log($(this).find('div').html());
         });
 
+        // 编辑周报
         $(".js-edit_diary").click(function(){
             var content = $(this).find("div").html();
             $("#weekly_content").html(content);

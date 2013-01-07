@@ -1,3 +1,6 @@
+<?php
+include dirname(dirname(dirname(__FILE__)))."/class/User.php";
+?>
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
@@ -89,7 +92,6 @@
     </div>
     <!--今日工作结束-->
     <?php if($showCommit):
-          include dirname(dirname(dirname(__FILE__)))."/class/User.php";
           include dirname(dirname(dirname(__FILE__)))."/team/comment.php";
     endif;?>
 </div>

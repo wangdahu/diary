@@ -21,7 +21,9 @@ if($forward){
 // 查看的年份和月份
 $object = date('Y-m', $endTime);
 $uid = $diary->uid;
+$corpId = $diary->corpId;
 
+include dirname(dirname(__FILE__))."/class/DiaryReport.php";
 $showCommit = false;
 // 判断是否为补交/未汇报/已汇报
 if($forward < 0) { // 未来
@@ -33,20 +35,14 @@ if($forward < 0) { // 未来
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
     $isReported = $allowPay = false;
     if(time() > strtotime($object."-".$dailyTime)){ // 已过汇报时间
-        include dirname(dirname(__FILE__))."/class/DiaryReport.php";
-        $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+        $isReported = DiaryReport::checkReport($diary, $type, $object);
         $allowPay  = $isReported ? false : true;
         $showCommit = true;
     }
 }else{ // 过去
-    include dirname(dirname(__FILE__))."/class/DiaryReport.php";
-    $isReported = DiaryReport::checkReport($diary, $type, $currentDate);
+    $isReported = DiaryReport::checkReport($diary, $type, $object);
     $allowPay = $isReported ? false : true;
     $showCommit = true;
-}
-if($showCommit){
-    // 查询汇报总人数
-    $reportCount = DiaryReport::getReportCount($diary, $type, $currentDate);
 }
 ?>
 <?php include "views/layouts/header.php"; ?>
@@ -54,15 +50,38 @@ if($showCommit){
 <?php include "views/team/monthly.php"; ?>
 <?php include "views/layouts/footer.php"; ?>
 
-<div id="dialog-form" title="写月报">
+<?php
+
+// 获取本月的所有周报
+$weeklys = array();
+$weeklySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 2 and `show_time` between $startTime and $endTime order by `show_time` asc";
+
+$result = $diary->db->query($weeklySql);
+while($row = $result->fetch_array(MYSQLI_ASSOC)){
+    $weeklys[date('Y-W',$row['show_time'])] = $row;
+}
+?>
+<div id="monthly-dialog-form" title="写月报">
     <form>
         <fieldset>
-            <textarea cols="60" rows="12" id="daily_content"></textarea>
+            <textarea cols="60" rows="12" id="monthly_content"></textarea>
+            <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
         </fieldset>
-        <div >
-            <?php for($w = 0; $w < 5; $w++):?>
-            <span >
-                <?php echo $weekArr[$w]?>
+        <div class="mt10">插入日报：
+            <?php for($w = 0; $w < $maxWeek; $w++):?>
+                  <?php
+                       $key = date('Y-W', $firstTime + $w*7*86400);
+                       $insert = isset($weeklys[$key]);
+                  ?>
+            <span class="ml10 p3 <?php echo $insert ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;">
+                <?php echo $weekArr[$w]; ?>
+                <?php if($insert):?>
+                <div style="display: none;">
+                    <?php echo date('y年m月d日', $firstTime + ($w-1)*7*86400);?> - <?php echo date('y年m月d日', $firstTime + ($w)*7*86400);?>&nbsp;&nbsp;<?php echo $weekArr[$w];?>
+                    <br/>
+                    <?php echo $weeklys[$key]['content'];?>
+                </div>
+                <?php endif;?>
             </span>
             <?php endfor;?>
         </div>
@@ -72,20 +91,21 @@ if($showCommit){
 
 <script>
     $(function() {
-        $("#dialog-form").dialog({
+        $("#monthly-dialog-form").dialog({
             autoOpen: false,
-            height: 300,
-            width: 530,
+            height: 315,
+            width: 520,
             modal: true,
             buttons: {
                 "写月报": function(){
-                    var content = $("#daily_content").val();
+                    var content = $("#monthly_content").val();
                     if(!content.length){
                         alert('请填写日志内容');
                         return false;
                     }
-                    var currentTime = <?php echo $startTime; ?>;
-                    $.post('createDaily', {content:content, currentTime:currentTime}, function(json){
+                    var currentTime = <?php echo $startTime; ?>,
+                    id = $("#monthly-dialog-form").find("#monthly_id").val();
+                    $.post('createMonthly', {content:content, currentTime:currentTime, id:id}, function(json){
                         location.reload();
                     }), 'json';
                 },
@@ -97,6 +117,30 @@ if($showCommit){
                 allFields.val("").removeClass("ui-state-error");
             }
         });
-        $(".write-monthly").button().click(function(){$("#dialog-form").dialog("open");});
+
+        // 新增和编辑月报
+        $(".write-monthly").button().click(function(){
+            if($('.js-edit_diary').length){
+                $(".js-edit_diary").click();
+            }else{
+                $("#monthly_content").html('');
+                $("#monthly_id").val(0);
+                $("#monthly-dialog-form").dialog("open");
+            }
+        });
+
+        // 编辑月报
+        $(".js-edit_diary").click(function(){
+            var content = $(this).find("div").html();
+            $("#monthly_content").html(content);
+            $("#monthly-dialog-form").find("#monthly_id").val($(this).attr('data-monthly_id'));
+            $("#monthly-dialog-form").dialog("open");
+        });
+
+        // 插入周报
+        $('.js-insert-daily').click(function(){
+            var html = $(this).find('div').html().trim();
+            $('#monthly_content').append(html);
+        });
     });
 </script>

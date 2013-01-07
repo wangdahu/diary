@@ -39,8 +39,19 @@ if($firstDayWeekth != 1){
     // 计算上月最后一周
     $weekArr = array($prevMonth.'月末周', '第一周','第二周','第三周','第四周','第五周');
 }else{
-    $weekArr = array('第一周','第二周','第三周','第四周','第五周');
+    $weekArr = array('第一周','第二周','第三周','第四周','第五周','第六周');
 }
+$maxWeek = ceil(($endTime - $firstTime)/(7*86400));
+
+// 当前月历中的开始时间和结束时间
+$lastTime = $firstTime + $maxWeek*7*86400 - 1;
+// 当前月历中哪些天有评论
+$firstDate = date('Y-m-d', $firstTime);
+$lastDate = date('Y-m-d', $lastTime);
+// echo "<pre>"; var_dump($lastDate);exit;
+
+include dirname(dirname(dirname(__FILE__)))."/class/DiaryComment.php";
+DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -49,7 +60,7 @@ if($firstDayWeekth != 1){
             <p>月报</p>
             <?php if($allowPay):?>
             <?php if($monthlys):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_daily"></a>
+            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
             <?php else:?>
             <a class="fr mr10 pay-disabled"></a>
             <?php endif;?>
@@ -108,9 +119,11 @@ if($firstDayWeekth != 1){
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for($w = 0; $w < 5; $w++):?>
+                    <?php for($w = 0; $w < $maxWeek; $w++):?>
                     <tr>
-                        <td class="<?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?>"><?php echo $weekArr[$w]?></td>
+                        <td class="<?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?>">
+                            <?php echo $weekArr[$w]?>
+                        </td>
                         <?php for($i = 0; $i < 7; $i++): ?>
                               <?php $j = date('j', $firstTime + 7*$w*86400 + $i*86400); ?>
                         <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : td_grey; ?>">
@@ -125,7 +138,7 @@ if($firstDayWeekth != 1){
         <div class="c_b"></div>
     </div>
     <!--日历结束-->
-    <?php if($monthlys):?>
+    <?php if($showCommit):?>
     <?php include dirname(dirname(dirname(__FILE__)))."/team/comment.php"; ?>
     <?php endif;?>
 </div>
