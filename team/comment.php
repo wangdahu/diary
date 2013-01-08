@@ -7,12 +7,17 @@ $viewCount = count($viewRecord);
 // 查询汇报总人数
 $reportList = DiaryReport::getReportList($diary, $type, $object);
 $reportCount = count($reportList);
+$typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 ?>
 <!--评论开始-->
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
         <p class="p_icon">评论（<?php echo count($commentList); ?>）</p>
-        <a href="javascript:;" class="fr js-view_record">汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人</a>
+        <?php if($reportCount):?>
+        <a href="javascript:;" class="fr js-view_record">
+            汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人
+        </a>
+        <?php endif;?>
     </h2>
     <?php foreach($commentList as $comment): ?>
     <?php $user = User::getInfo($comment['uid']);?>
@@ -53,9 +58,13 @@ $reportCount = count($reportList);
         <div class="c_b"></div>
     </div>
 </form>
+<style>
+#commit-dialog-form table {width: 375px;}
+#commit-dialog-form td{ border: 1px solid #ccc; text-align: center;}
+</style>
 <div id="commit-dialog-form" title="汇报统计">
-    <div>
-        <h3>日报</h3>
+    <div style="text-align: center;margin-bottom:10px; padding:5px; border-bottom: 1px solid #000;">
+        <h3><?php echo $object;?><?php echo $typeCommitArr[$type];?></h3>
     </div>
     <table>
         <tr>
@@ -63,11 +72,12 @@ $reportCount = count($reportList);
             <td>是否查阅</td>
             <td>查阅时间</td>
         </tr>
-        <?php foreach($viewList as $view):?>
-        <?php $user = User::getInfo($comment['uid']);?>
+        <?php foreach($reportList as $report):?>
+        <?php $user = User::getInfo($report['object']);?>
         <tr>
             <td><?php echo $user['username']; ?>（<?php echo $user['dept_name']; ?>）</td>
-            <td></td>
+            <td><?php echo isset($viewRecord[$report['object']]) ? '已阅' : '未阅'?></td>
+            <td><?php echo isset($viewRecord[$report['object']]) ? date('Y-m-d H:i', $viewRecord[$report['object']]['view_time']) : '--'?></td>
         </tr>
         <?php endforeach;?>
     </table>
@@ -78,24 +88,12 @@ $reportCount = count($reportList);
         $("#commit-dialog-form").dialog({
             autoOpen: false,
             height: 300,
-            width: 530,
+            width: 400,
             modal: true,
             open: function(){
                 $("#daily_content").select();
             },
             buttons: {
-                "写日志": function(){
-                    var content = $("#daily_content").val(),
-                    id = $("#daily-dialog-form").find("#daily_id").val();
-                    if(!content.length){
-                        alert('请填写日志内容');
-                        return false;
-                    }
-                    var currentTime = <?php echo $startTime; ?>;
-                    $.post('createDaily', {content:content, currentTime:currentTime, id: id}, function(json){
-                        location.reload();
-                    }), 'json';
-                },
                 "取消": function() {
                     $(this).dialog("close");
                 }
@@ -106,7 +104,6 @@ $reportCount = count($reportList);
         });
 
         $('.js-view_record').click(function(){
-            console.log(111);
             $("#commit-dialog-form").dialog("open");
         });
 

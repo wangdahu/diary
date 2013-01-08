@@ -56,8 +56,9 @@ body{background:#bfc0c5;}
 .c_c_c h2 a{color:#3f3f3f;}
 .zhan{position:absolute;right:12px;bottom:8px;font:700 14px/22px "宋体";}
 .delete{width:18px;height:18px;position:absolute;background:url(../images/ico_03.png) 0 0 no-repeat;}
-.add_tag{width:16px;height:16px;position:absolute;background:url(../images/ico_04.png) 0 0 no-repeat;}
+.add_tag{width:21px;height:21px;position:absolute;background:url(../images/select-tag.png) 0 0 no-repeat;}
 .date{float: right; padding-right: 30px; padding-top:3px;}
+.daily-date{float:right;color:#8f8f8f;font:400 12px/20px "宋体";}
 /*----------- 评论 ----------*/
 .content_tit p.p_icon{padding-left:16px;background:url(../images/icon_01.png) -6px 0 no-repeat;}
 .content_tit span{font-weight:400;margin-left:10px;}

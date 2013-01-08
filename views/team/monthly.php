@@ -2,43 +2,6 @@
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
 
-$showCommit = false;
-
-if(isset($from)) {
-    $allowPay = false;
-    $isReported = true;
-    // 判断是否为补交/未汇报/已汇报
-    if($forward == 0) { // 本月
-        // 是否已过汇报时间
-        $reportTime = DiarySet::reportTime($diary, $uid);
-        $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
-        if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
-            $showCommit = true;
-        }
-    }else { // 过去
-        $showCommit = true;
-    }
-}else {
-    // 判断是否为补交/未汇报/已汇报
-    if($forward < 0) { // 未来
-        $isReported = $allowPay = false;
-    }else if($forward == 0) { // 本月
-        // 是否已过汇报时间
-        $reportTime = DiarySet::reportTime($diary, $uid);
-        $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
-        $isReported = $allowPay = false;
-        if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
-            $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
-            $allowPay  = $isReported ? false : true;
-            $showCommit = true;
-        }
-    }else { // 过去
-        $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
-        $allowPay = $isReported ? false : true;
-        $showCommit = true;
-    }
-}
-
 // 该企业该用户在选择时间内的月报
 $rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 3 and `show_time` between $startTime and $endTime";
 $result = $diary->db->query($rowsSql);

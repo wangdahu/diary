@@ -132,9 +132,9 @@ if($showCommit){
                         <a href="javascript:;" style="padding: 0 4px;" class="add_tag js-opterate_tag"></a>
                     </span>
                     <span style="margin: 0 4px 0 24px;">
-                        <a href="javascript:;" style="padding: 0 4px;" data-diary_id="<?php echo $daily['id'];?>" class="js-del-all delete"></a>
+                        <a href="javascript:;" style="margin: 0 30px;" data-diary_id="<?php echo $daily['id'];?>" class="js-del-all delete"></a>
                     </span>
-                    <span style="padding-left: 25px;">
+                    <span class="daily-date">
                         <?php echo date('y-m-d H:i', $daily['fill_time']);?>
                     </span>
                 </div>
