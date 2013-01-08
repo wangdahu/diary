@@ -73,6 +73,7 @@ if($forward < 0) { // 未来
 }
 
 ?>
+
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/my/top.php"; ?>
 <?php include "views/team/weekly.php"; ?>

@@ -17,7 +17,8 @@ if($filePath){
     $file = "my/index.php";
 }
 // 加载所有类
-include "class/Diary.php";
+include "Init.php";
+
 $diary = new Diary();
 
 include $file;
