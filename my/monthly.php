@@ -23,14 +23,12 @@ $object = date('Y-m', $endTime);
 $uid = $diary->uid;
 $corpId = $diary->corpId;
 
-include dirname(dirname(__FILE__))."/class/DiaryReport.php";
 $showCommit = false;
 // 判断是否为补交/未汇报/已汇报
 if($forward < 0) { // 未来
     $isReported = $allowPay = false;
 }else if($forward == 0) { // 本月
     // 是否已过汇报时间
-    include dirname(dirname(__FILE__))."/class/DiarySet.php";
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
     $isReported = $allowPay = false;

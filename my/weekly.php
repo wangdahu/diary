@@ -2,7 +2,6 @@
 $title = "周报";
 $type = 'weekly';
 
-include dirname(dirname(__FILE__))."/class/DiaryDaily.php";
 // 当前周的周一时间戳
 $mondayTime = date('w') == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
 // 向前向后翻天
@@ -22,8 +21,6 @@ $endTime = $startTime + 7*86400 - 1;
 $object = date('Y-W', $startTime);
 $weekDate = array();
 // 用户设置的工作时间
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
-include dirname(dirname(__FILE__))."/class/DiaryReport.php";
 $selected = DiarySet::workingTime($diary, $diary->uid);
 $weekarray = array("一","二","三","四","五","六","日");
 

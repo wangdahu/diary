@@ -1,6 +1,4 @@
 <?php
-include dirname(dirname(__FILE__))."/class/DiaryComment.php";
-include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
 $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
 DiaryViewRecord::addRecord($diary, $type, $uid, $object);
 $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);

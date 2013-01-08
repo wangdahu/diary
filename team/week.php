@@ -23,8 +23,6 @@ $endTime = $startTime + 7*86400 - 1;
 $object = date('Y-W', $endTime);
 $type = "weekly";
 
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
-include dirname(dirname(__FILE__))."/class/User.php";
 // 周报汇报给我的和我订阅的用户
 $teamShowObject = DiarySet::teamShowObject($diary, 2);
 ?>

@@ -28,7 +28,6 @@ $uid = (int) $_GET['uid'];
 // 查看的日期
 $object = date('Y-m-d', $endTime);
 
-include dirname(dirname(__FILE__))."/class/User.php";
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
 

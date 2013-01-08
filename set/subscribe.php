@@ -2,8 +2,6 @@
 $title = "订阅设置";
 $setDefault = 'subscribe';
 
-
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if($_POST){
     $daily_users = explode(',', $_POST['daily_user_object']);
     $daily_depts = explode(',', $_POST['daily_dept_object']);

@@ -25,8 +25,6 @@ if($forward){
 $object = date('Y-m', $endTime);
 $type = "monthly";
 
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
-include dirname(dirname(__FILE__))."/class/User.php";
 // 月报汇报给我的和我订阅的用户
 $teamShowObject = DiarySet::teamShowObject($diary, 3);
 ?>

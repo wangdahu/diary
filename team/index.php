@@ -23,8 +23,6 @@ $endTime = $startTime + 86400 - 1;
 $object = date('Y-m-d', $endTime);
 $type = "daily";
 
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
-include dirname(dirname(__FILE__))."/class/User.php";
 // 日报汇报给我的和我订阅的用户
 $teamShowObject = DiarySet::teamShowObject($diary, 1);
 ?>

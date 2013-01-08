@@ -7,7 +7,6 @@ if($_POST){
 
 function payDiary($diary, $type, $currentDate){
     // 要发送汇报消息的用户列表
-    include dirname(dirname(__FILE__))."/class/DiarySet.php";
     $diaryType = $type == 'daily' ? 1 : ($type == 'weekly' ? 2 : 3);
     $allUsers = DiarySet::getAllObject($diary, $diaryType);
     $uid = $diary->uid;

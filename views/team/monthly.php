@@ -1,5 +1,4 @@
 <?php
-include dirname(dirname(dirname(__FILE__)))."/class/User.php";
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
 
@@ -48,12 +47,10 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 // 当前月历中哪些天有评论
 $firstDate = date('Y-m-d', $firstTime);
 $lastDate = date('Y-m-d', $lastTime);
-include dirname(dirname(dirname(__FILE__)))."/class/DiaryComment.php";
 $dateObject = DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
 $weekObject = DiaryComment::getWhichDate($diary, $uid, 'weekly', date('Y-W', strtotime($firstDate)), date('Y-W', strtotime($lastDate)));
 
 // 查询有内容的天并未汇报
-include dirname(dirname(dirname(__FILE__)))."/class/DiaryDaily.php";
 $noReportDaily = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 1, $uid);
 $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $uid);
 

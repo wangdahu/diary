@@ -1,6 +1,4 @@
 <?php
-include dirname(dirname(__FILE__))."/class/DiaryComment.php";
-include dirname(dirname(__FILE__))."/class/DiaryViewRecord.php";
 $showObject = $forward < 0 ? false : true;
 ?>
 <?php if($showObject):?>

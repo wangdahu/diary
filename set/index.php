@@ -1,7 +1,6 @@
 <?php
 $title = "汇报设置";
 $setDefault = 'report';
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if($_POST){
     DiarySet::saveReportTime($diary, $_POST['dailyReport'], $_POST['weeklyReport'], $_POST['monthlyReport']);
     $daily_users = explode(',', $_POST['daily_user_object']);

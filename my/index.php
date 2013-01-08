@@ -29,7 +29,6 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 };
 $num = count($dailys);
 
-include dirname(dirname(__FILE__))."/class/DiaryDaily.php";
 $userTags = DiaryDaily::getUserTags($diary);
 // 获取颜色列表
 $colorList = DiaryDaily::getColorList($diary);
@@ -43,18 +42,15 @@ if($forward < 0) { // 未来
     $isReported = $allowPay = false;
 }else if($forward == 0) { // 今天
     // 是否已过汇报时间
-    include dirname(dirname(__FILE__))."/class/DiarySet.php";
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
     $isReported = $allowPay = false;
     if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-        include dirname(dirname(__FILE__))."/class/DiaryReport.php";
         $isReported = DiaryReport::checkReport($diary, $type, $object);
         $allowPay  = $isReported ? false : true;
         $showCommit = $isReported;
     }
 }else{ // 过去
-    include dirname(dirname(__FILE__))."/class/DiaryReport.php";
     $isReported = DiaryReport::checkReport($diary, $type, $object);
     $allowPay = $isReported ? false : true;
     $showCommit = true;
@@ -165,7 +161,6 @@ if($showCommit){
     </div>
     <!--今日工作结束-->
     <?php if($showCommit):
-          include dirname(dirname(__FILE__))."/class/User.php";
           include dirname(dirname(__FILE__))."/team/comment.php";
     endif;?>
 </div>

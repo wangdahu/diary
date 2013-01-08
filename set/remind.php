@@ -2,7 +2,6 @@
 $title = "提醒设置";
 $setDefault = 'remind';
 
-include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if($_POST){
     DiarySet::saveRemindTime($diary, $_POST['dailyRemind'], $_POST['weeklyRemind'], $_POST['monthlyRemind']);
 }
