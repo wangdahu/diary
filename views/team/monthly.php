@@ -1,5 +1,5 @@
 <?php
-$user = User::getInfo($uid);
+$user = DiaryUser::getInfo($uid);
 $corpId = $user['corp_id'];
 
 // 该企业该用户在选择时间内的月报

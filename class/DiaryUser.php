@@ -1,5 +1,5 @@
 <?php
-class User{
+class DiaryUser{
 
     public static function getInfo($uid){
         return array(

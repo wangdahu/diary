@@ -12,7 +12,7 @@ class DB{
     public $corpId;
     public function __construct(){
         $this->db = new ezSQL_mysql('root','.','diary','localhost');
-        $this->uid = 1;
+        $this->uid = 5;
         $this->corpId = 1;
     }
 }

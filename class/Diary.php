@@ -19,7 +19,7 @@ class Diary{
         }
         $mysqli->query("SET NAMES 'utf8'");
         $this->db = $mysqli;
-        $this->uid = 1;
+        $this->uid = 3;
         $this->corpId = 1;
         $this->deptId = 1;
         $this->workingTime = array(1,2,3,4,5);

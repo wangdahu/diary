@@ -20,7 +20,7 @@ $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'�
 $reportSet = DiarySet::reportTime($diary);
 $reportObject = DiarySet::reportObject($diary);
 $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
-
+$reportStr = DiarySet::getNameAndDeptStr($reportObject);
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
@@ -32,7 +32,9 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="daily" id="daily" class="set_textarea"><?php echo implode(',', $reportObject['daily_object']['user']).",[".implode('],[', $reportObject['daily_object']['dept'])."]";?></textarea></p>
+                    <p>
+                        <textarea name="daily" id="daily" class="set_textarea"><?php echo $reportStr['daily_str'];?></textarea>
+                    </p>
                 </li>
                 <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $reportObject['daily_object']['user']);?>"/>
                 <input type="hidden" name="daily_dept_object" id="daily_dept_object" value="<?php echo implode(',', $reportObject['daily_object']['dept']);?>"/>
@@ -40,14 +42,14 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <label>汇报时间</label>
                     <select name="dailyReport[hour]">
                         <?php foreach($hours as $hour):?>
-                        <option <?php echo $reportSet['dailyReport']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                        <option <?php echo $reportSet['dailyReport']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
                             <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
                         </option>
                         <?php endforeach;?>
                     </select>
                     <select name="dailyReport[minute]">
                         <?php foreach($minutes as $minute):?>
-                        <option <?php echo $reportSet['dailyReport']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                        <option <?php echo $reportSet['dailyReport']['minute'] == $minute ? 'selected' : ''; ?> value="<?php echo $minute?>">
                             <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
                         </option>
                         <?php endforeach;?>
@@ -58,7 +60,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="dailyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['dailyReport']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="dailyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['dailyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -72,7 +74,9 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="weekly" id="weekly" class="set_textarea"><?php echo implode(',', $reportObject['weekly_object']['user']).",[".implode('],[', $reportObject['weekly_object']['dept'])."]";?></textarea></p>
+                    <p>
+                        <textarea name="weekly" id="weekly" class="set_textarea"><?php echo $reportStr['weekly_str'];?></textarea>
+                    </p>
                 </li>
                 <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $reportObject['weekly_object']['user']);?>"/>
                 <input type="hidden" name="weekly_dept_object" id="weekly_dept_object" value="<?php echo implode(',', $reportObject['weekly_object']['dept']);?>"/>
@@ -81,20 +85,20 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($weeks as $key => $val):?>
                         <label>
-                            <input type="radio" name="weeklyReport[w]" class="checkall" <?php echo $key == $reportSet['weeklyReport']['w'] ? checked : ''; ?> value="<?php echo $key;?>" >
+                            <input type="radio" name="weeklyReport[w]" class="checkall" <?php echo $key == $reportSet['weeklyReport']['w'] ? 'checked' : ''; ?> value="<?php echo $key;?>" >
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
                         <select name="weeklyReport[hour]">
                             <?php foreach($hours as $hour):?>
-                            <option <?php echo $reportSet['weeklyReport']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                            <option <?php echo $reportSet['weeklyReport']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
                                 <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
                         </select>
                         <select name="weeklyReport[minute]">
                             <?php foreach($minutes as $minute):?>
-                            <option <?php echo $reportSet['weeklyReport']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                            <option <?php echo $reportSet['weeklyReport']['minute'] == $minute ? 'selected' : ''; ?> value="<?php echo $minute?>">
                                 <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
@@ -106,7 +110,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="weeklyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReport']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="weeklyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -120,7 +124,9 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="monthly" id="monthly" class="set_textarea"><?php echo implode(',', $reportObject['monthly_object']['user']).",[".implode('],[', $reportObject['monthly_object']['dept'])."]";?></textarea></p>
+                    <p>
+                        <textarea name="monthly" id="monthly" class="set_textarea"><?php echo $reportStr['monthly_str'];?></textarea>
+                    </p>
                 </li>
                 <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $reportObject['monthly_object']['user']);?>"/>
                 <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $reportObject['monthly_object']['dept']);?>"/>
@@ -129,21 +135,21 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <select name="monthlyReport[date]">
                             <?php foreach($months as $month):?>
-                            <option <?php echo $reportSet['monthlyReport']['date'] == $month ? selected : ''; ?> value="<?php echo $month?>">
+                            <option <?php echo $reportSet['monthlyReport']['date'] == $month ? 'selected' : ''; ?> value="<?php echo $month?>">
                                 <?php echo str_pad($month, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
                         </select>日
                         <select name="monthlyReport[hour]">
                             <?php foreach($hours as $hour):?>
-                            <option <?php echo $reportSet['monthlyReport']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                            <option <?php echo $reportSet['monthlyReport']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
                                 <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
                         </select>
                         <select name="monthlyReport[minute]">
                             <?php foreach($minutes as $minute):?>
-                            <option <?php echo $reportSet['monthlyReport']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                            <option <?php echo $reportSet['monthlyReport']['minute'] == $minute ? 'selected' : ''; ?> value="<?php echo $minute?>">
                                 <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
@@ -155,7 +161,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="monthlyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['monthlyReport']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="monthlyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['monthlyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>

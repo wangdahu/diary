@@ -13,7 +13,6 @@ $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'�
 
 // 获取提醒设置
 $remindSet = DiarySet::remindTime($diary);
-// echo "<pre>"; var_dump($remindSet);exit;
 $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
 
 ?>
@@ -29,14 +28,14 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <label>汇报时间</label>
                     <select name="dailyRemind[hour]">
                         <?php foreach($hours as $hour):?>
-                        <option <?php echo $remindSet['dailyRemind']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                        <option <?php echo $remindSet['dailyRemind']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
                             <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
                         </option>
                         <?php endforeach;?>
                     </select>
                     <select name="dailyRemind[minute]">
                         <?php foreach($minutes as $minute):?>
-                        <option <?php echo $remindSet['dailyRemind']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                        <option <?php echo $remindSet['dailyRemind']['minute'] == $minute ? 'selected' : ''; ?> value="<?php echo $minute?>">
                             <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
                         </option>
                         <?php endforeach;?>
@@ -47,7 +46,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="dailyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['dailyRemind']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="dailyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['dailyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -64,20 +63,20 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($weeks as $key => $val):?>
                         <label>
-                            <input type="radio" name="weeklyRemind[w]" class="checkall" <?php echo $key == $remindSet['weeklyRemind']['w'] ? checked : ''; ?> value="<?php echo $key;?>" >
+                            <input type="radio" name="weeklyRemind[w]" class="checkall" <?php echo $key == $remindSet['weeklyRemind']['w'] ? 'checked' : ''; ?> value="<?php echo $key;?>" >
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
                         <select name="weeklyRemind[hour]">
                             <?php foreach($hours as $hour):?>
-                            <option <?php echo $remindSet['weeklyRemind']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                            <option <?php echo $remindSet['weeklyRemind']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
                                 <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
                         </select>
                         <select name="weeklyRemind[minute]">
                             <?php foreach($minutes as $minute):?>
-                            <option <?php echo $remindSet['weeklyRemind']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                            <option <?php echo $remindSet['weeklyRemind']['minute'] == $minute ? 'selected' : ''; ?> value="<?php echo $minute?>">
                                 <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
@@ -89,7 +88,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="weeklyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['weeklyRemind']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="weeklyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['weeklyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -106,21 +105,21 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <select name="monthlyRemind[date]">
                             <?php foreach($months as $month):?>
-                            <option <?php echo $remindSet['monthlyRemind']['date'] == $month ? selected : ''; ?> value="<?php echo $month?>">
+                            <option <?php echo $remindSet['monthlyRemind']['date'] == $month ? 'selected' : ''; ?> value="<?php echo $month?>">
                                 <?php echo str_pad($month, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
                         </select>日
                         <select name="monthlyRemind[hour]">
                             <?php foreach($hours as $hour):?>
-                            <option <?php echo $remindSet['monthlyRemind']['hour'] == $hour ? selected : ''; ?> value="<?php echo $hour; ?>">
+                            <option <?php echo $remindSet['monthlyRemind']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
                                 <?php echo str_pad($hour, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
                         </select>
                         <select name="monthlyRemind[minute]">
                             <?php foreach($minutes as $minute):?>
-                            <option <?php echo $remindSet['monthlyRemind']['minute'] == $minute ? selected : ''; ?> value="<?php echo $minute?>">
+                            <option <?php echo $remindSet['monthlyRemind']['minute'] == $minute ? 'selected' : ''; ?> value="<?php echo $minute?>">
                                 <?php echo str_pad($minute, 2, 0, STR_PAD_LEFT);?>
                             </option>
                             <?php endforeach;?>
@@ -132,7 +131,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="monthlyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['monthlyRemind']['way']) ? checked : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="monthlyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['monthlyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>

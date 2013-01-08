@@ -20,7 +20,7 @@ $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '
         <?php endif;?>
     </h2>
     <?php foreach($commentList as $comment): ?>
-    <?php $user = User::getInfo($comment['uid']);?>
+    <?php $user = DiaryUser::getInfo($comment['uid']);?>
     <div class="comment_box">
         <div class="c_t"></div>
         <div class="c_c clearfix">
@@ -73,7 +73,7 @@ $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '
             <td>查阅时间</td>
         </tr>
         <?php foreach($reportList as $report):?>
-        <?php $user = User::getInfo($report['object']);?>
+        <?php $user = DiaryUser::getInfo($report['object']);?>
         <tr>
             <td><?php echo $user['username']; ?>（<?php echo $user['dept_name']; ?>）</td>
             <td><?php echo isset($viewRecord[$report['object']]) ? '已阅' : '未阅'?></td>

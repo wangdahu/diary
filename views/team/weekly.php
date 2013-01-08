@@ -77,7 +77,7 @@
                             </div>
                             <?php endforeach;?>
                         </span>
-                         <span style="padding-left: 25px;"><?php echo date('y-m-d H:i', $daily['fill_time']);?></span>
+                         <span class="daily-date"><?php echo date('y-m-d H:i', $daily['fill_time']);?></span>
                     </div>
                 </div>
                 <?php endforeach; endif;?>

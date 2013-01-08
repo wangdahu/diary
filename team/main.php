@@ -8,7 +8,7 @@ $showObject = $forward < 0 ? false : true;
         <ul class="dy">
             <?php foreach($teamShowObject as $uid): ?>
             <?php
-                 $user = User::getInfo($uid);
+                 $user = DiaryUser::getInfo($uid);
                  $url = "daily?forward=$forward&uid=$uid";
                  if($setDefault === 'week'){
                      $url = "weekly?forward=$forward&uid=$uid";

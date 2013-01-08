@@ -100,6 +100,8 @@ class DiarySet{
         $sql = "select * from `diary_subscribe_object` where `uid` = $uid";
         $result = $diary->db->query($sql);
 
+        $subscribe = array();
+        $subscribe['daily_object']['user'] = $subscribe['daily_object']['dept'] = $subscribe['weekly_object']['user'] = $subscribe['weekly_object']['dept'] = $subscribe['monthly_object']['user'] = $subscribe['monthly_object']['dept'] = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             if($row['type'] == 1){ // 日报汇报对象
                 if($row['from_uid']){
@@ -121,7 +123,6 @@ class DiarySet{
                 }
             }
         };
-        // $subscribe['daily_object']['user'] = $subscribe['daily_object']['dept'] = $subscribe['weekly_object']['user'] = $subscribe['weekly_object']['dept'] = $subscribe['monthly_object']['user'] = $subscribe['monthly_object']['dept'] = array(5,8,1,2,3,4);
         return $subscribe;
     }
 
@@ -170,6 +171,8 @@ class DiarySet{
         $sql = "select * from `diary_report_object` where `uid` = $uid";
         $result = $diary->db->query($sql);
 
+        $report['daily_object']['user'] = $report['daily_object']['dept'] = $report['weekly_object']['user'] = $report['weekly_object']['dept'] = $report['monthly_object']['user'] = $report['monthly_object']['dept'] = array();
+
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             if($row['type'] == 1){ // 日报汇报对象
                 if($row['to_uid']){
@@ -191,7 +194,6 @@ class DiarySet{
                 }
             }
         };
-        $report['daily_object']['user'] = $report['daily_object']['dept'] = $report['weekly_object']['user'] = $report['weekly_object']['dept'] = $report['monthly_object']['user'] = $report['monthly_object']['dept'] = array(5,8,6,7,1,2,3,4);
         return $report;
     }
 
@@ -279,4 +281,65 @@ class DiarySet{
 
         return $allUsers;
     }
+
+    /**
+     * 获取到数据的部门和人员的名字和部门名
+     */
+    public static function getNameAndDeptStr($object) {
+        $daily_user_str = self::userStr($object['daily_object']['user']);
+        $daily_dept_str = self::deptStr($object['daily_object']['dept']);
+        $weekly_user_str = self::userStr($object['weekly_object']['user']);
+        $weekly_dept_str = self::deptStr($object['weekly_object']['dept']);
+        $monthly_user_str = self::userStr($object['monthly_object']['user']);
+        $monthly_dept_str = self::deptStr($object['monthly_object']['dept']);
+        if($daily_user_str) {
+            $daily_str = $daily_user_str;
+            if($daily_dept_str){
+                $daily_str = $daily_user_str."，".$daily_dept_str;
+            }
+        }else {
+            $daily_str = $daily_dept_str;
+        }
+
+        if($weekly_user_str) {
+            $weekly_str = $weekly_user_str;
+            if($weekly_dept_str){
+                $weekly_str = $weekly_user_str."，".$weekly_dept_str;
+            }
+        }else {
+            $weekly_str = $weekly_dept_str;
+        }
+
+        if($monthly_user_str) {
+            $monthly_str = $monthly_user_str;
+            if($monthly_dept_str){
+                $monthly_str = $monthly_user_str."，".$monthly_dept_str;
+            }
+        }else {
+            $monthly_str = $monthly_dept_str;
+        }
+        return compact('daily_str', 'weekly_str', 'monthly_str');
+    }
+
+    public static function userStr($user_ids) {
+        $name = array();
+        foreach($user_ids as $id) {
+            $user = DiaryUser::getInfo($id);
+            $name[] = $user['username'];
+        }
+        return implode('，', $name);
+    }
+
+    public static function deptStr($dept_ids) {
+        if($dept_ids){
+            foreach($dept_ids as $id) {
+                $dept = DiaryDept::getInfo($id);
+                $name[] = $dept['name'];
+            }
+            return "[".implode(']，[', $name)."]";
+        }else{
+            return '';
+        }
+    }
+
 }

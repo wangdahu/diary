@@ -24,7 +24,7 @@ $selected = DiarySet::workingTime($diary, $diary->uid);
                     <p>
                         <?php foreach($list as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="working_time[]" class="checkall" <?php echo in_array($key, $selected) ? checked : '';?> value="<?php echo $key;?>">
+                            <input type="checkbox" name="working_time[]" class="checkall" <?php echo in_array($key, $selected) ? 'checked' : '';?> value="<?php echo $key;?>">
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>

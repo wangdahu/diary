@@ -12,8 +12,8 @@ if($_POST){
     DiarySet::saveSubscribeObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
 }
 
-$subscribeObject = Set::subscribeObject($diary, $diary->uid);
-
+$subscribeObject = DiarySet::subscribeObject($diary, $diary->uid);
+$subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
@@ -26,7 +26,9 @@ $subscribeObject = Set::subscribeObject($diary, $diary->uid);
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="daily" id="daily" class="set_textarea"><?php echo implode(',', $subscribeObject['daily_object']['user']).",[".implode('],[', $subscribeObject['daily_object']['dept'])."]";?></textarea></p>
+                    <p>
+                        <textarea name="daily" id="daily" class="set_textarea"><?php echo $subscribeStr['daily_str'];?></textarea>
+                    </p>
                 </li>
                 <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $subscribeObject['daily_object']['user']); ?>"/>
                 <input type="hidden" name="daily_dept_object" id="daily_dept_object" value="<?php echo implode(',', $subscribeObject['daily_object']['dept']); ?>"/>
@@ -37,7 +39,9 @@ $subscribeObject = Set::subscribeObject($diary, $diary->uid);
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="weekly" id="weekly" class="set_textarea"><?php echo implode(',', $subscribeObject['weekly_object']['user']).",[".implode('],[', $subscribeObject['weekly_object']['dept'])."]";?></textarea></p>
+                    <p>
+                        <textarea name="weekly" id="weekly" class="set_textarea"><?php echo $subscribeStr['weekly_str'];?></textarea>
+                    </p>
                 </li>
                 <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $subscribeObject['weekly_object']['user']); ?>"/>
                 <input type="hidden" name="weekly_dept_object" id="weekly_dept_object" value="<?php echo implode(',', $subscribeObject['weekly_object']['dept']); ?>"/>
@@ -48,7 +52,9 @@ $subscribeObject = Set::subscribeObject($diary, $diary->uid);
             <ul class="set_list">
                 <li>
                     <label><a href="#">选择汇报对象</a></label>
-                    <p><textarea name="monthly" id="monthly" class="set_textarea"><?php echo implode(',', $subscribeObject['monthly_object']['user']).",[".implode('],[', $subscribeObject['monthly_object']['dept'])."]";?></textarea></p>
+                    <p>
+                        <textarea name="monthly" id="monthly" class="set_textarea"><?php echo $subscribeStr['monthly_str'];?></textarea>
+                    </p>
                 </li>
                 <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $subscribeObject['monthly_object']['user']); ?>"/>
                 <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $subscribeObject['monthly_object']['dept']); ?>"/>
