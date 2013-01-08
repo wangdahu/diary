@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 27 日 01:18
+-- 生成日期: 2013 年 01 月 09 日 01:08
 -- 服务器版本: 5.5.28-0ubuntu0.12.10.2
 -- PHP 版本: 5.4.6-1ubuntu1.1
 
@@ -37,26 +37,26 @@ CREATE TABLE IF NOT EXISTS `diary_tag_color` (
 --
 
 INSERT INTO `diary_tag_color` (`id`, `color`) VALUES
-(1, '#F0F8FF'),
-(2, '#FAEBD7'),
-(3, '#00FFFF'),
-(4, '#7FFFD4'),
-(5, '#F0FFFF'),
-(6, '#F5F5DC'),
-(7, '#FFE4C4'),
-(8, '#000000'),
-(9, '#FFEBCD'),
-(10, '#0000FF'),
-(11, '#8A2BE2'),
-(12, '#A52A2A'),
-(13, '#DEB887'),
-(14, '#5F9EA0'),
-(15, '#7FFF00'),
-(16, '#D2691E'),
-(17, '#FF7F50'),
-(18, '#6495ED'),
-(19, '#FFF8DC'),
-(20, '#DC143C');
+(1, '#B54143'),
+(2, '#4AA900'),
+(3, '#DBBA0F'),
+(4, '#37964C'),
+(5, '#DE7BA8'),
+(6, '#E5ACAD'),
+(7, '#AFE09C'),
+(8, '#F4D2A3'),
+(9, '#A6DAED'),
+(10, '#F4C9E1'),
+(11, '#46BC94'),
+(12, '#C7AE00'),
+(13, '#CE68EA'),
+(14, '#9D9D9D'),
+(15, '#373737'),
+(16, '#ACE7D8'),
+(17, '#ECE09D'),
+(18, '#EEBFFA'),
+(19, '#D9D9D9'),
+(20, '#F1F1F1');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
