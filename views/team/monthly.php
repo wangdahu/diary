@@ -2,6 +2,43 @@
 $user = User::getInfo($uid);
 $corpId = $user['corp_id'];
 
+$showCommit = false;
+
+if(isset($from)) {
+    $allowPay = false;
+    $isReported = true;
+    // 判断是否为补交/未汇报/已汇报
+    if($forward == 0) { // 本月
+        // 是否已过汇报时间
+        $reportTime = DiarySet::reportTime($diary, $uid);
+        $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
+        if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
+            $showCommit = true;
+        }
+    }else { // 过去
+        $showCommit = true;
+    }
+}else {
+    // 判断是否为补交/未汇报/已汇报
+    if($forward < 0) { // 未来
+        $isReported = $allowPay = false;
+    }else if($forward == 0) { // 本月
+        // 是否已过汇报时间
+        $reportTime = DiarySet::reportTime($diary, $uid);
+        $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
+        $isReported = $allowPay = false;
+        if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
+            $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
+            $allowPay  = $isReported ? false : true;
+            $showCommit = true;
+        }
+    }else { // 过去
+        $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
+        $allowPay = $isReported ? false : true;
+        $showCommit = true;
+    }
+}
+
 // 该企业该用户在选择时间内的月报
 $rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 3 and `show_time` between $startTime and $endTime";
 $result = $diary->db->query($rowsSql);
@@ -54,6 +91,10 @@ $weekObject = DiaryComment::getWhichDate($diary, $uid, 'weekly', date('Y-W', str
 $noReportDaily = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 1, $uid);
 $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $uid);
 
+// 获取过期的且无内容的
+$noContentDaily = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 1, $uid);
+$noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, $uid);
+
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -67,7 +108,7 @@ $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $u
             <a class="fr mr10 pay-disabled"></a>
             <?php endif;?>
             <?php endif;?>
-            <?php if($uid == $diary->uid):?>
+            <?php if(!$isReported):?>
             <a href="javascript:;" class="fr write-monthly"></a>
             <?php endif;?>
         </h2>
@@ -126,10 +167,14 @@ $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $u
                         <?php
                              $thisWeek = date('Y-W',($firstTime + 7*$w*86400));
                              $weekForward = DiaryDaily::getForward($firstTime + 7*$w*86400, 2);
+                             $url = "/diary/index.php/my/weekly?forward=".$weekForward;
+                             if(isset($from)) {
+                                $url = "/diary/index.php/team/weekly?forward=".$weekForward."&uid=".$uid;
+                             }
                         ?>
-                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'comment' : ''?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report' : '';?>">
+                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report' : '';?>">
 
-                            <a href="diary/index.php/my/index?forward=<?php echo $weekForward;?>">
+                            <a href="<?php echo $url;?>">
                                 <div>
                                     <?php echo $weekArr[$w]; ?>
                                 </div>
@@ -141,9 +186,13 @@ $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $u
                                    $j = date('j', $thisTime);
                                    $thisDate = date('Y-m-d', $thisTime);
                                    $dateForward = DiaryDaily::getForward($firstTime + 7*$w*86400 + $i*86400);
+                                   $url = "/diary/index.php/my/index?forward=".$dateForward;
+                                   if(isset($from)) {
+                                       $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
+                                   }
                               ?>
-                        <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : td_grey; ?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>">
-                            <a href="diary/index.php/my/index?forward=<?php echo $dateForward;?>">
+                        <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>">
+                            <a href="/diary/index.php/my/index?forward=<?php echo $dateForward;?>">
                                 <div>
                                     <?php echo $j;?>
                                 </div>

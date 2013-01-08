@@ -82,7 +82,7 @@ class DiaryDaily{
     }
 
     /**
-     * 获取有内容但为汇报的日报
+     * 获取有内容但未汇报的日报
      */
     public static function noReportDaily($diary, $firstTime, $lastTime, $type, $uid = null) {
         $uid = $uid ? $uid :$diary->uid;
@@ -111,11 +111,37 @@ class DiaryDaily{
     }
 
     /**
+     * 获取无内容的日报
+     */
+    public static function noContentDaily($diary, $firstTime, $lastTime, $type, $uid = null) {
+        $uid = $uid ? $uid :$diary->uid;
+        $uninStr = '%Y-%m-%d';
+        $sql = "select FROM_UNIXTIME(`show_time`, '$uninStr') as new_time from `diary_info` where `type` = $type and `uid` = $uid and (`show_time` between $firstTime and $lastTime) group by `new_time`";
+        $result = $diary->db->query($sql);
+        $infoList = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $infoList[] = $type == 1 ? $row['new_time'] : date('Y-W', strtoTime($row['new_time']));
+        }
+        $lastTime = $lastTime > strtotime('today') ? strtoTime('today') : $lastTime; // 大于今天则值匹配今天之前的
+        if($type == 1) {
+            $allDateArr = array_map(function($value) {
+                    return date('Y-m-d', $value);
+                }, range($firstTime, $lastTime, 86400));
+        }elseif($type == 2) {
+            $allDateArr = array_map(function($value) {
+                    return date('Y-W', $value);
+                }, range($firstTime, $lastTime, 86400*7));
+        }
+
+        return array_values(array_diff($allDateArr, $infoList));
+    }
+
+    /**
      * 获取当前时间点到今天或本周的forward值
      */
     public static function getForward($time, $type = 1){
         $now = strtotime('today');
-        $forward = ceil(($time - $now)/($type == 1 ? 86400 : 86400*7));
+        $forward = floor(($now - $time)/($type == 1 ? 86400 : 86400*7));
         return $forward;
     }
 }

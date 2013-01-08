@@ -23,25 +23,8 @@ $object = date('Y-m', $endTime);
 $uid = $diary->uid;
 $corpId = $diary->corpId;
 
-$showCommit = false;
-// 判断是否为补交/未汇报/已汇报
-if($forward < 0) { // 未来
-    $isReported = $allowPay = false;
-}else if($forward == 0) { // 本月
-    // 是否已过汇报时间
-    $reportTime = DiarySet::reportTime($diary);
-    $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
-    $isReported = $allowPay = false;
-    if(time() > strtotime($object."-".$dailyTime)){ // 已过汇报时间
-        $isReported = DiaryReport::checkReport($diary, $type, $object);
-        $allowPay  = $isReported ? false : true;
-        $showCommit = true;
-    }
-}else{ // 过去
-    $isReported = DiaryReport::checkReport($diary, $type, $object);
-    $allowPay = $isReported ? false : true;
-    $showCommit = true;
-}
+
+
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/my/top.php"; ?>

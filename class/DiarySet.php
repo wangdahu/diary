@@ -32,8 +32,8 @@ class DiarySet{
     /**
      * 查询汇报设置时间
      */
-    public static function reportTime($diary){
-        $uid = $diary->uid;
+    public static function reportTime($diary, $uid=null){
+        $uid = $uid ? $uid : $diary->uid;
         $sql = "select * from `diary_report_set` where `uid` = $uid";
         $reportSet = array();
         if($result = $diary->db->query($sql)){

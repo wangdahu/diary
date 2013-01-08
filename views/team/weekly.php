@@ -52,11 +52,11 @@
                 <div>
                     <p style="line-height:30px;">
                         <strong><?php echo "周".$k." ".$v; ?></strong>
-                        <span>工作：<?php echo count($dailys[$v]);?>项</span>
+                        <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
                     </p>
                 </div>
 
-                <?php if($dailys[$v]): foreach($dailys[$v] as $date => $daily):?>
+                <?php if(isset($dailys[$v])): foreach($dailys[$v] as $date => $daily):?>
                 <?php
                      $tagList = array();
                      $tagList = DiaryDaily::getDailyTag($diary, $daily['id']);

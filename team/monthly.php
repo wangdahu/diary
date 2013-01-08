@@ -18,11 +18,11 @@ if($forward){
     $endTime = mktime(0,0,0,date("m")+1,1,date("Y")) - 1;
 }
 $showDiary = $forward < 0 ? false : true;
-$showCommit = true;
 // 查看的年份和月份
 $object = date('Y-m', $endTime);
-
 $uid = (int) $_GET['uid'];
+
+$from = 'team';
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
