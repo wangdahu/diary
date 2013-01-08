@@ -132,6 +132,6 @@ form .show-color-list .color-selected {border: 1px solid #ccc; padding: 2px; mar
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 
 /* 选择标签浮动层 */
-.all-tag-floor { position:absolute; margin-left: 480px; display: none; border: 1px #ccc solid; width: 240px; line-height: 24px; z-index: 1; background: white; zoom: 1;}
+.all-tag-floor { position:absolute; margin-left: 500px; display: none; border: 1px #ccc solid; width: 240px; line-height: 24px; z-index: 1; background: white; zoom: 1;}
 
 

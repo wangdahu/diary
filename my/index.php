@@ -122,18 +122,22 @@ if($showCommit){
                                     <?php echo $tag['tag'];?>
                                 </span>
                             </div>
+                            <?php if(!$isReported):?>
                             <div class="js-del_tag" style="float: left; display:none;">
-                                <a href="javascript:;">next</a>
+                                <a href="javascript:;" class="dtag"></a>
                             </div>
+                            <?php endif;?>
                         </div>
                         <?php endforeach;?>
                     </span>
+                    <?php if(!$isReported):?>
                     <span style="margin: 0 24px 0 4px;">
                         <a href="javascript:;" style="padding: 0 4px;" class="add_tag js-opterate_tag"></a>
                     </span>
                     <span style="margin: 0 4px 0 24px;">
-                        <a href="javascript:;" style="margin: 0 30px;" data-diary_id="<?php echo $daily['id'];?>" class="js-del-all delete"></a>
+                        <a href="javascript:;" style="margin: 0 30px;" data-diary_id="<?php echo $daily['id'];?>" class="delete js-del_daily"></a>
                     </span>
+                    <?php endif;?>
                     <span class="daily-date">
                         <?php echo date('y-m-d H:i', $daily['fill_time']);?>
                     </span>
@@ -165,19 +169,26 @@ if($showCommit){
     endif;?>
 </div>
 
-<script>
-    $(function(){
-        $(".delete").click(function(){
-            console.log($(this).attr('data-id'));
-        });
-    });
-</script>
 <?php include "views/layouts/footer.php"; ?>
 <?php include "views/set/addTag.php"; ?>
 <?php include "views/my/createDaily.php"; ?>
 
 <script>
     $(function() {
+        // 删除日志
+        $(".js-del_daily").click(function(){
+            var id = $(this).attr('data-diary_id');
+            if(confirm("确定要删除这条日志？")){
+                $.post('/diary/index.php/my/delDiary', {id:id}, function(json){
+                    if(json != 0){
+                        location.reload();
+                    }else{
+                        return false;
+                    }
+                });
+            }
+        });
+
         // 删除某日志的所有标签
         $(".js-del-all").click(function(){
             var diary_id = $(this).attr('data-diary_id');
@@ -200,9 +211,15 @@ if($showCommit){
             $(this).find('.js-del_tag').toggle();
         });
 
+        // 操作标签
         $('.js-opterate_tag').click(function(){
             $(this).parent().parent().next().toggle();
         });
+
+        // 标签操作消失
+        // $(".all-floor-tag").onmouseout(
+        //     // $(this).hide();
+        // );
 
         // 标签列表的标签操作
         $(".js-del_tag").click(function(){
