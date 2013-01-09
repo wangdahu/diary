@@ -64,19 +64,19 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
             <p>月报</p>
-            <?php if($allowPay):?>
+            <?php if(!isset($from) && $allowPay):?>
             <?php if($monthlys):?>
             <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
             <?php else:?>
             <a class="fr mr10 pay-disabled"></a>
             <?php endif;?>
             <?php endif;?>
-            <?php if(!$isReported):?>
+            <?php if(!isset($from) && !$isReported):?>
             <a href="javascript:;" class="fr write-monthly"></a>
             <?php endif;?>
         </h2>
 
-        <?php if(!$monthlys):?>
+        <?php if(!$monthlys || (isset($from) && !$isReported)):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
             <div class="c_c_c">
@@ -155,7 +155,7 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                                    }
                               ?>
                         <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>">
-                            <a href="/diary/index.php/my/index?forward=<?php echo $dateForward;?>">
+                            <a href="<?php echo $url;?>">
                                 <div>
                                     <?php echo $j;?>
                                 </div>

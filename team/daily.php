@@ -5,7 +5,7 @@ $weekarray = array("日","一","二","三","四","五","六");
 
 // 向前向后翻天
 $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
-$showDiary = $froward < 0 ? false : true;
+$showDiary = $forward < 0 ? false : true;
 if($forward){
     $forwardDays = $forward + 1;
     $backwardDays = $forward - 1;
@@ -17,13 +17,34 @@ if($forward){
 }
 $startTime = strtotime($currentDate);
 $endTime = $startTime + 86400 - 1;
-
+$object = date('Y-m-d', $endTime);
 $uid = (int) $_GET['uid'];
+
+$showCommit = false;
+$allowPay = false;
+$isReported = true;
+// 判断是否为补交/未汇报/已汇报
+if($forward == 0) { // 本日
+    // 是否已过汇报时间
+    $reportTime = DiarySet::reportTime($diary, $uid);
+    $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
+    $isReported = $allowPay = false;
+    if(time() > strtotime($object." ".$dailyTime)) { // 已过汇报时间
+        $showCommit = true;
+        $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
+    }else {
+        $isReported = false;
+    }
+}else { // 过去
+    $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
+    $showCommit = true;
+}
+// echo "<pre>"; var_dump($isReported);
 ?>
 
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
-<?php if($forward):?>
+<?php if($forward >= 0):?>
 <?php
 // 查看的日期
 $object = date('Y-m-d', $endTime);
@@ -31,34 +52,77 @@ $object = date('Y-m-d', $endTime);
 $user = DiaryUser::getInfo($uid);
 $corpId = $user['corp_id'];
 
-// 该企业该用户在选择时间内的日报
-$rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
-$result = $diary->db->query($rowsSql);
 $dailys = array();
-while($row = $result->fetch_array(MYSQLI_ASSOC)){
-    $dailys[] = $row;
-};
-$num = count($dailys);
+$num = 0;
+if($isReported) {
+    // 该企业该用户在选择时间内的日报
+    $rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
+    $result = $diary->db->query($rowsSql);
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+        $dailys[] = $row;
+    };
+    $num = count($dailys);
+}
 ?>
+
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
         </h2>
+        <?php if(!$num):?>
+        <div class="c_t mt10"></div>
+        <div class="c_c">
+            <div class="c_c_c">
+                <div>
+                    <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
+                        <strong>还未填写任何日志内容</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="c_b"></div>
+        <?php else:?>
         <?php foreach($dailys as $daily):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
-            <div class="date"><?php echo date('填写y-m-d H:i:s', $daily['fill_time']), date('汇报y-m-d H:i:s', $daily['report_time']);?></div>
             <div class="c_c_c">
-                <p><?php echo nl2br($daily['content']); ?></p>
+                <?php if($isReported):?>
+                <div>
+                    <p><?php echo nl2br($daily['content']); ?></p>
+                </div>
+                <?php else:?>
+                <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                    <p><?php echo nl2br($daily['content']); ?></p>
+                    <div style="display:none;"><?php echo $daily['content'];?></div>
+                </div>
+                <?php endif;?>
+                <br />
+                <div style="float: right; margin-top: -20px;">
+    <?php
+        $tagList = array();
+        $tagList = DiaryDaily::getDailyTag($diary, $daily['id']);
+        $tagIds = array_keys($tagList);
+    ?>
+                    <span id="tag-list-<?php echo $daily['id'];?>">
+                        <?php foreach($tagList as $tag):?>
+                        <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
+                            <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                                <span style="margin:4px;"><?php echo $tag['tag']?></span>
+                            </div>
+                        </div>
+                        <?php endforeach;?>
+                    </span>
+                    <span class="daily-date">
+                        <?php echo date('y-m-d H:i', $daily['fill_time']);?>
+                    </span>
+                </div>
             </div>
-            <?php if($daily['report_time'] > $daily['fill_time']):?>
-            <a href="javascript:" class="delete" title="可编辑可删除" data-id="<?php echo $daily['id'];?>"></a>
-            <?php endif;?>
         </div>
         <div class="c_b"></div>
         <?php endforeach;?>
+        <?php endif;?>
     </div>
     <!--今日工作结束-->
     <?php include "comment.php"; ?>
