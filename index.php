@@ -1,6 +1,8 @@
 <?php
 $currentModule = 'my';
-$filePath = substr($_SERVER['PATH_INFO'], 1);
+include dirname(dirname(__FILE__))."/vars.php";
+
+$filePath = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : '';
 if($filePath){
     $pathArr = explode('/', $filePath);
     if(!file_exists($filePath.".php")){
@@ -20,5 +22,4 @@ if($filePath){
 include "Init.php";
 
 $diary = new Diary();
-
 include $file;

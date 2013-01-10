@@ -96,7 +96,7 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                     <p><?php echo nl2br($monthlys['content']); ?></p>
                 </div>
                 <?php else:?>
-                <div data-daily_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                <div data-monthly_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary" style="cursor: pointer">
                     <p><?php echo nl2br($monthlys['content']); ?></p>
                     <div style="display:none;"><?php echo $monthlys['content'];?></div>
                 </div>

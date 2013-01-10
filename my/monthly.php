@@ -102,7 +102,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
                         alert('请填写日志内容');
                         return false;
                     }
-                    var currentTime = <?php echo $startTime; ?>,
+                    var currentTime = '<?php echo $startTime; ?>',
                     id = $("#monthly-dialog-form").find("#monthly_id").val();
                     $.post('createMonthly', {content:content, currentTime:currentTime, id:id}, function(json){
                         location.reload();

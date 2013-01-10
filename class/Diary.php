@@ -4,6 +4,7 @@ class Diary{
     public $db;
     public $uid;
     public $corpId;
+    public $keyCode;
     public $workingTime; // 工作时间
     public $dailyReport; // 日报默认汇报时间
     public $weeklyReport;
@@ -13,15 +14,28 @@ class Diary{
     public $monthlyRemind;
 
     public function __construct(){
-        $mysqli = new mysqli('localhost', 'root', '.', 'diary');
+        $db_config = Kohana::config('database.wisetong');
+        $contection = $db_config['connection'];
+        $db_host = $contection['host'];
+        $db_port = $contection['port'];
+        $db_user = $contection['user'];
+        $db_pass = $contection['pass'];
+        $db_database = $contection['database'];
+        $character_set = $db_config['character_set'];
+        $mysqli = new mysqli($db_host.':'.$db_port, $db_user, $db_pass, $db_database);
         if($mysqli->connect_error){
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
         }
-        $mysqli->query("SET NAMES 'utf8'");
+        $_session_arr = Session::instance()->get();
+
+        $mysqli->query("SET NAMES '".$character_set."'");
+        $this->keyCode = 'gzRN53VWRF9BYUXo';
         $this->db = $mysqli;
-        $this->uid = 1;
-        $this->corpId = 1;
-        $this->deptId = 1;
+        $this->userInfo = $_session_arr['userInfo'];
+        $this->entInfo = $_session_arr['entInfo'];
+        $this->uid =  $this->userInfo['PID'];
+        $this->corpId = $this->entInfo['AccountID'];
+        $this->deptId = $this->entInfo['DeptID'];
         $this->workingTime = array(1,2,3,4,5);
         $this->dailyReport = array('hour' => '18', 'minute' => '0', 'way' => array('remind'));
         $this->dailyRemind = array('hour' => '17', 'minute' => '30', 'way' => array('remind'));
