@@ -1,6 +1,8 @@
 <?php
 $currentModule = 'my';
-include dirname(dirname(__FILE__))."/vars.php";
+if(file_exists(dirname(dirname(__FILE__))."/vars.php")){
+    include dirname(dirname(__FILE__))."/vars.php";
+}
 
 $filePath = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : '';
 if($filePath){

@@ -14,28 +14,39 @@ class Diary{
     public $monthlyRemind;
 
     public function __construct(){
-        $db_config = Kohana::config('database.wisetong');
-        $contection = $db_config['connection'];
-        $db_host = $contection['host'];
-        $db_port = $contection['port'];
-        $db_user = $contection['user'];
-        $db_pass = $contection['pass'];
-        $db_database = $contection['database'];
-        $character_set = $db_config['character_set'];
-        $mysqli = new mysqli($db_host.':'.$db_port, $db_user, $db_pass, $db_database);
-        if($mysqli->connect_error){
-            die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+        if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
+            $db_config = Kohana::config('database.wisetong');
+            $contection = $db_config['connection'];
+            $db_host = $contection['host'];
+            $db_port = $contection['port'];
+            $db_user = $contection['user'];
+            $db_pass = $contection['pass'];
+            $db_database = $contection['database'];
+            $character_set = $db_config['character_set'];
+            $mysqli = new mysqli($db_host.':'.$db_port, $db_user, $db_pass, $db_database);
+            if($mysqli->connect_error){
+                die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+            }
+            $_session_arr = Session::instance()->get();
+            $this->keyCode = 'gzRN53VWRF9BYUXo';
+            $this->userInfo = $_session_arr['userInfo'];
+            $this->entInfo = $_session_arr['entInfo'];
+            $this->uid =  $this->userInfo['PID'];
+            $this->corpId = $this->entInfo['AccountID'];
+            $this->deptId = $this->entInfo['DeptID'];
+        }else{
+            $character_set = 'utf8';
+            $mysqli = new mysqli('localhost', 'root', '.', 'diary');
+            if($mysqli->connect_error){
+                die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+            }
+            $this->uid =  1;
+            $this->corpId = 1;
+            $this->deptId = 1;
         }
-        $_session_arr = Session::instance()->get();
 
         $mysqli->query("SET NAMES '".$character_set."'");
-        $this->keyCode = 'gzRN53VWRF9BYUXo';
         $this->db = $mysqli;
-        $this->userInfo = $_session_arr['userInfo'];
-        $this->entInfo = $_session_arr['entInfo'];
-        $this->uid =  $this->userInfo['PID'];
-        $this->corpId = $this->entInfo['AccountID'];
-        $this->deptId = $this->entInfo['DeptID'];
         $this->workingTime = array(1,2,3,4,5);
         $this->dailyReport = array('hour' => '18', 'minute' => '0', 'way' => array('remind'));
         $this->dailyRemind = array('hour' => '17', 'minute' => '30', 'way' => array('remind'));
