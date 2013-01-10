@@ -5,6 +5,7 @@ class Diary{
     public $uid;
     public $corpId;
     public $keyCode;
+    public $userInfo;
     public $workingTime; // 工作时间
     public $dailyReport; // 日报默认汇报时间
     public $weeklyReport;
@@ -31,7 +32,7 @@ class Diary{
             $this->keyCode = 'gzRN53VWRF9BYUXo';
             $this->userInfo = $_session_arr['userInfo'];
             $this->entInfo = $_session_arr['entInfo'];
-            $this->uid =  $this->userInfo['PID'];
+            $this->uid = $this->userInfo['PID'];
             $this->corpId = $this->entInfo['AccountID'];
             $this->deptId = $this->entInfo['DeptID'];
         }else{

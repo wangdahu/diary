@@ -6,6 +6,13 @@ class DiaryUser{
             $host = "http://113.106.88.164:14132/Interface/www/op/stdserver.php?wsdl";
 
             $soap = new soapClient($host);
+
+            return array(
+                'photo' => '../../source/images/img_01.png',
+                'username' => $uid,
+                'dept_name' => '技术部',
+                'corp_id' => 1,
+            );
             $_arr = array(
                 'AccountID' => self::corpId, // 企业id
                 'userid' => array($uid),     // 人员id

@@ -75,11 +75,9 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
             <span class="ml10 p3 <?php echo $insert ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;">
                 <?php echo $weekArr[$w]; ?>
                 <?php if($insert):?>
-                <div style="display: none;">
-                    <?php echo date('y年m月d日', $firstTime + ($w-1)*7*86400);?> - <?php echo date('y年m月d日', $firstTime + ($w)*7*86400);?>&nbsp;&nbsp;<?php echo $weekArr[$w];?>
-                    <br/>
-                    <?php echo $weeklys[$key]['content'];?>
-                </div>
+<script type="text/string" class="insert_weekly"><?php echo date('y年m月d日', $firstTime + ($w-1)*7*86400);?> - <?php echo date('y年m月d日', $firstTime + ($w)*7*86400);?>    <?php echo $weekArr[$w]."\n";?>
+<?php echo $weeklys[$key]['content'];?>
+</script>
                 <?php endif;?>
             </span>
             <?php endfor;?>
@@ -138,8 +136,8 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 
         // 插入周报
         $('.js-insert-daily').click(function(){
-            var html = $(this).find('div').html().trim();
-            $('#monthly_content').append(html);
+            var html = $(this).find('.insert_weekly').html();
+            $('#monthly_content')[0].value += html;
         });
     });
 </script>

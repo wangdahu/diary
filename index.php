@@ -2,6 +2,12 @@
 $currentModule = 'my';
 if(file_exists(dirname(dirname(__FILE__))."/vars.php")){
     include dirname(dirname(__FILE__))."/vars.php";
+    $_session_arr = Session::instance()->get();
+    if(!isset($_session_arr['userInfo'])){
+        $url = 'http://113.106.88.164:14132/index.php/admin/user/login';
+        header("Location: $url");
+        exit;
+    }
 }
 
 $filePath = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : '';

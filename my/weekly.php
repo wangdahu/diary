@@ -159,7 +159,6 @@ foreach($dailys as $date => $daily){
         $('.js-insert-daily').click(function(){
             var html = $(this).find('.insert_daily').html();
             $('#weekly_content')[0].value += html;
-            console.log(html);
         });
 
         // 编辑周报

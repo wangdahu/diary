@@ -14,7 +14,7 @@ $weekarray=array("日","一","二","三","四","五","六");
     <div class="pags fl clearfix"><a href="month?forward=<?php echo $forwardMonths;?>" class="up" title="上一月"></a><a href="month?forward=<?php echo $backwardMonths;?>" class="down" title="下一月"></a></div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
-    <a href="javascript:" class="fr dc" style="margin-left: 10px;">组织架构</a>
+    <a href="javascript:" class="fr dc" style="margin-left: 10px;" id="js-selected_user">组织架构</a>
     <div class="data fr clearfix">
         <a href="index" class="<?php echo $setDefault == 'index' ? 'cur' : ''?>">今日</a>
         <a href="week" class="<?php echo $setDefault == 'week' ? 'cur' : ''?>">本周</a>
