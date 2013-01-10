@@ -100,17 +100,12 @@ foreach($dailys as $date => $daily){
             <?php foreach($weekarray as $k => $w):?>
             <span class="ml10 p3 <?php echo $dailys[$date_keys[$k]] ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;">
                 <?php echo '周'.$w?>
-                <div style="display: none;">
-                    <br/>
-                    <?php echo '周'.$w.' '.$date_keys[$k]?>
-                    <br/>
-                    <?php foreach($dailys[$date_keys[$k]] as $one):?>
-                    <?php echo $one['filltime'].' '.$one['tagStr']?>
-                    <br/>
-                    <?php echo $one['content']?>
-                    <br/>
-                    <?php endforeach;?>
-                </div>
+<script type="text/string" class="insert_daily"><?php echo '周'.$w.' '.$date_keys[$k]."\n"?>
+<?php foreach($dailys[$date_keys[$k]] as $one):?>
+<?php echo $one['filltime'].' '.$one['tagStr']."\n"?>
+<?php echo $one['content']."\n"?>
+<?php endforeach;?>
+</script>
             </span>
             <?php endforeach;?>
         </div>
@@ -160,9 +155,9 @@ foreach($dailys as $date => $daily){
 
         // 插入日报
         $('.js-insert-daily').click(function(){
-            var html = $(this).find('div').html().trim();
-            $('#weekly_content').append(html);
-            console.log($(this).find('div').html());
+            var html = $(this).find('.insert_daily').html();
+            $('#weekly_content')[0].value += html;
+            console.log(html);
         });
 
         // 编辑周报

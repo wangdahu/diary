@@ -149,7 +149,7 @@ if($showCommit){
                             <div style="float: left;margin: 5px 5px 5px 10px;">
                                 <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
                             </div>
-                            <div class="color-list" style="float: left; margin: 5px 3px; background-color: <?php echo $tag['color'];?>">
+                            <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
                             </div>
                             <div ><?php echo $tag['tag']?></div>
                         </label>

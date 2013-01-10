@@ -9,21 +9,11 @@
                 <input name="color_id" id="color_id" type="hidden" value="<?php echo $defaultColorId;?>" />
                 <input name="daily_id" id="daily_id" type="hidden" value="" />
                 <input name="id" id="id" type="hidden" value="" />
-                <div class="show-color-list">
-                    <table>
-                        <?php for($row = 0; $row < 2; $row++):?>
-                        <tr>
-                            <?php for($col = 1; $col < 11; $col++):?>
-                            <td>
-                                <div>
-                                    <div class="color-list" data-id="<?php echo $row*10 + $col;?>" style="background-color: <?php echo $colorList[$row*10 + $col]?>;"></div>
-                                </div>
-                            </td>
-                            <?php endfor;?>
-                        </tr>
-                        <?php endfor;?>
-                    </table>
-                </div>
+                <ul class="show-color-list clearfix">
+                    <?php for($row = 1; $row < 21; $row++):?>
+                          <li class="color-list-wrapper" data-id="<?php echo $row;?>"><div style="background-color: <?php echo $colorList[$row]?>;"></div></li>
+                    <?php endfor;?>
+                </ul>
             </div>
         </fieldset>
     </form>
@@ -117,12 +107,14 @@
 
         $(".select-color").click(function(){
             $(this).hide();
-            $(".show-color-list").show();
+            var colorId = $('#color_id').val();
+            $(".show-color-list").show()
+                .find('[data-id=' + colorId + ']').addClass('color-selected').siblings().removeClass('color-selected');
         });
 
-        $(".color-list").click(function(){
+        $(".color-list-wrapper").click(function(){
             $(".show-color-list").hide();
-            $(".default-color").css('background-color', $(this).css("background-color"));
+            $(".default-color").css('background-color', $(this).children().css("background-color"));
             $("#color_id").val($(this).attr("data-id"));
             $(".select-color").show();
         });
