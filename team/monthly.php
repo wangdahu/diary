@@ -23,7 +23,6 @@ $object = date('Y-m', $endTime);
 $uid = (int) $_GET['uid'];
 
 $showCommit = false;
-
 $allowPay = false;
 $isReported = true;
 // 判断是否为补交/未汇报/已汇报
@@ -33,11 +32,12 @@ if($forward == 0) { // 本月
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
     if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
         $showCommit = true;
+    }else {
+        $isReported = false;
     }
 }else { // 过去
     $showCommit = true;
 }
-
 ?>
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/team/view-top.php"; ?>

@@ -1,3 +1,13 @@
+<?php
+$from = 'team';
+if($isReported){
+    $url = "../../../../diary/source/images/already-report.png";
+    $reportStatus = "已汇报";
+}else{
+     $url = "../../../../diary/source/images/no-report.png";
+     $reportStatus = "未汇报";
+}
+?>
 <!--功能操作开始-->
 <div class="todo clearfix">
     <a href="" class="a_01 fl">刷新</a>
@@ -24,6 +34,9 @@
     </div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
+    <p class="fl mg10" title="<?php echo $reportStatus;?>">
+        <img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" />
+    </p>
     <p class="fl">
         <?php
              if($type == 'daily') {

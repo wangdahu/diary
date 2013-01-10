@@ -1,21 +1,33 @@
+<?php
+$user = DiaryUser::getInfo($uid);
+$corpId = $user['corp_id'];
+
+// 该企业该用户在选择时间内的月报
+$rowsSql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 2 and `show_time` between $startTime and $endTime";
+$result = $diary->db->query($rowsSql);
+$weeklys = array();
+while($row = $result->fetch_assoc()){
+    $weeklys = $row;
+};
+?>
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
             <p>周报</p>
-            <?php if($allowPay):?>
+            <?php if(!isset($from) && $allowPay):?>
             <?php if($weeklys):?>
             <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
             <?php else:?>
             <a class="fr mr10 pay-disabled"></a>
             <?php endif;?>
             <?php endif;?>
-            <?php if(!$isReported):?>
+            <?php if(!isset($from) && !$isReported):?>
             <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
             <?php endif;?>
         </h2>
 
-        <?php if(!$weeklys):?>
+        <?php if(!$weeklys || (isset($from) && !$isReported)):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
             <div class="c_c_c">
@@ -45,7 +57,7 @@
         </div>
         <div class="c_b"></div>
         <?php endif;?>
-        <?php if($weekDate): foreach($weekDate as $k => $v):?>
+        <?php if(!isset($from) && $weekDate): foreach($weekDate as $k => $v):?>
         <div>
             <div class="c_t mt10"></div>
             <div class="c_c">

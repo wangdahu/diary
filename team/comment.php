@@ -5,7 +5,7 @@ $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
 $viewCount = count($viewRecord);
 
 // 查询汇报总人数
-$reportList = DiaryReport::getReportList($diary, $type, $object);
+$reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
 $reportCount = count($reportList);
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 ?>

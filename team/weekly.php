@@ -16,9 +16,30 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
+// 查看的年份和月份
+$object = date('Y-W', $startTime);
 $showDiary = $forward < 0 ? false : true;
 $uid = (int) $_GET['uid'];
-$showCommit = true;
+
+$showCommit = false;
+$allowPay = false;
+$isReported = true;
+// 判断是否为补交/未汇报/已汇报
+if($forward == 0) { // 本月
+    // 是否已过汇报时间
+    $reportTime = DiarySet::reportTime($diary, $uid);
+    $w = date('w') ? date('w') : 7; // 周日转换成7
+    $weeklyTime = $reportTime['weeklyReport']['hour'].":".$reportTime['weeklyReport']['minute'];
+    if($w > $reportTime['weeklyReport']['w'] || ($w == $reportTime['weeklyReport']['w'] && time() > strtotime(date('Y-m-d')." ".$weeklyTime))) { // 已过汇报时间
+        $showCommit = true;
+        $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
+    }else {
+        $isReported = false;
+    }
+}else { // 过去
+    $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
+    $showCommit = true;
+}
 
 ?>
 <?php include "views/layouts/header.php"; ?>

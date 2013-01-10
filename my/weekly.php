@@ -98,7 +98,8 @@ foreach($dailys as $date => $daily){
         </fieldset>
         <div class="mt10">插入日报：
             <?php foreach($weekarray as $k => $w):?>
-            <span class="ml10 p3 <?php echo $dailys[$date_keys[$k]] ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;">
+            <?php if(isset($date_keys[$k])):?>
+            <span class="ml10 p3 js-insert-daily" style="border:1px solid #ccc;">
                 <?php echo '周'.$w?>
 <script type="text/string" class="insert_daily"><?php echo '周'.$w.' '.$date_keys[$k]."\n"?>
 <?php foreach($dailys[$date_keys[$k]] as $one):?>
@@ -107,6 +108,7 @@ foreach($dailys as $date => $daily){
 <?php endforeach;?>
 </script>
             </span>
+            <?php endif;?>
             <?php endforeach;?>
         </div>
     </form>
@@ -123,12 +125,12 @@ foreach($dailys as $date => $daily){
             buttons: {
                 "写周报": function(){
                     var content = $("#weekly_content").val(),
-                    id = $("#daily-dialog-form").find("#daily_id").val();
+                    id = $("#weekly-dialog-form").find("#weekly_id").val();
                     if(!content.length){
                         alert('请填写日志内容');
                         return false;
                     }
-                    var currentTime = <?php echo $startTime; ?>;
+                    var currentTime = '<?php echo $startTime; ?>';
                     $.post('createWeekly', {content:content, currentTime:currentTime, id:id}, function(json){
                         location.reload();
                     }), 'json';

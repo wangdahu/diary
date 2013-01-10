@@ -12,8 +12,8 @@ if($_POST){
     DiarySet::saveReportObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
 }
 
-$hours = range(0, 24);
-$minutes = range(0, 60, 5);
+$hours = range(0, 23);
+$minutes = range(0, 55, 5);
 $months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 // 获取汇报设置

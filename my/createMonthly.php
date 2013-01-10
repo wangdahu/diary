@@ -11,7 +11,7 @@ function saveDaily($diary, $content, $currentTime, $id) {
     $corpId = $diary->corpId;
     $uid = $diary->uid;
     // 该用户设置的汇报时间
-    $setSql = "select `daily` from `diary_send_set` where `uid` = $uid";
+    $setSql = "select `daily` from `diary_report_set` where `uid` = $uid";
     if($result = $diary->db->query($setSql)) {
         $row = $result->fetch_row();
         if($row) {

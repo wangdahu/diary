@@ -35,7 +35,6 @@ $colorList = DiaryDaily::getColorList($diary);
 $tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
-
 $showCommit = false;
 // 判断是否为补交/未汇报/已汇报
 if($forward < 0) { // 未来
@@ -54,10 +53,6 @@ if($forward < 0) { // 未来
     $isReported = DiaryReport::checkReport($diary, $type, $object);
     $allowPay = $isReported ? false : true;
     $showCommit = true;
-}
-if($showCommit){
-    // 查询汇报总人数
-    $reportCount = DiaryReport::getReportCount($diary, $type, $object);
 }
 ?>
 

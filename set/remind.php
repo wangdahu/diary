@@ -7,7 +7,7 @@ if($_POST){
 }
 
 $hours = range(0, 24);
-$minutes = range(0, 60, 5);
+$minutes = range(0, 55, 5);
 $months = range(1, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 
