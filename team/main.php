@@ -25,7 +25,7 @@ $showObject = $forward < 0 ? false : true;
                 </a>
                 <p>
                     <a href="<?php echo $url;?>">
-                        <?php echo $user['username']; ?></a>（<?php echo $user['dept_name']; ?>）<br />
+                        <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>）<br />
                     已汇报
                     </a>
                     <span style="color:red;"><?php echo DiaryComment::checkUserObjectComment($diary, $uid, $type, $object) ? '评论' : '';?></span>

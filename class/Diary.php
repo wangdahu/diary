@@ -4,7 +4,6 @@ class Diary{
     public $db;
     public $uid;
     public $corpId;
-    public $keyCode;
     public $userInfo;
     public $workingTime; // 工作时间
     public $dailyReport; // 日报默认汇报时间
@@ -29,7 +28,6 @@ class Diary{
                 die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
             }
             $_session_arr = Session::instance()->get();
-            $this->keyCode = 'gzRN53VWRF9BYUXo';
             $this->userInfo = $_session_arr['userInfo'];
             $this->entInfo = $_session_arr['entInfo'];
             $this->uid = $this->userInfo['PID'];
@@ -74,6 +72,14 @@ class Diary{
             'hour' => '17',
             'minute' => '30',
             'way' => array('remind'),
+        );
+    }
+
+    public static function getConfig() {
+        return array(
+            'host' => '113.106.88.164',
+            'port' => '14132',
+            'keyCode' => 'gzRN53VWRF9BYUXo',
         );
     }
 }

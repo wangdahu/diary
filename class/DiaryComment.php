@@ -10,7 +10,7 @@ class DiaryComment{
         $list = array();
         $result = $diary->db->query($sql);
         while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $list[] = $row;
+            $list[$row['uid']] = $row;
         }
         return $list;
     }

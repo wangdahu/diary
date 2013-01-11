@@ -66,13 +66,13 @@
                     dept_names = [];
                     for(var i=0; i<users.length; i++){
                         user_ids.push(users[i]['id']);
-                        user_names.push(users[i]['id']);
+                        user_names.push(users[i]['name']);
                     };
                     for(var i=0; i<depts.length; i++){
                         dept_ids.push(depts[i]['id']);
-                        dept_names.push("["+depts[i]['id'] + "]");
+                        dept_names.push("["+depts[i]['name'] + "]");
                     };
-                    var text = user_names.concat( dept_names).join(',');
+                    var text = user_names.concat( dept_names).join('，');
                     object.parent().next().children().text(text);
                     object.parent().parent().next().val(user_ids.join(','))
                         .next().val(dept_ids.join(','));

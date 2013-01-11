@@ -26,7 +26,12 @@
                 mode:'simple',/*有两种模式 简单(simple)和复杂(intricacy) 默认复杂模式(intricacy)*/
                 sp:false,
                 rs:function(val) {/*获得结果函数*/
-                    location.href + '&uid=' + id;
+                    var jsonVal = $.parseJSON(val),
+                    users = jsonVal[1];
+                    var id = users[0]['id'];
+                    var type = '<?php echo $type;?>',
+                    forward = '<?php echo $forward;?>';
+                    location.href  = '/diary/index.php/team/'+type+'?forward='+forward+'&uid='+id;
                     $('#mask').hide();
                 },
                 fun:function(val){/*外部函数*/

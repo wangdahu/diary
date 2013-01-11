@@ -322,22 +322,23 @@ class DiarySet{
     }
 
     public static function userStr($user_ids) {
+        $users = DiaryUser::getUsers($user_ids);
         $name = array();
-        foreach($user_ids as $id) {
-            $user = DiaryUser::getInfo($id);
-            $name[] = $user['username'];
+        foreach($users as $user) {
+            $name[] = $user['UserName'];
         }
         return implode('，', $name);
     }
 
     public static function deptStr($dept_ids) {
         if($dept_ids){
-            foreach($dept_ids as $id) {
-                $dept = DiaryDept::getInfo($id);
-                $name[] = $dept['name'];
+            $depts = DiaryDept::getDepts($dept_ids);
+            $name = array();
+            foreach($depts as $dept) {
+                $name[] = $dept['Name'];
             }
             return "[".implode(']，[', $name)."]";
-        }else{
+        }else {
             return '';
         }
     }

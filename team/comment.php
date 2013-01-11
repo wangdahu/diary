@@ -8,6 +8,10 @@ $viewCount = count($viewRecord);
 $reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
 $reportCount = count($reportList);
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
+
+$reportUserIds = array_keys($reportList);
+$commentUserIds = array_keys($commentList);
+$allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
 ?>
 <!--评论开始-->
 <div class="content_bar">
@@ -20,14 +24,13 @@ $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '
         <?php endif;?>
     </h2>
     <?php foreach($commentList as $comment): ?>
-    <?php $user = DiaryUser::getInfo($comment['uid']);?>
     <div class="comment_box">
         <div class="c_t"></div>
         <div class="c_c clearfix">
-            <div class="pic"><img src="<?php echo $user['photo']; ?>" alt="" /></div>
+            <div class="pic"><img src="<?php echo $allUsers[$comment['uid']]['photo']; ?>" alt="" /></div>
             <div class="comment_t">
                 <h2>
-                    <a href="javascript:;"><?php echo $user['username']; ?>（<?php echo $user['dept_name']; ?>）</a>
+                    <a href="javascript:;"><?php echo $allUsers[$comment['uid']]['UserName']; ?>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>）</a>
                     <span>
                         <?php echo date('y-m-d H:i', $comment['add_time']); ?>
                     </span>
@@ -73,9 +76,8 @@ $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '
             <td>查阅时间</td>
         </tr>
         <?php foreach($reportList as $report):?>
-        <?php $user = DiaryUser::getInfo($report['object']);?>
         <tr>
-            <td><?php echo $user['username']; ?>（<?php echo $user['dept_name']; ?>）</td>
+            <td><?php echo $allUsers[$report['object']]['UserName']; ?>（<?php echo $allUsers[$report['object']]['dept_name']; ?>）</td>
             <td><?php echo isset($viewRecord[$report['object']]) ? '已阅' : '未阅'?></td>
             <td><?php echo isset($viewRecord[$report['object']]) ? date('Y-m-d H:i', $viewRecord[$report['object']]['view_time']) : '--'?></td>
         </tr>
@@ -88,7 +90,7 @@ $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '
         $("#commit-dialog-form").dialog({
             autoOpen: false,
             height: 300,
-            width: 400,
+            width: 410,
             modal: true,
             open: function(){
                 $("#daily_content").select();
