@@ -1,4 +1,4 @@
-<div id="daily-dialog-form" title="写日志">
+<div id="daily-dialog-form" title="写日志" style="display: none">
     <form>
         <fieldset>
             <textarea cols="60" rows="12" id="daily_content"></textarea>

@@ -26,18 +26,18 @@
                 depchoice1.inputval = [];
                 depchoice1.inputempval = [];
                 if(oldUsers){
-                    var userArr = oldUsers.split(','), userObject = [];
-                    for (var i=0; i<userArr.length; i++) {
-                        userObject.push({'id': userArr[i], 'name': ''});
-                    }
+                    var userArr = oldUsers.split(',');
+                    var userObject = $.map(userArr, function(id) {
+                        return {id: id, name: '' };
+                    });
                     depchoice1.inputempval = userObject;
                 }
                 /*人员组装格式 json串 [{"id":"12","name":"11"},{"id":"19","name":"11111"}] */
                 if(oldDepts){
-                    var deptArr = oldDepts.split(','), deptObject = [], i;
-                    for (var i=0; i<deptArr.length; i++) {
-                        deptObject.push({'id': deptArr[i], 'name': ''});
-                    }
+                    var deptArr = oldDepts.split(','),
+                    deptObject = $.map(deptArr, function(id) {
+                        return {id: id, name: '' };
+                    });
                     depchoice1.inputval = deptObject;
                 }
                 depchoice1.init();
@@ -57,25 +57,25 @@
                 sp:false,
                 rs:function(val) {/*获得结果函数*/
                     $('#mask').hide();
-                    var jsonVal = JSON.parse(val),
+                    var jsonVal = $.parseJSON(val),
                     depts = jsonVal[0],
                     users = jsonVal[1];
-                    var user_ids = '',
-                    user_names = '',
-                    dept_ids = '',
-                    dept_names = '';
+                    var user_ids = [],
+                    user_names = [],
+                    dept_ids = [],
+                    dept_names = [];
                     for(var i=0; i<users.length; i++){
-                        user_ids += users[i]['id']+",";
-                        user_names += users[i]['id']+"，";
+                        user_ids.push(users[i]['id']);
+                        user_names.push(users[i]['id']);
                     };
                     for(var i=0; i<depts.length; i++){
-                        dept_ids += depts[i]['id']+",";
-                        dept_names += "["+depts[i]['id']+"]，";
+                        dept_ids.push(depts[i]['id']);
+                        dept_names.push("["+depts[i]['id'] + "]");
                     };
-                    var text = user_names + dept_names;
+                    var text = user_names.concat( dept_names).join(',');
                     object.parent().next().children().text(text);
-                    object.parent().parent().next().val(user_ids);
-                    object.parent().parent().next().next().val(dept_ids);
+                    object.parent().parent().next().val(user_ids.join(','))
+                        .next().val(dept_ids.join(','));
                 },
                 fun:function(val){/*外部函数*/
                     $('#mask').hide();

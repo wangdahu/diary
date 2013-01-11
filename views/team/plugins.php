@@ -26,7 +26,7 @@
                 mode:'simple',/*有两种模式 简单(simple)和复杂(intricacy) 默认复杂模式(intricacy)*/
                 sp:false,
                 rs:function(val) {/*获得结果函数*/
-                    console.log(location.href);
+                    location.href + '&uid=' + id;
                     $('#mask').hide();
                 },
                 fun:function(val){/*外部函数*/

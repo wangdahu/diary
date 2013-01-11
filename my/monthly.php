@@ -60,7 +60,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $weeklys[date('Y-W',$row['show_time'])] = $row;
 }
 ?>
-<div id="monthly-dialog-form" title="写月报">
+<div id="monthly-dialog-form" title="写月报" style="display: none">
     <form>
         <fieldset>
             <textarea cols="60" rows="12" id="monthly_content"></textarea>

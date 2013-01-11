@@ -207,8 +207,20 @@ if($forward < 0) { // 未来
         });
 
         // 操作标签
-        $('.js-opterate_tag').click(function(){
+        $('.js-opterate_tag').click(function(){console.log(1);
             $(this).parent().parent().next().toggle();
+        });
+        // 点击其他地方隐藏
+        $(document.body).click(function(e) {
+            var target = $(e.target);
+            console.log(target, target.length);
+            if(target && target.is('.js-opterate_tag')) {
+                return;
+            }
+            $('.js-opterate_tag').parent().parent().next().hide();
+        });
+        $('.js-all-tag').click(function(e) {
+            e.stopPropagation();
         });
 
         // 标签操作消失

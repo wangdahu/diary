@@ -90,7 +90,7 @@ foreach($dailys as $date => $daily){
     }
 }
 ?>
-<div id="weekly-dialog-form" title="写周报">
+<div id="weekly-dialog-form" title="写周报" style="display: none">
     <form>
         <fieldset>
             <textarea cols="60" rows="12" id="weekly_content"></textarea>
