@@ -18,6 +18,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
 
+
 <div class="content">
     <form id="report-set-form" method="post">
         <div class="set_bar mb25">
@@ -25,9 +26,9 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="#">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
                     <p>
-                        <textarea name="daily" id="daily" class="set_textarea"><?php echo $subscribeStr['daily_str'];?></textarea>
+                        <textarea readonly name="daily" id="daily" class="set_textarea"><?php echo $subscribeStr['daily_str'];?></textarea>
                     </p>
                 </li>
                 <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $subscribeObject['daily_object']['user']); ?>"/>
@@ -38,9 +39,9 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2>周报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="#">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
                     <p>
-                        <textarea name="weekly" id="weekly" class="set_textarea"><?php echo $subscribeStr['weekly_str'];?></textarea>
+                        <textarea readonly name="weekly" id="weekly" class="set_textarea"><?php echo $subscribeStr['weekly_str'];?></textarea>
                     </p>
                 </li>
                 <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $subscribeObject['weekly_object']['user']); ?>"/>
@@ -51,9 +52,9 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2>月报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="#">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
                     <p>
-                        <textarea name="monthly" id="monthly" class="set_textarea"><?php echo $subscribeStr['monthly_str'];?></textarea>
+                        <textarea readonly name="monthly" id="monthly" class="set_textarea"><?php echo $subscribeStr['monthly_str'];?></textarea>
                     </p>
                 </li>
                 <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $subscribeObject['monthly_object']['user']); ?>"/>
@@ -75,3 +76,6 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
         });
     });
 </script>
+
+
+<?php include "plugins.php"; ?>

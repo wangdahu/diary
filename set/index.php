@@ -31,9 +31,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="#">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
                     <p>
-                        <textarea name="daily" id="daily" class="set_textarea"><?php echo $reportStr['daily_str'];?></textarea>
+                        <textarea readonly name="daily" id="daily" class="set_textarea"><?php echo $reportStr['daily_str'];?></textarea>
                     </p>
                 </li>
                 <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $reportObject['daily_object']['user']);?>"/>
@@ -73,9 +73,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
             <h2>周报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="#">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
                     <p>
-                        <textarea name="weekly" id="weekly" class="set_textarea"><?php echo $reportStr['weekly_str'];?></textarea>
+                        <textarea readonly name="weekly" id="weekly" class="set_textarea"><?php echo $reportStr['weekly_str'];?></textarea>
                     </p>
                 </li>
                 <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $reportObject['weekly_object']['user']);?>"/>
@@ -123,9 +123,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
             <h2>月报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="#">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
                     <p>
-                        <textarea name="monthly" id="monthly" class="set_textarea"><?php echo $reportStr['monthly_str'];?></textarea>
+                        <textarea readonly name="monthly" id="monthly" class="set_textarea"><?php echo $reportStr['monthly_str'];?></textarea>
                     </p>
                 </li>
                 <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $reportObject['monthly_object']['user']);?>"/>
@@ -185,3 +185,4 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
         });
     });
 </script>
+<?php include "plugins.php"; ?>

@@ -5,7 +5,6 @@
     <title><?php echo $title;?></title>
     <script src="../../../../diary/source/jqueryUI/js/jquery-1.8.3.js"></script>
     <script src="../../../../diary/source/jqueryUI/js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script type="text/javascript" src="../../../../misc/vendors/depchoice/edep_plugin.js"></script>
     <link rel="stylesheet" href="../../../../diary/source/jqueryUI/css/smoothness/jquery-ui-1.9.2.custom.min.css">
     <link rel="stylesheet" href="../../../../diary/source/css/base.css">
     <link rel="stylesheet" href="../../../../diary/source/css/module.css">

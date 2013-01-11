@@ -60,3 +60,4 @@ if($isReported){
     </div>
 </div>
 <!--功能操作结束-->
+<?php include 'plugins.php';?>
