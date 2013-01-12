@@ -5,7 +5,7 @@ $showObject = $forward < 0 ? false : true;
 <div class="content">
     <div class="set_bar mb25">
         <!--标签设置开始-->
-        <ul class="dy">
+        <ul class="dy clearfix">
             <?php foreach($teamShowObject as $uid): ?>
             <?php
                  $user = DiaryUser::getInfo($uid);
@@ -16,20 +16,22 @@ $showObject = $forward < 0 ? false : true;
                      $url = "monthly?forward=$forward&uid=$uid";
                  }
                  $status = DiaryViewRecord::checkUser($diary, $type, $uid, $object);
+                 $cls = $status ? '' : 'unread';
+                 if(DiaryComment::checkUserObjectComment($diary, $uid, $type, $object)) {
+                     $cls .= ' has-comment';
+                 }
             ?>
-            <li style="<?php echo $status ? '' : 'border: 1px solid #000;'?>">
-                <a href="<?php echo $url;?>">
-                    <div class="pic">
-                        <img src="<?php echo $user['photo']; ?>" />
-                </div>
-                </a>
-                <p>
+            <li class="clearfix <?php echo $cls; ?>">
+                <div class="pic">
                     <a href="<?php echo $url;?>">
-                        <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>）<br />
-                    已汇报
-                    </a>
-                    <span style="color:red;"><?php echo DiaryComment::checkUserObjectComment($diary, $uid, $type, $object) ? '评论' : '';?></span>
-                </p>
+                        <img src="<?php echo $user['photo']; ?>" />
+                     </a>
+                </div>
+                <div class="info">
+                    <a href="<?php echo $url;?>">
+                        <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>）
+                    <div class="mini-report">已汇报</div>
+                </div>
             </li>
             <?php endforeach;?>
         </ul>

@@ -63,7 +63,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 <div id="monthly-dialog-form" title="写月报" style="display: none">
     <form>
         <fieldset>
-            <textarea cols="60" rows="12" id="monthly_content"></textarea>
+            <textarea style="width: 95%;" rows="8" id="monthly_content"></textarea>
             <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
         </fieldset>
         <div class="mt10">插入日报：

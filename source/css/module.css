@@ -1,4 +1,4 @@
-body{background:#bfc0c5;}
+body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 /*----------- 头部 ----------*/
 .topBar{width:100%;height:40px;background:url(../images/topBar_bg.png) repeat-x;position:fixed;top:0;left:0;_position:absolute; _top:expression(documentElement.scrollTop+0+"px"); z-index:300;}
 .topBarInner{width:900px;margin:0 auto;line-height:40px;}
@@ -103,18 +103,22 @@ body{background:#bfc0c5;}
 /*----------- 订阅设置 ----------*/
 .set_bar h2 .tjdy{width:80px;height:25px;display:block;background:url(../images/btn.png) 0 -211px no-repeat;margin-bottom:5px;}
 .set_bar h2 .qxdy{width:80px;height:25px;display:block;background:url(../images/btn.png) 0 -246px no-repeat;margin-bottom:5px;}
-.dy{overflow:hidden;padding:12px 0 0 0;}
-.dy li{float:left;width:246px;height:60px;background:url(../images/bg_05.png) 0 -94px no-repeat;padding:12px;margin:7px;}
-.dy li:hover{background:url(../images/bg_05.png) 0 0 no-repeat;}
-.dy li p{line-height:28px;}
+.dy{padding:12px 0 0 0; }
+.dy li{float:left;width:246px;height:60px;padding:12px;margin:7px; border: solid 1px #d3d3d3; background-color: #fff; border-radius: 5px; }
+.dy li:hover {background-color: #f5f5f5; }
+.dy li.unread { border-color: #659bec; }
+.dy li .info {line-height:28px; float: left; }
+.mini-report { background: url(../images/mini-report.png) no-repeat 0px center; padding-left: 18px; line-height: 1.5; }
+.mini-unreport { background: url(../images/mini-unreport.png) no-repeat 0px center; padding-left: 18px; line-height: 1.5; }
 
 .calendar{width:830px;margin:0 auto 15px auto;}
-.calendar td{text-align:center;font:400 20px/70px "Microsoft YaHei",黑体;}
-.calendar thead td{line-height:50px;}
+.calendar td{text-align:center;font-size: 20px; line-height: 70px;}
+.calendar a { color: #999; text-decoration: none; }
+.calendar thead td{line-height:50px; color: #999; }
 .calendar tbody td{border:1px solid #dedede;}
 .calendar tbody td.td_l{width:130px;border:1px solid #aaa;}
 .calendar tbody td.td_grey{background:#f2f2f2;}
-.calendar tbody td.td_blue{background:#5bc3ff;border:1px solid #46b0ed;}
+.calendar tbody td.td_blue{background-color:#5bc3ff;border:1px solid #46b0ed;}
 .calendar tbody td.td_white{background:white;}
-.calendar tbody td.comment {background:url(../images/comment.png) right top no-repeat;}
-.calendar tbody td.no-report {background:url(../images/has-no-report.png) left top no-repeat;}
+.has-comment { background-image: url(../images/comment.png); background-position: right top; background-repeat: no-repeat;}
+.calendar tbody td.no-report {background-image: url(../images/has-no-report.png); background-position: left top; background-repeat: no-repeat;}

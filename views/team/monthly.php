@@ -115,13 +115,13 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                 <thead>
                     <tr>
                         <td><?php echo $currentMonth;?></td>
-                        <td style="<?php echo $currentWeekth == 1 ? 'color:blue;' : ''?>">星期一</td>
-                        <td style="<?php echo $currentWeekth == 2 ? 'color:blue;' : ''?>">星期二</td>
-                        <td style="<?php echo $currentWeekth == 3 ? 'color:blue;' : ''?>">星期三</td>
-                        <td style="<?php echo $currentWeekth == 4 ? 'color:blue;' : ''?>">星期四</td>
-                        <td style="<?php echo $currentWeekth == 5 ? 'color:blue;' : ''?>">星期五</td>
-                        <td style="<?php echo $currentWeekth == 6 ? 'color:blue;' : ''?>">星期六</td>
-                        <td style="<?php echo $currentWeekth == 0 ? 'color:blue;' : ''?>">星期日</td>
+                        <td style="<?php echo $currentWeekth == 1 ? 'color:black;' : ''?>">星期一</td>
+                        <td style="<?php echo $currentWeekth == 2 ? 'color:black;' : ''?>">星期二</td>
+                        <td style="<?php echo $currentWeekth == 3 ? 'color:black;' : ''?>">星期三</td>
+                        <td style="<?php echo $currentWeekth == 4 ? 'color:black;' : ''?>">星期四</td>
+                        <td style="<?php echo $currentWeekth == 5 ? 'color:black;' : ''?>">星期五</td>
+                        <td style="<?php echo $currentWeekth == 6 ? 'color:black;' : ''?>">星期六</td>
+                        <td style="<?php echo $currentWeekth == 0 ? 'color:black;' : ''?>">星期日</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,12 +135,10 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                                 $url = "/diary/index.php/team/weekly?forward=".$weekForward."&uid=".$uid;
                              }
                         ?>
-                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report' : '';?>">
+                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report' : '';?>" style="<?php echo 'border-width: 2px;';?>" >
 
                             <a href="<?php echo $url;?>">
-                                <div>
-                                    <?php echo $weekArr[$w]; ?>
-                                </div>
+                                <div><?php echo $weekArr[$w]; ?></div>
                             </a>
                         </td>
                         <?php for($i = 0; $i < 7; $i++): ?>
@@ -154,7 +152,7 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                                        $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
                                    }
                               ?>
-                        <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>">
+                            <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'has-comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
                             <a href="<?php echo $url;?>">
                                 <div>
                                     <?php echo $j;?>

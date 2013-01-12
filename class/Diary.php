@@ -35,7 +35,7 @@ class Diary{
             $this->deptId = $this->entInfo['DeptID'];
         }else{
             $character_set = 'utf8';
-            $mysqli = new mysqli('localhost', 'root', '.', 'diary');
+            $mysqli = new mysqli('192.168.0.101', 'root', '.', 'diary');
             if($mysqli->connect_error){
                 die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
             }
