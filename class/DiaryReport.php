@@ -30,7 +30,7 @@ class DiaryReport {
         $sql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$type' and `date` = '$date'";
         $result = $diary->db->query($sql);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            $list[$row['object']] = $row;
+            $list[] = $row;
         }
         return $list;
     }
