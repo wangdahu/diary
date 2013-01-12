@@ -20,6 +20,9 @@ $showObject = $forward < 0 ? false : true;
                  if(DiaryComment::checkUserObjectComment($diary, $uid, $type, $object)) {
                      $cls .= ' has-comment';
                  }
+                 $isReport = DiaryReport::checkReport($diary, $type, $object, $uid);
+                 $isr = $isReport ? "mini-report" : "mini-unreport";
+                 $reportStr = $isReport ? "已汇报" : "未汇报";
             ?>
             <li class="clearfix <?php echo $cls; ?>">
                 <div class="pic">
@@ -30,7 +33,7 @@ $showObject = $forward < 0 ? false : true;
                 <div class="info">
                     <a href="<?php echo $url;?>">
                         <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>）
-                    <div class="mini-report">已汇报</div>
+                    <div class="<?php echo $isr; ?>"><?php echo $reportStr;?></div>
                 </div>
             </li>
             <?php endforeach;?>

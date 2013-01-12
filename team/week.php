@@ -20,7 +20,7 @@ if($forward){
 }
 $endTime = $startTime + 7*86400 - 1;
 // 查看的年份和周
-$object = date('Y-W', $endTime);
+$object = date('Y-W', $startTime);
 $type = "weekly";
 
 // 周报汇报给我的和我订阅的用户

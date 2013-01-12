@@ -49,7 +49,6 @@ $firstDate = date('Y-m-d', $firstTime);
 $lastDate = date('Y-m-d', $lastTime);
 $dateObject = DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
 $weekObject = DiaryComment::getWhichDate($diary, $uid, 'weekly', date('Y-W', strtotime($firstDate)), date('Y-W', strtotime($lastDate)));
-
 // 查询有内容的天并未汇报
 $noReportDaily = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 1, $uid);
 $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $uid);
@@ -134,8 +133,9 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                              if(isset($from)) {
                                 $url = "/diary/index.php/team/weekly?forward=".$weekForward."&uid=".$uid;
                              }
+                             $isFuture = ($firstTime + 7*$w*86400) > time();
                         ?>
-                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report' : '';?>" style="<?php echo 'border-width: 2px;';?>" >
+                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'has-comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report td_grey' : '';?> <?php echo $isFuture ? 'td_white' : '';?>" style="<?php echo 'border-width: 2px;';?>" >
 
                             <a href="<?php echo $url;?>">
                                 <div><?php echo $weekArr[$w]; ?></div>
@@ -152,7 +152,7 @@ $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, 
                                        $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
                                    }
                               ?>
-                            <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'has-comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
+                            <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report td_grey' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'has-comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
                             <a href="<?php echo $url;?>">
                                 <div>
                                     <?php echo $j;?>

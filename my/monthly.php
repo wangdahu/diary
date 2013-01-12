@@ -63,7 +63,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 <div id="monthly-dialog-form" title="写月报" style="display: none">
     <form>
         <fieldset>
-            <textarea style="width: 95%;" rows="8" id="monthly_content"></textarea>
+            <textarea style="width: 95%;" rows="12" id="monthly_content" data-limit="1000"></textarea>
             <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
         </fieldset>
         <div class="mt10">插入日报：
@@ -90,14 +90,22 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $(function() {
         $("#monthly-dialog-form").dialog({
             autoOpen: false,
-            height: 315,
+            height: 350,
             width: 520,
             modal: true,
+            open: function(){
+                $("#monthly_content").select();
+                $('#monthly_content').wordLimit();
+            },
             buttons: {
                 "写月报": function(){
                     var content = $("#monthly_content").val();
                     if(!content.length){
                         alert('请填写日志内容');
+                        return false;
+                    }
+                    if($('#word_valid').val()){
+                        alert('输入的文字内容大于所规定的字数');
                         return false;
                     }
                     var currentTime = '<?php echo $startTime; ?>',

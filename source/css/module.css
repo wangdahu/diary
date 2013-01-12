@@ -115,10 +115,10 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .calendar td{text-align:center;font-size: 20px; line-height: 70px;}
 .calendar a { color: #999; text-decoration: none; }
 .calendar thead td{line-height:50px; color: #999; }
-.calendar tbody td{border:1px solid #dedede;}
+.calendar tbody td{background-color: #d9fefe; border:1px solid #dedede;}
 .calendar tbody td.td_l{width:130px;border:1px solid #aaa;}
-.calendar tbody td.td_grey{background:#f2f2f2;}
+.calendar tbody td.td_grey{background-color:#f2f2f2;}
 .calendar tbody td.td_blue{background-color:#5bc3ff;border:1px solid #46b0ed;}
-.calendar tbody td.td_white{background:white;}
+.calendar tbody td.td_white{background-color:white;}
 .has-comment { background-image: url(../images/comment.png); background-position: right top; background-repeat: no-repeat;}
 .calendar tbody td.no-report {background-image: url(../images/has-no-report.png); background-position: left top; background-repeat: no-repeat;}

@@ -30,7 +30,7 @@ class DiaryUser{
             return array(
                 'photo' => '../../source/images/img_01.png',
                 'UserName' => $result[0]['UserName'],
-                'dept_name' => DiaryDept::getName($result[0]['DepartmentID']),
+                'dept_name' => $result[0]['depname'],
                 'corp_id' => $result[0]['AccountID'],
             );
         }else {
@@ -44,10 +44,14 @@ class DiaryUser{
     }
 
     public static function getUsers($user_ids){
-        // $users = self::base($user_ids);
         $result = array();
-        foreach($user_ids as $id){
-            $result[$id] = self::getInfo($id);
+        if($user_ids){
+            $users = self::base($user_ids);
+            foreach($users as $user){
+                $user['dept_name'] = $user['depname'];
+                $user['photo'] = '../../source/images/img_01.png';
+                $result[$user['PID']] = $user;
+            }
         }
         return $result;
     }

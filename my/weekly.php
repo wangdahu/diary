@@ -28,6 +28,7 @@ $weekarray = array("一","二","三","四","五","六","日");
 for($i = 6; $i >= 0; $i--){
     $time = $startTime + 86400*$i;
     $weekDate[$weekarray[$i]] = date('y.m.d', $time);
+    $dateForwards[date('y.m.d', $time)] = $time;
 }
 $corpId = $diary->corpId;
 $uid = $diary->uid;
@@ -93,7 +94,7 @@ foreach($dailys as $date => $daily){
 <div id="weekly-dialog-form" title="写周报" style="display: none">
     <form>
         <fieldset>
-            <textarea cols="60" rows="12" id="weekly_content"></textarea>
+            <textarea style="width: 95%;" rows="12" id="weekly_content" data-limit="1000"></textarea>
             <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
         </fieldset>
         <div class="mt10">插入日报：
@@ -119,15 +120,23 @@ foreach($dailys as $date => $daily){
     $(function() {
         $("#weekly-dialog-form").dialog({
             autoOpen: false,
-            height: 315,
+            height: 350,
             width: 520,
             modal: true,
+            open: function(){
+                $("#weekly_content").select();
+                $('#weekly_content').wordLimit();
+            },
             buttons: {
                 "写周报": function(){
                     var content = $("#weekly_content").val(),
                     id = $("#weekly-dialog-form").find("#weekly_id").val();
                     if(!content.length){
                         alert('请填写日志内容');
+                        return false;
+                    }
+                    if($('#word_valid').val()){
+                        alert('输入的文字内容大于所规定的字数');
                         return false;
                     }
                     var currentTime = '<?php echo $startTime; ?>';

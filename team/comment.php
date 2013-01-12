@@ -3,14 +3,20 @@ $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
 DiaryViewRecord::addRecord($diary, $type, $uid, $object);
 $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
 $viewCount = count($viewRecord);
+$commentUserIds = array();
+foreach($commentList as $comment) {
+    $commentUserIds[] = $comment['uid'];
+}
 
 // 查询汇报总人数
 $reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
 $reportCount = count($reportList);
+$reportUserIds = array();
+foreach($reportList as $report) {
+    $reportUserIds[] = $report['object'];
+}
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 
-$reportUserIds = array_keys($reportList);
-$commentUserIds = array_keys($commentList);
 $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
 ?>
 <!--评论开始-->
