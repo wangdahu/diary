@@ -213,7 +213,6 @@ if($forward < 0) { // 未来
         // 点击其他地方隐藏
         $(document.body).click(function(e) {
             var target = $(e.target);
-            console.log(target, target.length);
             if(target && target.is('.js-opterate_tag')) {
                 return;
             }

@@ -38,12 +38,32 @@ if($isReported){
     $('.js-pay_diary').live('click', function() {
         var type = '<?php echo $type;?>',
         currentDate = '<?php echo $object; ?>';
-    console.log(type, currentDate);
         $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
             if(json != 0) {
                 location.reload();
             }
         });
     });
+
+$.fn.extend({
+    wordLimit: function() {
+        this.each(function() {
+            var textarea = $(this), limit = textarea.data('limit'), wordIndicator;
+            if(textarea.data('init')) {
+                return textarea.trigger('input');
+            }
+            textarea.data('init', 1);
+            textarea.parent().css('position', 'relative');
+            wordIndicator = $('<span class="word-limit"><span>0</span> / <span>' + limit + '</span><input id="word_valid" type="hidden"/></span>').insertAfter(textarea);
+            textarea.bind('input keyup', function() {
+                var len = this.value.length;
+                wordIndicator.find('span:first').text(len);
+                wordIndicator.toggleClass('word-exceed', len > limit);
+                wordIndicator.find('input[type=hidden]').val(len > limit ? 1 : '');
+            }).trigger('input');
+        });
+        return this;
+    }
+});
 </script>
 

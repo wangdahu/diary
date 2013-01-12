@@ -1,7 +1,7 @@
 <div id="daily-dialog-form" title="写日志" style="display: none">
     <form>
         <fieldset>
-            <textarea cols="60" rows="12" id="daily_content"></textarea>
+            <textarea rows="10" style="width: 95%;" id="daily_content" data-limit="300"></textarea>
             <input type="hidden" name="daily_id" id="daily_id"/>
         </fieldset>
     </form>
@@ -16,6 +16,7 @@
             modal: true,
             open: function(){
                 $("#daily_content").select();
+                $('#daily_content').wordLimit();
             },
             buttons: {
                 "写日志": function(){
@@ -39,15 +40,15 @@
             }
         });
 
-        $(".write-daily").button().click(function(){
-            $("#daily_content").html('');
+        $(".write-daily").click(function(){
+            $("#daily_content").val('');
             $("#daily_id").val(0);
             $("#daily-dialog-form").dialog("open");
         });
 
         $(".js-edit_diary").click(function(){
             var content = $(this).find("div").html();
-            $("#daily_content").html(content);
+            $("#daily_content").val(content);
             $("#daily-dialog-form").find("#daily_id").val($(this).attr('data-daily_id'));
             $("#daily-dialog-form").dialog("open");
         });
