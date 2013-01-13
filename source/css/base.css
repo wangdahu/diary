@@ -142,4 +142,7 @@ form .show-color-list .color-selected { border: 1px solid #666; }
 .word-limit { position: absolute; bottom: 5px; right: 5%; color: #9B9B9B; font-size: 14px; font-family: Constantia, Georgia;}
 .word-exceed { color: #f00; }
 
-
+.emotion-wrapper { float: left; position: relative; }
+.insert-emotion { display: block; width: 20px; height: 20px; background: url(../images/ico_02.png) no-repeat center center; }
+.emotion-list { position: absolute; display: none; border: 1px solid #D7D7D7; width: 410px; height: 300px; background: #fff; }
+.emotion-list li { float: left; }

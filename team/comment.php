@@ -56,9 +56,17 @@ $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
         <div class="c_c">
             <div class="comment_f">
                 <button class="fr" type="submit">评论</button>
+                <div class="emotion-warpper">
+                    <a class="insert-emotion"></a>
+                    <ul class="emotion-list clearfix">
+                        <li><a href="javascript:"><img src="/diary/source/emotions/e6004.gif"/></a></li>
+                        <li><a href="javascript:"><img src="/diary/source/emotions/e4006.gif"/></a></li>
+                    </ul>
+                </div>
             </div>
             <div class="ftextarea">
-                <textarea name="content" id="content" class="textarea_comment" maxlength="1000"></textarea>
+                <div contenteditable="true" id="content" class="textarea_comment" ></div>
+                <textarea name="content" style="display: none;"></textarea>
             </div>
             <input type="hidden" value="<?php echo $type;?>" name="type" id="type"/>
             <input type="hidden" value="<?php echo $uid;?>" name="to_uid" id="to_uid"/>
@@ -116,12 +124,13 @@ $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
         });
 
         $("#comment-form").submit(function(){
-            var form = $(this), content = $('#content').val();
+            var form = $(this), content = $('#content').html();
             if(!content.length){
                 alert('请填写内容');
                 $('#content').select();
                 return false;
             }
+            $('[name=content]').val(content); // sync div content to textarea
             $.post('/diary/index.php/team/createComment', form.serialize(), function(json){
                 if(json){
                     location.reload();
@@ -132,6 +141,18 @@ $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
             return false;
         });
 
+
+        $('.insert-emotion').click(function() {
+            $(this).next().toggle();
+        });
+        $('.emotion-list').delegate('a', 'click', function() {
+            var src = $(this).children()[0].src;
+            console.log(src);
+            var textarea = $('#content')[0];
+            textarea.focus();
+            textarea.ownerDocument.execCommand('insertImage', false, src);
+            $(this).closest('.emotion-list').hide();
+        });
 
     });
 </script>

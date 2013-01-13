@@ -45,12 +45,20 @@ class DiaryUser{
 
     public static function getUsers($user_ids){
         $result = array();
-        if($user_ids){
-            $users = self::base($user_ids);
-            foreach($users as $user){
-                $user['dept_name'] = $user['depname'];
-                $user['photo'] = '../../source/images/img_01.png';
-                $result[$user['PID']] = $user;
+        if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
+            if($user_ids){
+                $users = self::base($user_ids);
+                foreach($users as $user){
+                    $user['dept_name'] = $user['depname'];
+                    $user['photo'] = '../../source/images/img_01.png';
+                    $result[$user['PID']] = $user;
+                }
+            }
+        } else {
+            if($user_ids){
+                foreach($user_ids as $id){
+                    $result[$id] = self::getInfo($id);
+                }
             }
         }
         return $result;
