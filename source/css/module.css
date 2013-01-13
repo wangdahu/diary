@@ -55,11 +55,14 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .c_c_c h2{line-height:30px;}
 .c_c_c h2 a{color:#3f3f3f;}
 .zhan{position:absolute;right:12px;bottom:8px;font:700 14px/22px "宋体";}
-.delete{width:18px;height:18px;position:absolute;background:url(../images/ico_03.png) 0 0 no-repeat;}
-.add_tag{width:21px;height:21px;position:absolute;background:url(../images/select-tag.png) 0 0 no-repeat;}
+.diary-operation .add-tag-wrapper, .diary-operation .delete, .diary-operation .daily-date, .diary-operation .tag-list { float: right; }
+.add-tag-wrapper { position: relative; }
+.delete{width:18px;height:21px;background:url(../images/ico_03.png) no-repeat center center; margin: 0 4px 0 6px; }
+.add_tag{display: block; width:21px;height:21px;background:url(../images/select-tag.png) no-repeat; }
+.diary-operation .tag-list { margin-right: 4px; }
 .dtag{width:22px;height:22px;position:absolute;background:url(../images/del-tag.png) 0 0 no-repeat;z-index: 1}
 .date{float: right; padding-right: 30px; padding-top:3px;}
-.daily-date{float:right;color:#8f8f8f;font:400 12px/20px "宋体";}
+.daily-date{color:#8f8f8f}
 /*----------- 评论 ----------*/
 .content_tit p.p_icon{padding-left:16px;background:url(../images/icon_01.png) -6px 0 no-repeat;}
 .content_tit span{font-weight:400;margin-left:10px;}

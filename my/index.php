@@ -103,13 +103,35 @@ if($forward < 0) { // 未来
                 </div>
                 <?php endif;?>
                 <br />
-                <div style="float: right; margin-top: -20px;">
+                <div class="clearfix diary-operation" >
     <?php
         $tagList = array();
         $tagList = DiaryDaily::getDailyTag($diary, $daily['id']);
         $tagIds = array_keys($tagList);
     ?>
-                    <span id="tag-list-<?php echo $daily['id'];?>">
+                    <span class="daily-date"><?php echo date('y-m-d H:i', $daily['fill_time']);?></span>
+                    <?php if(!$isReported):?>
+                    <a href="javascript:;" data-diary_id="<?php echo $daily['id'];?>" class="delete js-del_daily"></a>
+                    <div class="add-tag-wrapper">
+                        <a href="javascript:;"  class="add_tag js-opterate_tag"></a>
+                        <div class="js-all-tag all-tag-floor" >
+                            <?php foreach($userTags as $tag):?>
+                            <div>
+                                <label>
+                                    <div style="float: left;margin: 5px 5px 5px 10px;">
+                                        <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
+                                    </div>
+                                    <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
+                                    </div>
+                                    <div ><?php echo $tag['tag']?></div>
+                                </label>
+                            </div>
+                            <?php endforeach;?>
+                            <?php include "tag.php"; ?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <span class="tag-list" id="tag-list-<?php echo $daily['id'];?>">
                         <?php foreach($userTags as $tag):?>
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
                             <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
@@ -125,32 +147,6 @@ if($forward < 0) { // 未来
                         </div>
                         <?php endforeach;?>
                     </span>
-                    <?php if(!$isReported):?>
-                    <span style="margin: 0 24px 0 4px;">
-                        <a href="javascript:;" style="padding: 0 4px;" class="add_tag js-opterate_tag"></a>
-                    </span>
-                    <span style="margin: 0 4px 0 24px;">
-                        <a href="javascript:;" style="margin: 0 30px;" data-diary_id="<?php echo $daily['id'];?>" class="delete js-del_daily"></a>
-                    </span>
-                    <?php endif;?>
-                    <span class="daily-date">
-                        <?php echo date('y-m-d H:i', $daily['fill_time']);?>
-                    </span>
-                </div>
-                <div class="js-all-tag all-tag-floor" style="">
-                    <?php foreach($userTags as $tag):?>
-                    <div>
-                        <label>
-                            <div style="float: left;margin: 5px 5px 5px 10px;">
-                                <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
-                            </div>
-                            <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
-                            </div>
-                            <div ><?php echo $tag['tag']?></div>
-                        </label>
-                    </div>
-                    <?php endforeach;?>
-                    <?php include "tag.php"; ?>
                 </div>
             </div>
         </div>
@@ -207,25 +203,20 @@ if($forward < 0) { // 未来
         });
 
         // 操作标签
-        $('.js-opterate_tag').click(function(){console.log(1);
-            $(this).parent().parent().next().toggle();
+        $('.js-opterate_tag').click(function(){
+            $(this).next().toggle();
         });
         // 点击其他地方隐藏
-        $(document.body).click(function(e) {
+        $(document).click(function(e) {
             var target = $(e.target);
             if(target && target.is('.js-opterate_tag')) {
                 return;
             }
-            $('.js-opterate_tag').parent().parent().next().hide();
+            $('.js-opterate_tag').next().hide();
         });
         $('.js-all-tag').click(function(e) {
             e.stopPropagation();
         });
-
-        // 标签操作消失
-        // $(".all-floor-tag").onmouseout(
-        //     // $(this).hide();
-        // );
 
         // 标签列表的标签操作
         $(".js-del_tag").click(function(){
