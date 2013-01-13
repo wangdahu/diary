@@ -137,7 +137,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
         // 编辑月报
         $(".js-edit_diary").click(function(){
             var content = $(this).find("div").html();
-            $("#monthly_content").html(content);
+            $("#monthly_content").val(content);
             $("#monthly-dialog-form").find("#monthly_id").val($(this).attr('data-monthly_id'));
             $("#monthly-dialog-form").dialog("open");
         });

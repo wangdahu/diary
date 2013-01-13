@@ -100,7 +100,7 @@ foreach($dailys as $date => $daily){
         <div class="mt10">插入日报：
             <?php foreach($weekarray as $k => $w):?>
             <?php if(isset($date_keys[$k])):?>
-            <span class="ml10 p3 js-insert-daily" style="border:1px solid #ccc;">
+            <span class="ml10 p3 js-insert-daily" style="border:1px solid #ccc;cursor: default;">
                 <?php echo '周'.$w?>
 <script type="text/string" class="insert_daily"><?php echo '周'.$w.' '.$date_keys[$k]."\n"?>
 <?php foreach($dailys[$date_keys[$k]] as $one):?>
@@ -149,7 +149,6 @@ foreach($dailys as $date => $daily){
                 }
             },
             close: function() {
-                allFields.val("").removeClass("ui-state-error");
             }
         });
 
@@ -164,16 +163,47 @@ foreach($dailys as $date => $daily){
             }
         });
 
+        var TA = {
+            select: function(textarea, start, end){
+                if(document.selection){
+                    var range = textarea.createTextRange();
+                    range.moveEnd('character', -textarea.value.length);
+                    range.moveEnd('character', end);
+                    range.moveStart('character', start);
+                    range.select();
+                }else{
+                    textarea.setSelectionRange(start, end);
+                    textarea.focus();
+                }
+
+            },
+            setCursorPosition: function(textarea, position) {
+                this.select(textarea, position, position);
+            },
+            insertAtPoint: function(textarea, txt) {
+                var val = textarea.value;
+                if(document.selection){
+                    textarea.focus()
+                    document.selection.createRange().text = txt;
+                } else {
+                    var curPosition = textarea.selectionStart,
+                    oldLength = textarea.value.length;
+                    textarea.value = textarea.value.substring(0, curPosition) + txt + textarea.value.substring(curPosition, oldLength);
+                    this.setCursorPosition(textarea, curPosition + txt.length);
+                }
+            }
+        }
+
         // 插入日报
         $('.js-insert-daily').click(function(){
             var html = $(this).find('.insert_daily').html();
-            $('#weekly_content')[0].value += html;
+            TA.insertAtPoint($('#weekly_content')[0], '\n' + 'cc' + '\n');
         });
 
         // 编辑周报
         $(".js-edit_diary").click(function(){
             var content = $(this).find("div").html();
-            $("#weekly_content").html(content);
+            $("#weekly_content").val(content);
             $("#weekly-dialog-form").find("#weekly_id").val($(this).attr('data-weekly_id'));
             $("#weekly-dialog-form").dialog("open");
         });
