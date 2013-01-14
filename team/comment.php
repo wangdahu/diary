@@ -65,9 +65,7 @@ unset($titleList['count']);
                     <a class="insert-emotion" href="javascript:"></a>
                     <ul class="emotion-list clearfix">
                         <?php foreach($titleList as $k => $title): ?>
-                        <li><a title="<?php echo $title;?>" href="javascript:">
-                                <img src="/diary/source/emotions/<?php echo $k?>_s.bmp"/>
-                        </a></li>
+                        <li><a title="<?php echo $title;?>" href="javascript:" data-id="<?php echo $k;?>"></a></li>
                         <?php endforeach;?>
                     </ul>
                 </div>
@@ -154,8 +152,7 @@ unset($titleList['count']);
             $(this).next().toggle();
         });
         $('.emotion-list').delegate('a', 'click', function() {
-            var src = $(this).children()[0].src;
-            src = src.replace('_s.bmp', '.gif');
+            var src = '/diary/source/emotions/' + $(this).data('id') + '.gif';
             var textarea = $('#content')[0];
             textarea.focus();
             textarea.ownerDocument.execCommand('insertImage', false, src);
