@@ -71,7 +71,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .comment_t{float:right;width:780px;}
 .comment_t h2{overflow:hidden;line-height:20px;padding-bottom:6px;}
 .comment_t h2 a{float:left;}
-.comment_t h2 span{float:right;color:#8f8f8f;font:400 12px/20px "宋体";}
+.comment_t h2 span{float:right;color:#8f8f8f; font-size: 12px; font-weight: normal;}
 .comment_t p{line-height:18px;}
 /*----------- 发表评论 ----------*/
 .comment_f{overflow:hidden;padding-bottom:8px;}

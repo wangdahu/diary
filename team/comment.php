@@ -62,7 +62,7 @@ unset($titleList['count']);
             <div class="comment_f">
                 <button class="fr" type="submit">评论</button>
                 <div class="emotion-warpper">
-                    <a class="insert-emotion"></a>
+                    <a class="insert-emotion" href="javascript:"></a>
                     <ul class="emotion-list clearfix">
                         <?php foreach($titleList as $k => $title): ?>
                         <li><a title="<?php echo $title;?>" href="javascript:">
@@ -155,11 +155,18 @@ unset($titleList['count']);
         });
         $('.emotion-list').delegate('a', 'click', function() {
             var src = $(this).children()[0].src;
-            console.log(src);
+            src = src.replace('_s.bmp', '.gif');
             var textarea = $('#content')[0];
             textarea.focus();
             textarea.ownerDocument.execCommand('insertImage', false, src);
             $(this).closest('.emotion-list').hide();
+        }).click(function(e) {
+            e.stopPropagation();
+        });
+        $(document).click(function(e) {
+            var target = $(e.target);
+            if(target.is('.insert-emotion')) { return; }
+            $('.emotion-list').hide();
         });
 
     });
