@@ -278,7 +278,6 @@ class DiarySet{
         $objectType = $type == 1 ? 'daily_object' : ($type == 2 ? 'weekly_object' : 'monthly_object');
         $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
         $allDepts = array_unique(array_merge($reportObject[$objectType]['dept'], $subscribeMy));
-
         return $allUsers;
     }
 

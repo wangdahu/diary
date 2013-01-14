@@ -17,7 +17,7 @@ if($isReported){
     <a href="" class="a_01 fl">刷新</a>
     <?php if($type == 'daily'):?>
     <div class="pags fl clearfix"><a href="index?forward=<?php echo $forwardDays;?>" class="up" title="上一天"></a><a href="index?forward=<?php echo $backwardDays;?>" class="down" title="下一天"></a></div>
-    <p class="fl"><?php echo date('Y年m月d日', $startTime);?>（周<?php echo $weekarray[date("w", $startTime)];?>）</p>
+    <p class="fl showObject"><?php echo date('Y年m月d日', $startTime);?>（周<?php echo $weekarray[date("w", $startTime)];?>）</p>
     <?php elseif($type == 'weekly'):?>
     <div class="pags fl clearfix"><a href="weekly?forward=<?php echo $forwardWeeks;?>" class="up" title="上一周"></a><a href="weekly?forward=<?php echo $backwardWeeks;?>" class="down" title="下一周"></a></div>
     <p class="fl"><?php echo date('Y年m月d日', $startTime);?>--<?php echo date('Y年m月d日', $endTime);?></p>
@@ -37,10 +37,11 @@ if($isReported){
     // 补交
     $('.js-pay_diary').live('click', function() {
         var type = '<?php echo $type;?>',
-        currentDate = '<?php echo $object; ?>';
-        $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type}, function(json) {
+        currentDate = '<?php echo $object; ?>',
+        showObject = $('.showObject').html();
+        $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject}, function(json) {
             if(json != 0) {
-                location.reload();
+                // location.reload();
             }
         });
     });
