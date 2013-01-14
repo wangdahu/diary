@@ -27,8 +27,7 @@ class DiaryDept{
 
     public static function getInfo($dept_id) {
         return array(
-            'name' => $dept_id,
-            'corp_id' => 1,
+            'Name' => $dept_id,
         );
     }
 
@@ -38,7 +37,13 @@ class DiaryDept{
     }
 
     public static function getDepts($dept_ids) {
-        $depts = self::base($dept_ids);
+        if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
+            $depts = self::base($dept_ids);
+        }else {
+            foreach($dept_ids as $dept_id){
+                $depts[] = self::getInfo($dept_id);
+            }
+        }
         return array_combine($dept_ids, $depts);
     }
 }
