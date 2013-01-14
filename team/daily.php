@@ -98,20 +98,21 @@ if($isReported) {
                     <div style="display:none;"><?php echo $daily['content'];?></div>
                 </div>
                 <?php endif;?>
-                <br />
-                <div style="float: right; margin-top: -20px;">
+                <div class="clearfix diary-operation" >
     <?php
         $tagList = array();
         $tagList = DiaryDaily::getDailyTag($diary, $daily['id']);
         $tagIds = array_keys($tagList);
     ?>
-                    <span id="tag-list-<?php echo $daily['id'];?>">
+                    <span class="tag-list">
                         <?php foreach($tagList as $tag):?>
-                        <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
-                            <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">
-                                <span style="margin:4px;"><?php echo $tag['tag']?></span>
+                        <a href="javascript:">
+                            <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
+                                <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                                    <span style="margin:4px;"><?php echo $tag['tag']?></span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         <?php endforeach;?>
                     </span>
                     <span class="daily-date">

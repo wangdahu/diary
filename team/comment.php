@@ -18,6 +18,11 @@ foreach($reportList as $report) {
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 
 $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
+
+// 获取表情文件夹的所有表情
+$emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
+$emotions = scandir($emotionsDir);
+unset($emotions[0], $emotions[1]);
 ?>
 <!--评论开始-->
 <div class="content_bar">
@@ -59,8 +64,9 @@ $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
                 <div class="emotion-warpper">
                     <a class="insert-emotion"></a>
                     <ul class="emotion-list clearfix">
-                        <li><a href="javascript:"><img src="/diary/source/emotions/e6004.gif"/></a></li>
-                        <li><a href="javascript:"><img src="/diary/source/emotions/e4006.gif"/></a></li>
+                        <?php foreach($emotions as $emotion): ?>
+                        <li><a href="javascript:"><img src="/diary/source/emotions/<?php echo $emotion?>"/></a></li>
+                        <?php endforeach;?>
                     </ul>
                 </div>
             </div>

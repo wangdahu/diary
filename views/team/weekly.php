@@ -83,9 +83,8 @@ while($row = $result->fetch_assoc()){
                     <div>
                         <p><?php echo nl2br($daily['content']);?></p>
                     </div>
-                    <br>
-                    <div style="float: right; margin-top: -20px;">
-                        <span>
+                    <div class="clearfix diary-operation" >
+                        <span class="tag-list">
                             <?php foreach($tagList as $tag):?>
                             <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
                                 <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">

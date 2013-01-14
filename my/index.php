@@ -102,7 +102,6 @@ if($forward < 0) { // 未来
                     <div style="display:none;"><?php echo $daily['content'];?></div>
                 </div>
                 <?php endif;?>
-                <br />
                 <div class="clearfix diary-operation" >
     <?php
         $tagList = array();
