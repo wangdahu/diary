@@ -40,8 +40,8 @@ class Diary{
                 die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
             }
             $this->uid =  1;
-            $this->corpId = 1;
-            $this->deptId = 131785;
+            $this->corpId = 131785;
+            $this->deptId = 1;
         }
 
         $mysqli->query("SET NAMES '".$character_set."'");
@@ -77,7 +77,7 @@ class Diary{
 
     public static function getConfig() {
         return array(
-            'host' => '113.106.88.164',
+            'host' => Kohana::config('config.domain'),
             'port' => '14132',
             'keyCode' => 'gzRN53VWRF9BYUXo',
         );

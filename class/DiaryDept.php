@@ -3,14 +3,14 @@ class DiaryDept{
 
     public static function base($ids) {
         $config = Diary::getConfig(); // 网站的基本配置
-        $host = "http://".$config['host'].":".$config['port']."/Interface/www/op/stdserver.php?wsdl";
+        $host = "http://".$config['host']."/Interface/www/op/stdserver.php?wsdl";
         $soap = new soapClient($host);
         $_session_arr = Session::instance()->get();
 
         $_arr = array(
             'AccountID' => $_session_arr['entInfo']['AccountID'], // 企业id
             'depid' => $ids,     // 部门id
-            'keycode' => 'gzRN53VWRF9BYUXo'//$config['keyCode'],  // 验证码
+            'keycode' => $config['keyCode'],  // 验证码
         );
 
         try {
