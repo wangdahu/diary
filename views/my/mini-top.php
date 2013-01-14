@@ -3,26 +3,17 @@ if($isReported){
     $url = "../../../../diary/source/images/already-report.png";
     $reportStatus = "已汇报";
 }else{
-    if((!$forward && !$allowPay) || $forward < 0){
-        $url = "../../../../diary/source/images/wait-report.png";
-        $reportStatus = "等待汇报";
-    }else{
-        $url = "../../../../diary/source/images/no-report.png";
-        $reportStatus = "未汇报";
-    }
+    $url = "../../../../diary/source/images/no-report.png";
+    $reportStatus = "未汇报";
 }
 ?>
 <!--功能操作开始-->
 <div class="todo clearfix">
-    <a href="" class="a_01 fl">刷新</a>
     <?php if($type == 'daily'):?>
-    <div class="pags fl clearfix"><a href="index?forward=<?php echo $forwardDays;?>" class="up" title="上一天"></a><a href="index?forward=<?php echo $backwardDays;?>" class="down" title="下一天"></a></div>
     <p class="fl showObject"><?php echo date('Y年m月d日', $startTime);?>（周<?php echo $weekarray[date("w", $startTime)];?>）</p>
     <?php elseif($type == 'weekly'):?>
-    <div class="pags fl clearfix"><a href="weekly?forward=<?php echo $forwardWeeks;?>" class="up" title="上一周"></a><a href="weekly?forward=<?php echo $backwardWeeks;?>" class="down" title="下一周"></a></div>
     <p class="fl"><?php echo date('Y年m月d日', $startTime);?>--<?php echo date('Y年m月d日', $endTime);?></p>
     <?php elseif($type == 'monthly'):?>
-    <div class="pags fl clearfix"><a href="monthly?forward=<?php echo $forwardMonths;?>" class="up" title="上一月"></a><a href="monthly?forward=<?php echo $backwardMonths;?>" class="down" title="下一月"></a></div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
     <p class="fl mg10" title="<?php echo $reportStatus;?>"><img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /></p>
@@ -67,4 +58,3 @@ $.fn.extend({
     }
 });
 </script>
-

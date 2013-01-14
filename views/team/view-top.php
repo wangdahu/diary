@@ -50,7 +50,6 @@ if($isReported){
                  $backUrl = "month?forward=$forward";
              }
         ?>
-        <a href="<?php echo $backUrl; ?>" class="a_01 mg10">返回</a>
     </p>
     <a href="javascript:" class="fr dc mg10" id="js-selected_user" >组织架构</a>
     <div class="data fr clearfix">

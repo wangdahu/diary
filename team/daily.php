@@ -69,6 +69,10 @@ if($isReported) {
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
+            <a href="<?php echo $backUrl; ?>" class="a_01 mg10">返回</a>
+            <div> <?php echo $user['UserName']."（".$user['dept_name']."）";?></div>
+        </h2>
+       <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
         </h2>
         <?php if(!$num):?>

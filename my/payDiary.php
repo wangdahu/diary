@@ -21,6 +21,9 @@ function payDiary($diary, $type, $currentDate, $showObject) {
         }
     }
     $content = $showObject;
-    // DiarySms::sendSms($allUsers, $title, $cotent, $url);
+    $title = "补交工作日志";
+    $config = Dairy::getConfig();
+    $url = "http://".$config['host']."/diary/team/".$diaryType."?uid=".$uid;
+    DiarySms::sendSms($allUsers, $title, $cotent, $url);
     return 1;
 }

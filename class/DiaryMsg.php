@@ -1,5 +1,5 @@
 <?php
-class DiarySms{
+class DiaryMsg{
 
     /*
      *@param string $receive 接收人登录账户
@@ -9,7 +9,7 @@ class DiarySms{
      *@param string $keycode 加密串
      *@return int $style 发送方式 （1单人发送）
      * */
-    public static function sendSms($user_ids, $title, $content, $url) {
+    public static function send($user_ids, $title, $content, $url) {
         $config = Diary::getConfig(); // 网站的基本配置
         $host = "http://".$config['host']."/Interface/www/op/stdserver.php?wsdl";
         $soap = new soapClient($host);
@@ -24,7 +24,7 @@ class DiarySms{
                 'content' => $content, // 内容
                 'url' => $url, // 地址
             );
-            $soap->doAct('getmsg', json_encode($sms));
+            $soap->doAct('sendmsg', json_encode($sms));
         }
     }
 }

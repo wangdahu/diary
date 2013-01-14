@@ -1,13 +1,14 @@
 <?php
 $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
-DiaryViewRecord::addRecord($diary, $type, $uid, $object);
 $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
 $viewCount = count($viewRecord);
 $commentUserIds = array();
 foreach($commentList as $comment) {
     $commentUserIds[] = $comment['uid'];
 }
-
+if(in_array($uid, $commentUserIds)) {
+    DiaryViewRecord::addRecord($diary, $type, $uid, $object);
+}
 // 查询汇报总人数
 $reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
 $reportCount = count($reportList);

@@ -3,26 +3,14 @@ if($_POST) {
     $content = addslashes($_POST['content']);
     $currentTime = $_POST['currentTime'];
     $id = $_POST['id'] ? (int) $_POST['id'] : 0;
-    $diaryId = saveDaily($diary, $content, $currentTime, $id);
+    $diaryId = saveDaily($diary, $content, $id);
     echo $diaryId;
 }
 
-function saveDaily($diary, $content, $currentTime, $id) {
+function saveDaily($diary, $content, $id) {
     $corpId = $diary->corpId;
     $uid = $diary->uid;
-    // 该用户设置的汇报时间
-    $setSql = "select `daily` from `diary_report_set` where `uid` = $uid";
-    $result = $diary->db->query($setSql);
-    if($row = $result->fetch_row()) {
-        $reportTime = $currentTime; // 需要修改
-    }else {
-        $reportTime = strtotime(date('Y-m-d', $currentTime)." ".$diary->dailyReport['hour'].":".$diary->dailyReport['minute']);
-    }
-    if($reportTime < time()) { // 已过汇报时间，为补交,马上汇报
-        $reportTime = $fillTime = time();
-    }else {
-        $fillTime = time();
-    }
+    $reportTime = $fillTime = time();
     if($id) {
         $sql = "update `diary_info` set `content` = '".$content."', `report_time` = $reportTime, `fill_time` = $fillTime where `id` = $id";
         return $diary->db->query($sql);
@@ -34,6 +22,3 @@ function saveDaily($diary, $content, $currentTime, $id) {
 
 }
 
-function insertCorn($diaryId){
-    return true;
-}
