@@ -41,7 +41,7 @@ class Diary{
             }
             $this->uid =  1;
             $this->corpId = 1;
-            $this->deptId = 1;
+            $this->deptId = 131785;
         }
 
         $mysqli->query("SET NAMES '".$character_set."'");
