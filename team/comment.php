@@ -19,10 +19,10 @@ $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '
 
 $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
 
-// 获取表情文件夹的所有表情
+// 获取表情的title
 $emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
-$emotions = scandir($emotionsDir);
-unset($emotions[0], $emotions[1]);
+$titleList = parse_ini_file($emotionsDir."faceList.ini");
+unset($titleList['count']);
 ?>
 <!--评论开始-->
 <div class="content_bar">
@@ -64,8 +64,10 @@ unset($emotions[0], $emotions[1]);
                 <div class="emotion-warpper">
                     <a class="insert-emotion"></a>
                     <ul class="emotion-list clearfix">
-                        <?php foreach($emotions as $emotion): ?>
-                        <li><a href="javascript:"><img src="/diary/source/emotions/<?php echo $emotion?>"/></a></li>
+                        <?php foreach($titleList as $k => $title): ?>
+                        <li><a title="<?php echo $title;?>" href="javascript:">
+                                <img src="/diary/source/emotions/<?php echo $k?>_s.bmp"/>
+                        </a></li>
                         <?php endforeach;?>
                     </ul>
                 </div>
