@@ -33,14 +33,6 @@ for($i = 6; $i >= 0; $i--){
 $corpId = $diary->corpId;
 $uid = $diary->uid;
 
-$weeklys = array();
-// 该企业该用户在选择时间内的周报
-$weeklySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 2 and `show_time` between $startTime and $endTime";
-$result = $diary->db->query($weeklySql);
-while($row = $result->fetch_assoc()){
-    $weeklys = $row;
-};
-
 // 该企业该用户在选择时间内的日报
 $dailySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corpId and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
 $result = $diary->db->query($dailySql);

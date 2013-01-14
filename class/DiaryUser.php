@@ -39,7 +39,7 @@ class DiaryUser{
                 'photo' => '../../source/images/img_01.png',
                 'UserName' => $id,
                 'dept_name' => '技术部',
-                'corp_id' => 1,
+                'corp_id' => 131785,
             );
         }
     }
