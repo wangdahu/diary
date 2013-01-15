@@ -69,8 +69,7 @@ if($isReported) {
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
-            <a href="<?php echo $backUrl; ?>" class="a_01 mg10">返回</a>
-            <div> <?php echo $user['UserName']."（".$user['dept_name']."）";?></div>
+            <a href="<?php echo $backUrl; ?>" class="a_01 mg10" style="display:inline-block">返回</a> <?php echo $user['UserName']."（".$user['dept_name']."）";?>
         </h2>
        <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
@@ -103,6 +102,7 @@ if($isReported) {
                 </div>
                 <?php endif;?>
                 <div class="clearfix diary-operation" >
+                    <span class="daily-date"><?php echo date('y-m-d H:i', $daily['fill_time']);?></span>
     <?php
         $tagList = array();
         $tagList = DiaryDaily::getDailyTag($diary, $daily['id']);
@@ -110,17 +110,15 @@ if($isReported) {
     ?>
                     <span class="tag-list">
                         <?php foreach($tagList as $tag):?>
-                        <a href="javascript:">
                             <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
                                 <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">
-                                    <span style="margin:4px;"><?php echo $tag['tag']?></span>
+                                    <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']."&uid=".$uid; ?>
+                                    <a style="text-decoration: none;" href="<?php echo $url;?>">
+                                        <span style="margin:4px;"><?php echo $tag['tag']?></span>
+                                    </a>
                                 </div>
                             </div>
-                        </a>
                         <?php endforeach;?>
-                    </span>
-                    <span class="daily-date">
-                        <?php echo date('y-m-d H:i', $daily['fill_time']);?>
                     </span>
                 </div>
             </div>

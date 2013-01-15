@@ -138,6 +138,7 @@ if($forward < 0) { // 未来
                                 <span style="margin:4px;">
                                     <?php echo $tag['tag'];?>
                                 </span>
+                                </a>
                             </div>
                             <?php if(!$isReported):?>
                             <div class="js-del_tag" style="float: left; display:none;">
