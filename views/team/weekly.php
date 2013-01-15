@@ -13,10 +13,12 @@ while($row = $result->fetch_assoc()){
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
+        <?php if(isset($from)):?>
         <h2 class="content_tit clearfix">
             <a href="<?php echo $backUrl; ?>" class="a_01 mg10">返回</a>
             <div> <?php echo $user['UserName']."（".$user['dept_name']."）";?></div>
         </h2>
+        <?php endif;?>
         <h2 class="content_tit clearfix">
             <p>周报</p>
             <?php if(!isset($from) && $allowPay):?>
