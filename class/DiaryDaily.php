@@ -42,7 +42,7 @@ class DiaryDaily{
         $result = $diary->db->query($sql);
         $list = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $list[] = $row;
+            $list[$row['id']] = $row;
         }
         return $list;
     }
@@ -65,6 +65,19 @@ class DiaryDaily{
     }
 
     /**
+     * 获取当前tag的日报信息
+     */
+    public static function getTagDailys($diary, $tag_id) {
+        $sql = "select * from `diary_info` where `id` in (select `diary_id` from `diary_daily_tag` where `tag_id` = $tag_id)";
+        $result = $diary->db->query($sql);
+        $dailys = array();
+        while($daily = $result->fetch_array(MYSQLI_ASSOC)) {
+            $dailys[$daily['id']] = $daily;
+        }
+        return $dailys;
+    }
+
+    /**
      * 获取日报的tag名列表
      */
     public static function getDailyTagName($diary, $daily_id) {
@@ -81,9 +94,6 @@ class DiaryDaily{
         return $tagList;
     }
 
-    /**
-     * 获取有内容但未汇报的日报
-     */
     public static function noReportDaily($diary, $firstTime, $lastTime, $type, $uid = null) {
         $uid = $uid ? $uid :$diary->uid;
         $uninStr = '%Y-%m-%d';
