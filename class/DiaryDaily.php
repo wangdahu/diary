@@ -36,8 +36,8 @@ class DiaryDaily{
     /**
      * 获取用户tag列表
      */
-    public static function getUserTags($diary){
-        $uid = $diary->uid;
+    public static function getUserTags($diary, $uid=null){
+        $uid = $uid ? $uid : $diary->uid;
         $sql = "select t.*,c.`color` from `diary_tag` as t left join `diary_tag_color` as c on `t`.`color_id` = `c`.`id` where t.`uid` = $uid";
         $result = $diary->db->query($sql);
         $list = array();

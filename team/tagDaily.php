@@ -8,7 +8,7 @@ $type = 'daily';
 $dailys = DiaryDaily::getTagDailys($diary, $tagId);
 
 $num = count($dailys);
-$userTags = DiaryDaily::getUserTags($diary);
+$userTags = DiaryDaily::getUserTags($diary, $uid);
 $tagName = $userTags[$tagId]['tag'];
 ?>
 

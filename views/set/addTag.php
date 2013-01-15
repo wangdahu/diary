@@ -1,4 +1,4 @@
-<div id="tag-dialog-form" title="添加标签">
+<div id="tag-dialog-form" style="display:none;" title="添加标签">
     <form method="post">
         <fieldset>
             <input id="tag" name="tag" size="35" maxlength="40" placeholder="输入标签名称" style="line-height: 24px;"/>
