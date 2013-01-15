@@ -6,15 +6,15 @@ $commentUserIds = array();
 foreach($commentList as $comment) {
     $commentUserIds[] = $comment['uid'];
 }
-if(in_array($uid, $commentUserIds)) {
-    DiaryViewRecord::addRecord($diary, $type, $uid, $object);
-}
 // 查询汇报总人数
 $reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
 $reportCount = count($reportList);
 $reportUserIds = array();
 foreach($reportList as $report) {
     $reportUserIds[] = $report['object'];
+}
+if(in_array($uid, $reportUserIds)) {
+    DiaryViewRecord::addRecord($diary, $type, $uid, $object);
 }
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 

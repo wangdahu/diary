@@ -118,13 +118,10 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
                     $(this).dialog("close");
                 }
             },
-            close: function() {
-                allFields.val("").removeClass("ui-state-error");
-            }
         });
 
         // 新增和编辑月报
-        $(".write-monthly").button().click(function(){
+        $(".write-monthly").click(function(){
             if($('.js-edit_diary').length){
                 $(".js-edit_diary").click();
             }else{
@@ -142,10 +139,43 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
             $("#monthly-dialog-form").dialog("open");
         });
 
+
+        var TA = {
+            select: function(textarea, start, end){
+                if(document.selection){
+                    var range = textarea.createTextRange();
+                    range.moveEnd('character', -textarea.value.length);
+                    range.moveEnd('character', end);
+                    range.moveStart('character', start);
+                    range.select();
+                }else{
+                    textarea.setSelectionRange(start, end);
+                    textarea.focus();
+                }
+
+            },
+            setCursorPosition: function(textarea, position) {
+                this.select(textarea, position, position);
+            },
+            insertAtPoint: function(textarea, txt) {
+                var val = textarea.value;
+                if(document.selection){
+                    textarea.focus()
+                    document.selection.createRange().text = txt;
+                } else {
+                    var curPosition = textarea.selectionStart,
+                    oldLength = textarea.value.length;
+                    textarea.value = textarea.value.substring(0, curPosition) + txt + textarea.value.substring(curPosition, oldLength);
+                    this.setCursorPosition(textarea, curPosition + txt.length);
+                }
+            }
+        }
+
         // 插入周报
         $('.js-insert-daily').click(function(){
             var html = $(this).find('.insert_weekly').html();
-            $('#monthly_content')[0].value += html;
+            TA.insertAtPoint($('#monthly_content')[0], '\n' + html + '\n');
         });
+
     });
 </script>

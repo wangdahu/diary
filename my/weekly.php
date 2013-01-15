@@ -16,7 +16,6 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
-
 // 当前时间为 当前年的多少周
 $object = date('Y-W', $startTime);
 $weekDate = array();
@@ -82,6 +81,12 @@ foreach($dailys as $date => $daily){
         $dailys[$date][$k]['filltime'] = date('H:i', $one['fill_time']);
     }
 }
+
+for($i = $startTime; $i < $endTime; $i+=86400) {
+    $key = date('y.m.d', $i);
+    $allDate[] = $key;
+}
+
 ?>
 <div id="weekly-dialog-form" title="写周报" style="display: none">
     <form>
@@ -91,17 +96,17 @@ foreach($dailys as $date => $daily){
         </fieldset>
         <div class="mt10">插入日报：
             <?php foreach($weekarray as $k => $w):?>
-            <?php if(isset($date_keys[$k])):?>
-            <span class="ml10 p3 js-insert-daily" style="border:1px solid #ccc;cursor: default;">
+            <span class="ml10 p3 <?php echo in_array($allDate[$k], $date_keys) ? 'js-insert-daily' : ''?>" style="border:1px solid #ccc;">
                 <?php echo '周'.$w?>
-<script type="text/string" class="insert_daily"><?php echo '周'.$w.' '.$date_keys[$k]."\n"?>
-<?php foreach($dailys[$date_keys[$k]] as $one):?>
+                <?php if(in_array($allDate[$k], $date_keys)):?>
+<script type="text/string" class="insert_daily"><?php echo '周'.$w.' '.$allDate[$k]."\n"?>
+<?php foreach($dailys[$allDate[$k]] as $one):?>
 <?php echo $one['filltime'].' '.$one['tagStr']."\n"?>
 <?php echo $one['content']."\n"?>
 <?php endforeach;?>
 </script>
-            </span>
             <?php endif;?>
+            </span>
             <?php endforeach;?>
         </div>
     </form>
@@ -189,7 +194,7 @@ foreach($dailys as $date => $daily){
         // 插入日报
         $('.js-insert-daily').click(function(){
             var html = $(this).find('.insert_daily').html();
-            TA.insertAtPoint($('#weekly_content')[0], '\n' + 'cc' + '\n');
+            TA.insertAtPoint($('#weekly_content')[0], '\n' + html + '\n');
         });
 
         // 编辑周报

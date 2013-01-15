@@ -147,3 +147,5 @@ form .show-color-list .color-selected { border: 1px solid #666; }
 .emotion-list { position: absolute; display: none; border: 1px solid #D7D7D7; width: 390px; background: #fff url(/diary/source/emotions/all.png) no-repeat center center; padding: 5px 10px; border-radius: 5px; margin-top: 5px; }
 .emotion-list li { float: left; }
 .emotion-list li a { width: 24px; height: 24px; padding: 1px; display: block; }
+
+.js-insert-daily {cursor: pointer;}
