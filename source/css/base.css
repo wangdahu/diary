@@ -6,7 +6,7 @@ h4, h5, h6 { font-weight:100; font-size:12px; }
 h1, h2, h3 { font-weight:700; font-size:14px; }
 a{color:#006CFF;text-decoration:none;}
 a:hover{color:#ee9300;}
-a, a:hover{text-decoration:underline; }
+a, a:hover {text-decoration:underline; }
 input, select, button, textarea{vertical-align:middle;}
 img, a img{vertical-align:middle; border:none;}
 em, i{font-style:normal;}
