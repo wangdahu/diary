@@ -32,7 +32,6 @@ $num = count($dailys);
 $userTags = DiaryDaily::getUserTags($diary);
 // 获取颜色列表
 $colorList = DiaryDaily::getColorList($diary);
-$tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
 $showCommit = false;
@@ -134,9 +133,12 @@ if($forward < 0) { // 未来
                         <?php foreach($userTags as $tag):?>
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
                             <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                                <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
+                                <a style="text-decoration: none;" href="<?php echo $url;?>">
                                 <span style="margin:4px;">
                                     <?php echo $tag['tag'];?>
                                 </span>
+                                </a>
                             </div>
                             <?php if(!$isReported):?>
                             <div class="js-del_tag" style="float: left; display:none;">
@@ -222,7 +224,7 @@ if($forward < 0) { // 未来
             var js_tag = $(this).closest('.js-tag'),
             diary_id = js_tag.attr('data-diary_id'),
             tag_id = js_tag.attr('data-tag_id');
-            var tag_input = js_tag.parent().parent().next().find("#tag_"+tag_id);
+            var tag_input = js_tag.parent().prev().find("#tag_"+tag_id);
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
                 if(json != 0) {
                     tag_input.attr('checked', false);

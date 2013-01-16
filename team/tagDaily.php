@@ -1,17 +1,19 @@
 <?php
 $tagId = (int)$_GET['tag'];
+$uid = (int)$_GET['uid'];
+$userInfo = DiaryUser::getInfo($uid);
 $title = "我自己的标签";
 $type = 'daily';
 // 获取当前tag的所有日志
 $dailys = DiaryDaily::getTagDailys($diary, $tagId);
 
 $num = count($dailys);
-$userTags = DiaryDaily::getUserTags($diary);
+$userTags = DiaryDaily::getUserTags($diary, $uid);
 $tagName = $userTags[$tagId]['tag'];
 ?>
 
 <?php include "views/layouts/header.php"; ?>
-<?php include "views/my/tag-top.php"; ?>
+<?php include "views/team/tag-top.php"; ?>
 
 <div class="content">
     <!--今日工作开始-->
@@ -38,15 +40,12 @@ $tagName = $userTags[$tagId]['tag'];
                         <?php foreach($userTags as $tag):?>
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
                             <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
-                                <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
+                                <?php $url = "/diary/index.php/team/tagDaily?tag=".$tag['id']."&uid=".$daily['uid']; ?>
                                 <a style="text-decoration: none;" href="<?php echo $url;?>">
                                 <span style="margin:4px;">
                                     <?php echo $tag['tag'];?>
                                 </span>
                                 </a>
-                            </div>
-                            <div class="js-del_tag" style="float: left; display:none;">
-                                <a href="javascript:;" class="dtag"></a>
                             </div>
                         </div>
                         <?php endforeach;?>
