@@ -115,10 +115,8 @@ if($forward < 0) { // 未来
                         <div class="js-all-tag all-tag-floor" >
                             <?php foreach($userTags as $tag):?>
                             <div>
-                                <label>
-                                    <div style="float: left;margin: 5px 5px 5px 10px;">
-                                        <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
-                                    </div>
+                                <label class="clearfix" style="cursor:default;">
+                                    <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>" style="line-height:24px;height:24px;float: left;margin: 0 5px 0 10px;"/>
                                     <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
                                     </div>
                                     <div ><?php echo $tag['tag']?></div>
@@ -227,7 +225,7 @@ if($forward < 0) { // 未来
             var tag_input = js_tag.parent().prev().find("#tag_"+tag_id);
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
                 if(json != 0) {
-                    tag_input.attr('checked', false);
+                    tag_input.prop('checked', false);
                     js_tag.remove();
                 }else {
                     alert('操作失败');
@@ -241,24 +239,20 @@ if($forward < 0) { // 未来
         $(".js-operate_tag").change(function(){
             var diary_id = $(this).attr('data-diary_id'),
             tag_id = $(this).attr('data-tag_id'),
-            action = !!$(this).attr('checked') ? 'add-diary-tag' : 'del-diary-tag';
+            action = !!$(this).prop('checked') ? 'add-diary-tag' : 'del-diary-tag';
             var len = $(this).closest('.js-all-tag').find(':checked').length;
             if(len > 5){
-                $(this).attr('checked', false);
+                this.checked = false;
                 alert('单个日志不能超过五个标签哦');
                 return false;
             }
-            var color = $(this).parent().next().css('background-color'),
-            tag = $(this).parent().next().next().html();
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:action}, function(json) {
                 if(json != 0) {
                     $('#tag-list-'+diary_id).find('#diary_tag_'+tag_id).toggle();
                 }else {
                     alert('操作失败');
-                    return false;
                 }
             });
-            return false;
         });
 
     });
