@@ -94,7 +94,10 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
                             <?php foreach($tagList as $tag):?>
                             <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
                                 <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                                <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
+                                <a style="text-decoration: none;" href="<?php echo $url;?>">
                                     <span style="margin:4px;"><?php echo $tag['tag']?></span>
+                                </a>
                                 </div>
                             </div>
                             <?php endforeach;?>
