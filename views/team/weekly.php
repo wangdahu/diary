@@ -88,6 +88,7 @@ while($row = $result->fetch_assoc()){
                         <p><?php echo nl2br($daily['content']);?></p>
                     </div>
                     <div class="clearfix diary-operation" >
+                        <span class="daily-date"><?php echo date('y-m-d H:i', $daily['fill_time']);?></span>
                         <span class="tag-list">
                             <?php foreach($tagList as $tag):?>
                             <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
@@ -97,7 +98,6 @@ while($row = $result->fetch_assoc()){
                             </div>
                             <?php endforeach;?>
                         </span>
-                         <span class="daily-date"><?php echo date('y-m-d H:i', $daily['fill_time']);?></span>
                     </div>
                 </div>
                 <?php endforeach; endif;?>
