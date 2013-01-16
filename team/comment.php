@@ -148,9 +148,14 @@ unset($titleList['count']);
             return false;
         });
 
-
-        $('.insert-emotion').click(function() {
-            $(this).next().toggle();
+        // 显示表情与隐藏
+        $(document).click(function(e) {
+            var target = $(e.target);
+            if(target.is('.insert-emotion')) {
+                target.next().toggle();
+            } else {
+                $('.emotion-list').hide();
+            }
         });
         $('.emotion-list').delegate('a', 'click', function() {
             var src = '/diary/source/emotions/' + $(this).data('id') + '.gif';
@@ -160,11 +165,6 @@ unset($titleList['count']);
             $(this).closest('.emotion-list').hide();
         }).click(function(e) {
             e.stopPropagation();
-        });
-        $(document).click(function(e) {
-            var target = $(e.target);
-            if(target.is('.insert-emotion')) { return; }
-            $('.emotion-list').hide();
         });
 
     });

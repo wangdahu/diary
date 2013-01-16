@@ -196,22 +196,18 @@ if($forward < 0) { // 未来
 
         // 单个标签操作
         $(".js-tag").mouseover(function(){
-            $(this).find('.js-del_tag').toggle();
+            $(this).find('.js-del_tag').show();
         }).mouseout(function(){
-            $(this).find('.js-del_tag').toggle();
+            $(this).find('.js-del_tag').hide();
         });
 
-        // 操作标签
-        $('.js-opterate_tag').click(function(){
-            $(this).next().toggle();
-        });
-        // 点击其他地方隐藏
+        // 标签操作，点击其他地方隐藏
         $(document).click(function(e) {
             var target = $(e.target);
-            if(target && target.is('.js-opterate_tag')) {
-                return;
+            if(target.is('.js-opterate_tag')) {
+                target.next().toggle();
             }
-            $('.js-opterate_tag').next().hide();
+            $('.js-opterate_tag').not(target).next().hide();
         });
         $('.js-all-tag').click(function(e) {
             e.stopPropagation();
