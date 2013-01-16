@@ -47,10 +47,10 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .dc{float:right;border:1px solid #dadada;font:400 12px/22px "宋体";padding:0 6px;color:#757575;text-decoration:none;}
 .c_t{width:878px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b{width:878px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
-.c_c{width:852px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;position:relative;}
+.c_c{width:852px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;}
 .c_t_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
-.c_c_1{width:802px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;position:relative;}
+.c_c_1{width:802px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px; position:relative; }
 .c_c_c{width:100%;line-height:22px;}
 .c_c_c h2{line-height:30px;}
 .c_c_c h2 a{color:#3f3f3f;}
