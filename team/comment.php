@@ -27,7 +27,7 @@ unset($titleList['count']);
 <!--评论开始-->
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
-        <p class="p_icon">评论（<?php echo count($commentList); ?>）</p>
+        <p>评论（<?php echo count($commentList); ?>条）</p>
         <?php if($reportCount):?>
         <a href="javascript:;" class="fr js-view_record">
             汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人
