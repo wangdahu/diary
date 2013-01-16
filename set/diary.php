@@ -5,6 +5,9 @@ $uid = $diary->uid;
 include dirname(dirname(__FILE__))."/class/DiarySet.php";
 if(isset($_POST['working_time'])){
     DiarySet::saveWorkingTime($diary, $_POST['working_time']);
+    // 设置循环
+    DiaryLoop::insertPolling(0, 'sendRemind');
+    DiaryLoop::insertPolling(1, 'sendReport');
 }
 
 $list = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');

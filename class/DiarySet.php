@@ -342,4 +342,43 @@ class DiarySet{
         }
     }
 
+    /**
+     * 获取下次汇报/提醒时间
+     */
+    public static function nextTime($type = 'report') {
+        $diary = new Diary();
+        $func = $type.'Time';
+        $type = ucwords($type);
+        $time = self::$func($diary);
+        // 日报下次提交时间
+        $now = time();
+        $dailyTime = strtotime(date('Y-m-d ').$time['daily'.$type]['hour'].":".$time['daily'.$type]['minute']);
+        $dailyTime = $dailyTime < $now ? $dailyTime+86400 : $dailyTime;
+
+        // 周报下次提交时间
+        $w = date('w') ? date('w') : 7; // 周日转换成7
+        $weeklyHourTime = $time['weekly'.$type]['hour'].":".$time['weekly'.$type]['minute'];
+        if($w == $time['weekly'.$type]['w']) {
+            $weeklyTime = strtotime(date('Y-m-d ').$weeklyHourTime);
+        }elseif ($w < $time['weekly'.$type]['w']){
+            $weeklyTime = strtotime(date('Y-m-d ').$weeklyHourTime) + ($time['weekly'.$type]['w']-$w)*86400;
+        }else{
+            $weeklyTime = strtotime(date('Y-m-d ').$weeklyHourTime) - ($w-$time['weekly'.$type]['w'])*86400;
+        }
+        $weeklyTime = $weeklyTime < $now ? $weeklyTime+7*86400 : $weeklyTime;
+        // 月报下次提交时间
+        $monthlyTime = strtotime(date('Y-m-').$time['monthly'.$type]['date']." ".$time['monthly'.$type]['hour'].":".$time['monthly'.$type]['minute']);
+        $nextMonthTime = mktime(date('H', $monthlyTime), date('i', $monthlyTime), 0, date('m', $monthlyTime)+1, date('d', $monthlyTime), date('Y', $monthlyTime));
+        $monthlyTime = $monthlyTime < $now ? $nextMonthTime : $monthlyTime;
+
+        $nextTime = min($dailyTime, $weeklyTime, $monthlyTime);
+        $diaryType = 'daily';
+        if($nextTime == $weeklyTime) {
+            $diaryType = 'weekly';
+        }elseif($nextTime == $monthlyTime) {
+            $diaryType = 'monthly';
+        }
+        return compact('diaryType', 'nextTime');
+    }
+
 }

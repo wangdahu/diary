@@ -5,6 +5,9 @@ $setDefault = 'remind';
 if($_POST){
     // 设置提醒时间
     DiarySet::saveRemindTime($diary, $_POST['dailyRemind'], $_POST['weeklyRemind'], $_POST['monthlyRemind']);
+    // 设置循环
+    DiaryLoop::insertPolling(0, 'sendRemind');
+    DiaryLoop::insertPolling(1, 'sendReport');
 }
 
 $hours = range(0, 24);

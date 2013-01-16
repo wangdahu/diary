@@ -11,6 +11,9 @@ if($_POST){
     $monthly_depts = explode(',', $_POST['monthly_dept_object']);
     // 设置汇报对象
     DiarySet::saveReportObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
+    // 设置循环
+    DiaryLoop::insertPolling(0, 'sendRemind');
+    DiaryLoop::insertPolling(1, 'sendReport');
 }
 
 $hours = range(0, 23);
