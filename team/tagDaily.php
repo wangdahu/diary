@@ -2,7 +2,7 @@
 $tagId = (int)$_GET['tag'];
 $uid = (int)$_GET['uid'];
 $userInfo = DiaryUser::getInfo($uid);
-$title = "我自己的标签";
+$title = $userInfo['UserName']."的标签";
 $type = 'daily';
 // 获取当前tag的所有日志
 $dailys = DiaryDaily::getTagDailys($diary, $tagId);

@@ -9,7 +9,10 @@ if($_POST){
     $weekly_depts = explode(',', $_POST['weekly_dept_object']);
     $monthly_users = explode(',', $_POST['monthly_user_object']);
     $monthly_depts = explode(',', $_POST['monthly_dept_object']);
+    // 设置订阅对象
     DiarySet::saveSubscribeObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
+
+    
 }
 
 $subscribeObject = DiarySet::subscribeObject($diary, $diary->uid);
