@@ -63,13 +63,14 @@ if($isReported) {
     };
     $num = count($dailys);
 }
+$wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
 ?>
 
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
-            <a href="<?php echo $backUrl; ?>" class="a_01 mg10" style="display:inline-block">返回</a> <?php echo $user['UserName']."（".$user['dept_name']."）";?>
+    <a href="<?php echo $backUrl; ?>" class="a_01 mg10" style="display:inline-block">返回</a>  <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."）";?>
         </h2>
        <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
@@ -112,7 +113,7 @@ if($isReported) {
                         <?php foreach($tagList as $tag):?>
                             <div style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>;">
                                 <div title="<?php echo $tag['tag']?>" class="ellipsis" style="max-width: 120px; float: left; ">
-                                    <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']."&uid=".$uid; ?>
+                                    <?php $url = "/diary/index.php/team/tagDaily?tag=".$tag['id']."&uid=".$uid; ?>
                                     <a style="text-decoration: none;" href="<?php echo $url;?>">
                                         <span style="margin:4px;"><?php echo $tag['tag']?></span>
                                     </a>

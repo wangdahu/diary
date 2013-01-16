@@ -19,7 +19,6 @@ if(in_array($uid, $reportUserIds)) {
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 
 $allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
-
 // 获取表情的title
 $emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
 $titleList = parse_ini_file($emotionsDir."faceList.ini");
@@ -36,13 +35,14 @@ unset($titleList['count']);
         <?php endif;?>
     </h2>
     <?php foreach($commentList as $comment): ?>
+    <?php $wiseucUrl = "wisetong://message/?uid=".$allUsers[$comment['uid']]['LoginName']."&myid=".$diary->LoginName;?>
     <div class="comment_box">
         <div class="c_t"></div>
         <div class="c_c clearfix">
-            <div class="pic"><img src="<?php echo $allUsers[$comment['uid']]['photo']; ?>" alt="" /></div>
+            <div class="pic"><a href="<?php echo $wiseucUrl;?>"><img src="<?php echo $allUsers[$comment['uid']]['photo']; ?>" alt="" /></a></div>
             <div class="comment_t">
                 <h2>
-                    <a href="javascript:;"><?php echo $allUsers[$comment['uid']]['UserName']; ?>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>）</a>
+                    <a href="<?php echo $wiseucUrl;?>"><?php echo $allUsers[$comment['uid']]['UserName']; ?></a>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>）
                     <span>
                         <?php echo date('y-m-d H:i', $comment['add_time']); ?>
                     </span>

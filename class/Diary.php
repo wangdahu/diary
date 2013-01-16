@@ -29,6 +29,7 @@ class Diary{
             }
             $_session_arr = Session::instance()->get();
             $this->userInfo = $_session_arr['userInfo'];
+            $this->LoginName = $_session_arr['userInfo']['LoginName'];
             $this->entInfo = $_session_arr['entInfo'];
             $this->uid = $this->userInfo['PID'];
             $this->corpId = $this->entInfo['AccountID'];
@@ -40,6 +41,7 @@ class Diary{
                 die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
             }
             $this->uid =  1;
+            $this->LoginName = 'admin';
             $this->corpId = 131785;
             $this->deptId = 1;
         }

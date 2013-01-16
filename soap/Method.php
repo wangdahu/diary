@@ -1,4 +1,17 @@
 <?php
 class Method {
-    // public static function send
+    /**
+     * 发送提醒
+     */
+    public static function sendRemind($diary, $params) {
+
+    }
+
+    /**
+     * 发送汇报
+     */
+    public static function sendReport() {
+
+    }
+
 }

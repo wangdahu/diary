@@ -3,6 +3,7 @@ $title = "提醒设置";
 $setDefault = 'remind';
 
 if($_POST){
+    // 设置提醒时间
     DiarySet::saveRemindTime($diary, $_POST['dailyRemind'], $_POST['weeklyRemind'], $_POST['monthlyRemind']);
 }
 

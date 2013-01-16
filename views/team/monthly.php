@@ -57,13 +57,15 @@ $noReportWeekly = DiaryDaily::noReportDaily($diary, $firstTime, $lastTime, 2, $u
 $noContentDaily = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 1, $uid);
 $noContentWeekly = DiaryDaily::noContentDaily($diary, $firstTime, $lastTime, 2, $uid);
 
+$wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
+
 ?>
 <div class="content">
     <!--本月总结开始-->
     <div class="content_bar mb25">
         <?php if(isset($from)):?>
         <h2 class="content_tit clearfix">
-            <a href="<?php echo $backUrl; ?>" class="a_01 mg10" style="display:inline-block">返回</a> <?php echo $user['UserName']."（".$user['dept_name']."）";?>
+            <a href="<?php echo $backUrl; ?>" class="a_01 mg10" style="display:inline-block">返回</a>  <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."）";?>
         </h2>
         <?php endif;?>
         <h2 class="content_tit clearfix">

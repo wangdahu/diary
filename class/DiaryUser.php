@@ -33,6 +33,7 @@ class DiaryUser{
                 'UserName' => $result[0]['UserName'],
                 'dept_name' => $result[0]['depname'],
                 'corp_id' => $result[0]['AccountID'],
+                'LoginName' => $result[0]['LoginName'],
             );
         }else {
             return array(
@@ -40,6 +41,7 @@ class DiaryUser{
                 'UserName' => $id,
                 'dept_name' => '技术部',
                 'corp_id' => 131785,
+                'LoginName' => 'admin',
             );
         }
     }
@@ -64,4 +66,5 @@ class DiaryUser{
         }
         return $result;
     }
+
 }
