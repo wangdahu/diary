@@ -24,10 +24,11 @@ $emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
 $titleList = parse_ini_file($emotionsDir."faceList.ini");
 unset($titleList['count']);
 ?>
+<script src="../../../diary/source/js/wordslimit.js"></script>
 <!--评论开始-->
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
-        <p class="p_icon">评论（<?php echo count($commentList); ?>）</p>
+        <p>评论（<?php echo count($commentList); ?>条）</p>
         <?php if($reportCount):?>
         <a href="javascript:;" class="fr js-view_record">
             汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人
@@ -72,7 +73,7 @@ unset($titleList['count']);
                 </div>
             </div>
             <div class="ftextarea">
-                <div contenteditable="true" id="content" class="textarea_comment" ></div>
+                <div contenteditable="true" id="content" class="textarea_comment" data-limit="300"></div>
                 <textarea name="content" style="display: none;"></textarea>
             </div>
             <input type="hidden" value="<?php echo $type;?>" name="type" id="type"/>
@@ -167,6 +168,8 @@ unset($titleList['count']);
             e.stopPropagation();
         });
 
+        
+        $('#content').wordLimit();
     });
 </script>
 <!--发表评论结束-->
