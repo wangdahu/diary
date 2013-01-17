@@ -168,8 +168,8 @@ unset($titleList['count']);
             e.stopPropagation();
         });
 
+        
+        $('#content').wordLimit();
     });
-$('#content').wordLimit();
-
 </script>
 <!--发表评论结束-->
