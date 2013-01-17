@@ -24,6 +24,7 @@ $emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
 $titleList = parse_ini_file($emotionsDir."faceList.ini");
 unset($titleList['count']);
 ?>
+<script src="../../../diary/source/js/wordslimit.js"></script>
 <!--评论开始-->
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
@@ -168,30 +169,7 @@ unset($titleList['count']);
         });
 
     });
-
-
-$.fn.extend({
-    divWordLimit: function() {
-        this.each(function() {
-            console.log(this);
-            var div = $(this), limit = div.data('limit'), wordIndicator;
-            if(div.data('init')) {
-                return div.trigger('input');
-            }
-            div.data('init', 1);
-            div.parent().css('position', 'relative');
-            wordIndicator = $('<span class="word-limit"><span>0</span> / <span>' + limit + '</span><input id="word_valid" type="hidden"/></span>').insertAfter(div);
-            div.bind('input keyup', function() {
-                var len = $(this).html().length;
-                wordIndicator.find('span:first').text(len);
-                wordIndicator.toggleClass('word-exceed', len > limit);
-                wordIndicator.find('input[type=hidden]').val(len > limit ? 1 : '');
-            }).trigger('input');
-        });
-        return this;
-    }
-});
-$('#content').divWordLimit();
+$('#content').wordLimit();
 
 </script>
 <!--发表评论结束-->
