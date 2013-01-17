@@ -72,7 +72,7 @@ unset($titleList['count']);
                 </div>
             </div>
             <div class="ftextarea">
-                <div contenteditable="true" id="content" class="textarea_comment" ></div>
+                <div contenteditable="true" id="content" class="textarea_comment" data-limit="300"></div>
                 <textarea name="content" style="display: none;"></textarea>
             </div>
             <input type="hidden" value="<?php echo $type;?>" name="type" id="type"/>
@@ -168,5 +168,30 @@ unset($titleList['count']);
         });
 
     });
+
+
+$.fn.extend({
+    divWordLimit: function() {
+        this.each(function() {
+            console.log(this);
+            var div = $(this), limit = div.data('limit'), wordIndicator;
+            if(div.data('init')) {
+                return div.trigger('input');
+            }
+            div.data('init', 1);
+            div.parent().css('position', 'relative');
+            wordIndicator = $('<span class="word-limit"><span>0</span> / <span>' + limit + '</span><input id="word_valid" type="hidden"/></span>').insertAfter(div);
+            div.bind('input keyup', function() {
+                var len = $(this).html().length;
+                wordIndicator.find('span:first').text(len);
+                wordIndicator.toggleClass('word-exceed', len > limit);
+                wordIndicator.find('input[type=hidden]').val(len > limit ? 1 : '');
+            }).trigger('input');
+        });
+        return this;
+    }
+});
+$('#content').divWordLimit();
+
 </script>
 <!--发表评论结束-->
