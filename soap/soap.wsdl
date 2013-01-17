@@ -60,7 +60,7 @@
 
 	<service name="soapService">
 		<port name="functionsPort" binding="typens:functionsBinding">
-			<soap:address location="http://sys.ids5.com/Interface/www/soap/stdserver.php?wsdl"/>
+			<soap:address location="http://113.106.88.164:14132/diary/soap/stdserver.php?wsdl"/>
 		</port>
 	</service>
 </definitions>

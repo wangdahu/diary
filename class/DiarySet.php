@@ -345,13 +345,12 @@ class DiarySet{
     /**
      * 获取下次汇报/提醒时间
      */
-    public static function nextTime($type = 'report') {
+    public static function nextTime($type = 'report', $now = time()) {
         $diary = new Diary();
         $func = $type.'Time';
         $type = ucwords($type);
         $time = self::$func($diary);
         // 日报下次提交时间
-        $now = time();
         $dailyTime = strtotime(date('Y-m-d ').$time['daily'.$type]['hour'].":".$time['daily'.$type]['minute']);
         $dailyTime = $dailyTime < $now ? $dailyTime+86400 : $dailyTime;
 

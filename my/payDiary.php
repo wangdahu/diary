@@ -23,7 +23,7 @@ function payDiary($diary, $type, $currentDate, $showObject) {
     $content = $showObject;
     $title = "补交工作日志";
     $config = Diary::getConfig();
-    $url = "http://".$config['host']."/diary/team/".$diaryType."?uid=".$uid;
+    $url = "http://".$config['host']."/diary/team/".$type."?uid=".$uid;
     DiaryMsg::send($allUsers, $title, $content, $url);
     return 1;
 }
