@@ -222,7 +222,7 @@ if($forward < 0) { // 未来
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
                 if(json != 0) {
                     tag_input.prop('checked', false);
-                    js_tag.remove();
+                    js_tag.toggle();
                 }else {
                     alert('操作失败');
                     return false;
