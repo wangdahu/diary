@@ -25,7 +25,7 @@ $showCommit = false;
 $allowPay = false;
 $isReported = true;
 // 判断是否为补交/未汇报/已汇报
-if($forward == 0) { // 本月
+if($forward == 0) { // 本周
     // 是否已过汇报时间
     $reportTime = DiarySet::reportTime($diary, $uid);
     $w = date('w') ? date('w') : 7; // 周日转换成7
