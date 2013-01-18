@@ -138,6 +138,10 @@ unset($titleList['count']);
                 $('#content').select();
                 return false;
             }
+            if(form.find('#word_valid').val()){
+                alert('输入的文字内容大于所规定的字数');
+                return false;
+            }
             $('[name=content]').val(content); // sync div content to textarea
             $.post('/diary/index.php/team/createComment', form.serialize(), function(json){
                 if(json){

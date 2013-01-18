@@ -104,7 +104,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
                         alert('请填写日志内容');
                         return false;
                     }
-                    if($('#word_valid').val()){
+                    if($("#monthly-dialog-form").find('#word_valid').val()){
                         alert('输入的文字内容大于所规定的字数');
                         return false;
                     }

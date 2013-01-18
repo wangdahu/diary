@@ -26,7 +26,7 @@
                         alert('请填写日志内容');
                         return false;
                     }
-                    if($('#word_valid').val()){
+                    if($("#daily-dialog-form").find('#word_valid').val()){
                         alert('输入的文字内容大于所规定的字数');
                         return false;
                     }
