@@ -345,7 +345,10 @@ class DiarySet{
     /**
      * 获取下次汇报/提醒时间
      */
-    public static function nextTime($type = 'report', $now = time()) {
+    public static function nextTime($type = 'report', $now = null) {
+        if(!$now) {
+            $now = time();
+        }
         $diary = new Diary();
         $func = $type.'Time';
         $type = ucwords($type);
