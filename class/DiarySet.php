@@ -277,7 +277,7 @@ class DiarySet{
         $subscribeMy = self::subscribeMy($diary, $type);
         $objectType = $type == 1 ? 'daily_object' : ($type == 2 ? 'weekly_object' : 'monthly_object');
         $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
-        $allDepts = array_unique(array_merge($reportObject[$objectType]['dept'], $subscribeMy));
+        $allDepts = array_unique($reportObject[$objectType]['dept']);
         return $allUsers;
     }
 
@@ -345,11 +345,9 @@ class DiarySet{
     /**
      * 获取下次汇报/提醒时间
      */
-    public static function nextTime($type = 'report', $now = null) {
-        if(!$now) {
-            $now = time();
-        }
+    public static function nextTime($type = 'report') {
         $diary = new Diary();
+        $now = time();
         $func = $type.'Time';
         $type = ucwords($type);
         $time = self::$func($diary);

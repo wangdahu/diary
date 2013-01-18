@@ -26,7 +26,7 @@ class DB{
         }
         $mysqli->query("SET NAMES '".$character_set."'");
         $this->db = $mysqli;
-        
+
         $this->workingTime = array(1,2,3,4,5);
         $this->dailyReport = array('hour' => '18', 'minute' => '0', 'way' => array('remind'));
         $this->dailyRemind = array('hour' => '17', 'minute' => '30', 'way' => array('remind'));
