@@ -23,6 +23,9 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
 <div class="content">
     <form id="report-set-form" method="post">
         <div class="set_bar mb25">
+            <div class="pt25">
+                <div class="hint pl10">在此订阅他人的日志，系统将自动将他们的报告汇总到您的“团队日志”。</div>
+            </div>
             <!--日报设置开始-->
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
@@ -62,10 +65,11 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
                 <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $subscribeObject['monthly_object']['dept']); ?>"/>
             </ul>
             <!--月报设置结束-->
-        </div>
-        <div class="form-action">
-            <button type="submit">确定</button>
-            <button type="reset">取消</button>
+            <h2 class="mb10"></h2>
+            <div class="form-action">
+                <button type="submit">确定</button>
+                <button type="reset">取消</button>
+            </div>
         </div>
     </form>
 </div>

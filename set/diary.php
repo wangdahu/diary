@@ -21,7 +21,9 @@ $selected = DiarySet::workingTime($diary, $diary->uid);
     <div class="content">
         <div class="set_bar mb25">
             <!--日报设置开始-->
-            <h2 class="pt25">工作时间设置 <span style="font-size: 12px; font-weight: normal;">将根据您的上班规律，自动配置好您的日报、提醒等功能</span></h2>
+            <div class="pt25">
+                <div class="hint pl10">工作时间设置 将根据您的上班规律，自动配置好您的日报、提醒等功能。</div>
+            </div>
             <ul class="set_list">
                 <li>
                     <p>
@@ -31,12 +33,14 @@ $selected = DiarySet::workingTime($diary, $diary->uid);
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
+                    </p>
                 </li>
             </ul>
-        </div>
-        <div class="form-action">
-            <button type="submit">确定</button>
-            <button type="reset">取消</button>
+            <h2 class="mb10"></h2>
+            <div class="form-action">
+                <button type="submit">确定</button>
+                <button type="reset">取消</button>
+            </div>
         </div>
     </div>
 </form>

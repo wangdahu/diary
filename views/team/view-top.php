@@ -17,7 +17,7 @@ if($isReported){
         <a href="daily?forward=<?php echo $backwardDays;?>&uid=<?php echo $uid;?>" class="down" title="下一天"></a>
     </div>
     <p class="fl">
-        <?php echo date('Y年m月d日', $startTime);?>（周<?php echo $weekarray[date("w", $startTime)];?>）
+        <?php echo date('Y年m月d日', $startTime);?> 周<?php echo $weekarray[date("w", $startTime)];?>
     </p>
     <?php elseif($type == 'weekly'):?>
     <div class="pags fl clearfix">
@@ -34,8 +34,8 @@ if($isReported){
     </div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
-    <p class="fl mg10" title="<?php echo $reportStatus;?>">
-        <img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" />
+    <p class="fl status mg15" title="<?php echo $reportStatus;?>">
+        <img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /> <?php echo $reportStatus; ?>
     </p>
     <p class="fl">
         <?php

@@ -27,7 +27,7 @@ $showObject = $forward < 0 ? false : true;
             <li class="clearfix <?php echo $cls; ?>">
                 <div class="pic">
                     <a href="<?php echo $url;?>">
-                        <img src="<?php echo $user['photo']; ?>" />
+                     <img style="height: 56px; width: 56px;" src="<?php echo $user['photo']; ?>" />
                      </a>
                 </div>
                 <div class="info">

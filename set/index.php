@@ -31,6 +31,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
 <div class="content">
     <form id="report-set-form" method="post">
         <div class="set_bar mb25">
+            <div class="pt25">
+                <div class="hint pl10">在此设置日志汇报对象，系统自动将您的日志主动提交。</div>
+            </div>
             <!--日报设置开始-->
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
@@ -174,10 +177,12 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                 </li>
             </ul>
             <!--月报设置结束-->
-        </div>
-        <div class="form-action">
-            <button type="submit">确定</button>
-            <button type="reset">取消</button>
+
+            <h2 class="mb10"></h2>
+            <div class="form-action">
+                <button type="submit">确定</button>
+                <button type="reset">取消</button>
+            </div>
         </div>
     </form>
 </div>

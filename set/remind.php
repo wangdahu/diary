@@ -25,6 +25,9 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
 <div class="content">
     <form id="report-set-form" method="post">
         <div class="set_bar mb25">
+            <div class="pt25">
+                <div class="hint pl10">在此设置日志填写提醒，系统将根据您的设置定时提醒。</div>
+            </div>
             <!--日报设置开始-->
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
@@ -144,10 +147,11 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                 </li>
             </ul>
             <!--月报设置结束-->
-        </div>
-        <div class="form-action">
-            <button type="submit">确定</button>
-            <button type="reset">取消</button>
+            <h2 class="mb10"></h2>
+            <div class="form-action">
+                <button type="submit">确定</button>
+                <button type="reset">取消</button>
+            </div>
         </div>
     </form>
 </div>
