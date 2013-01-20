@@ -1,11 +1,11 @@
 <?php
 $from = 'team';
 if($isReported){
-    $url = "../../../../diary/source/images/already-report.png";
+    $reportCls = "top-reported";
     $reportStatus = "已汇报";
 }else{
-     $url = "../../../../diary/source/images/no-report.png";
-     $reportStatus = "未汇报";
+    $reportCls = "top-unreport";
+    $reportStatus = "未汇报";
 }
 ?>
 <!--功能操作开始-->
@@ -34,9 +34,7 @@ if($isReported){
     </div>
     <p class="fl"><?php echo $currentMonth;?></p>
     <?php endif;?>
-    <p class="fl status mg15" title="<?php echo $reportStatus;?>">
-        <img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /> <?php echo $reportStatus; ?>
-    </p>
+    <p class="fl status mg15 <?php echo $reportCls?>" title="<?php echo $reportStatus;?>"><?php echo $reportStatus; ?></p>
     <p class="fl">
         <?php
              if($type == 'daily') {

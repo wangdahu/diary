@@ -43,10 +43,8 @@ unset($titleList['count']);
             <div class="pic"><a href="<?php echo $wiseucUrl;?>"><img src="<?php echo $allUsers[$comment['uid']]['photo']; ?>" alt="" /></a></div>
             <div class="comment_t">
                 <h2>
+                    <span> <?php echo date('y-m-d H:i', $comment['add_time']); ?> </span>
                     <a href="<?php echo $wiseucUrl;?>"><?php echo $allUsers[$comment['uid']]['UserName']; ?></a>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>）
-                    <span>
-                        <?php echo date('y-m-d H:i', $comment['add_time']); ?>
-                    </span>
                 </h2>
                 <p><?php echo nl2br($comment['content']); ?></p>
             </div>
@@ -62,7 +60,7 @@ unset($titleList['count']);
         <div class="c_t"></div>
         <div class="c_c">
             <div class="comment_f">
-                <button class="fr" type="submit">评论</button>
+                <a class="a_01 fr" onclick="$(this).closest('form').submit()" href="javascript:">提交</a>
                 <div class="emotion-warpper">
                     <a class="insert-emotion" href="javascript:"></a>
                     <ul class="emotion-list clearfix">

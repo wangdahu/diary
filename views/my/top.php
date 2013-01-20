@@ -1,13 +1,13 @@
 <?php
 if($isReported){
-    $url = "../../../../diary/source/images/already-report.png";
+    $reportCls = "top-reported";
     $reportStatus = "已汇报";
 }else{
     if((!$forward && !$allowPay) || $forward < 0){
-        $url = "../../../../diary/source/images/wait-report.png";
+        $reportCls = "top-wait-report";
         $reportStatus = "等待汇报";
     }else{
-        $url = "../../../../diary/source/images/no-report.png";
+        $reportCls = "top-unreport";
         $reportStatus = "未汇报";
     }
 }
@@ -26,7 +26,7 @@ if($isReported){
     <div class="pags fl clearfix"><a href="monthly?forward=<?php echo $forwardMonths;?>" class="up" title="上一月"></a><a href="monthly?forward=<?php echo $backwardMonths;?>" class="down" title="下一月"></a></div>
     <p class="fl showObject"><?php echo $currentMonth;?></p>
     <?php endif;?>
-    <p class="fl status mg15" title="<?php echo $reportStatus;?>"><img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /> <?php echo $reportStatus; ?></p>
+    <p class="fl status mg15 <?php echo $reportCls?>" title="<?php echo $reportStatus;?>"><?php echo $reportStatus; ?></p>
     <div class="data fr clearfix">
         <a href="index" class="<?php echo $type == 'daily' ? 'cur' : ''?>">今日</a>
         <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>

@@ -29,8 +29,12 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 #wrapper {width:902px;margin:0 auto;position: relative;top: 58px;}
 .content{width:898px;margin:0 auto;padding:0 2px 20px;background:url(../images/bg_02.png) repeat-y;}
 .todo{height:37px;background:url(../images/subnav_bg.png)  0 0 no-repeat;padding:11px 10px 0;line-height:25px;}
-.todo p { font-family:"微软雅黑";font-size: 16px; color: #000;}
-.todo .status{ border-left: 1px solid #E7E8EA; padding-left: 15px;}
+.todo p { font-size: 16px; color: #000;}
+.todo .status{ border-left: 1px solid #E7E8EA; padding-left: 42px; line-height: 27px; }
+.top-reported {background: url(../images/already-report.png) 15px top no-repeat; }
+.top-wait-report {background: url(../images/wait-report.png) 15px top no-repeat;}
+.top-unreport {background: url(../images/no-report.png) 15px top no-repeat;}
+
 .pags{width:75px;height:25px;background:url(../images/btn.png) 0 0 no-repeat;margin:0 10px;}
 .pags a{display:block;height:25px;}
 .up{float:left;width:37px;}
@@ -39,14 +43,14 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .down:hover{background:url(../images/btn.png) -37px -35px no-repeat;}
 .data{border:1px solid #a3a3a3;border-right:none;}
 .data a{float:left;width:52px;border-right:1px solid #a3a3a3;display:block;line-height:23px;text-align:center;text-decoration:none;color:#757575;}
-.data a:hover{background:#a3a3a3;}
+.data a:hover{background:#E3E3E3;}
 .data a.cur{background:#F58400;color:#fff;}
 /*----------- 今日工作 ----------*/
 .content_bar{padding:0 10px;}
 .content_tit{border-bottom:1px solid #dadada;line-height:22px;padding:10px 0 6px;}
 .content_tit p{float:left;}
 .content_tit p em{color:#f00;margin:0 3px;}
-.dc{float:right;border:1px solid #dadada;font:400 12px/22px "宋体";padding:0 6px;color:#757575;text-decoration:none;}
+.dc{float:right;padding:0 6px;color:#757575;text-decoration:none;}
 .c_t{width:878px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b{width:878px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
 .c_c{width:852px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;}
@@ -127,4 +131,5 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .calendar tbody td.td_white{background-color:white;}
 .has-comment { background-image: url(../images/comment.png); background-position: right top; background-repeat: no-repeat;}
 .calendar tbody td.no-report {background-image: url(../images/has-no-report.png); background-position: left top; background-repeat: no-repeat;}
+
 

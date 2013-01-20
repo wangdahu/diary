@@ -15,7 +15,7 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <?php if(isset($from)):?>
-        <h2 class="content_tit clearfix"><a href="<?php echo $backUrl; ?>" style="display:inline-block" class="a_01 mg10">返回</a>  <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."）";?>
+        <a href="<?php echo $backUrl; ?>" class="a_01 mg10 fl">返回</a><h2 class="content_tit clearfix">  <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."）";?>
         </h2>
         <?php endif;?>
         <h2 class="content_tit clearfix">
@@ -68,13 +68,13 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
             <div class="c_c">
                 <div>
                     <p style="line-height:30px;">
+                        <a href="<?php echo $url;?>" class="a_01 fr">进入</a>
                         <strong><?php echo "周".$k." ".$v; ?></strong>
                         <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
                         <?php
                              $dateForward = DiaryDaily::getForward($dateForwards[$v]);
                              $url = "/diary/index.php/my/index?forward=".$dateForward;
                         ?>
-                        <a href="<?php echo $url;?>" style="text-decoration: none;"><button style="cursor: pointer" class="fr" type="button">进入</button></a>
                     </p>
                 </div>
 
