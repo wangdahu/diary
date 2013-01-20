@@ -20,6 +20,10 @@
         });
 
     </script>
+<!--[if IE 6]>
+<script src="/diary/source/js/DD_belatedPNG-min.js"></script>
+<script>$(function() { DD_belatedPNG.fix('*'); });</script>
+<![endif]-->
 </head>
 
 <body>

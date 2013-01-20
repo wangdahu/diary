@@ -28,7 +28,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 /*----------- 功能操作 ----------*/
 #wrapper {width:902px;margin:0 auto;position: relative;top: 58px;}
 .content{width:898px;margin:0 auto;padding:0 2px 20px;background:url(../images/bg_02.png) repeat-y;}
-.todo{height:37px;background:url(../images/subnav_bg.png)  0 0 no-repeat;padding:11px 10px 0;line-height:25px;}
+.todo{height:37px;background:url(../images/subnav_bg.png)  0 0 no-repeat;padding:11px 10px 0;line-height:25px; }
 .todo p { font-size: 16px; color: #000;}
 .todo .status{ border-left: 1px solid #E7E8EA; padding-left: 42px; line-height: 27px; }
 .top-reported {background: url(../images/already-report.png) 15px top no-repeat; }
@@ -54,7 +54,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .dc:hover { background-position: left -29px; }
 .btn_back { background: url(../images/btn_back.png) no-repeat center top; width: 80px; height: 30px; margin-top: 4px;}
 .btn_back:hover { background-position: center -30px; }
-.c_t{width:878px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
+.c_t{width:878px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat; font-size: 0; }
 .c_b{width:878px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
 .c_c{width:852px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;}
 .c_t_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
@@ -92,7 +92,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .subnav li a{display:block;height:39px;color:#3f3f3f;font:700 14px/29px "宋体";text-decoration:none;}
 .subnav li a:hover,.subnav li a.current{background:url(../images/subnavli_bg.png) center top no-repeat;color:#fff;}
 .set_bar{padding:0 20px;}
-.set_bar .hint {background: #e3ffca; border: 1px solid #cae8af; line-height: 24px; }
+.set_bar .hint {background: #e3ffca; border: 1px solid #cae8af; line-height: 24px; height: 24px; }
 .set_bar h2{line-height:28px;border-bottom:1px solid #bdbdbd;}
 .set_list{margin:15px 0 15px;}
 .set_list li{overflow:hidden;padding:5px 0;line-height:25px;}
