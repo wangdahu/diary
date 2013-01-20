@@ -96,17 +96,15 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
         </fieldset>
         <div class="mt10">插入日报：
             <?php foreach($weekarray as $k => $w):?>
-            <span class="ml10 p3 <?php echo in_array($allDate[$k], $date_keys) ? 'js-insert-daily' : ''?>" style="border:1px solid #ccc;">
-                <?php echo '周'.$w?>
-                <?php if(in_array($allDate[$k], $date_keys)):?>
-<script type="text/string" class="insert_daily"><?php echo '周'.$w.' '.$allDate[$k]."\n"?>
+            <span class="mr10 p3 <?php echo in_array($allDate[$k], $date_keys) ? 'js-insert-daily' : ''?>" style="border:1px solid #ccc;"><?php echo '周'.$w?></span>
+<?php if(in_array($allDate[$k], $date_keys)):?>
+<script type="text/string"><?php echo '周'.$w.' '.$allDate[$k]."\n"?>
 <?php foreach($dailys[$allDate[$k]] as $one):?>
 <?php echo $one['filltime'].' '.$one['tagStr']."\n"?>
 <?php echo $one['content']."\n"?>
 <?php endforeach;?>
 </script>
-            <?php endif;?>
-            </span>
+<?php endif;?>
             <?php endforeach;?>
         </div>
     </form>
@@ -193,7 +191,7 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
 
         // 插入日报
         $('.js-insert-daily').click(function(){
-            var html = $(this).find('.insert_daily').html();
+            var html = $(this).next().html();
             TA.insertAtPoint($('#weekly_content')[0], '\n' + html + '\n');
         });
 

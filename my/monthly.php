@@ -72,14 +72,12 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
                        $key = date('Y-W', $firstTime + $w*7*86400);
                        $insert = isset($weeklys[$key]);
                   ?>
-            <span class="ml10 p3 <?php echo $insert ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;">
-                <?php echo $weekArr[$w]; ?>
-                <?php if($insert):?>
-<script type="text/string" class="insert_weekly"><?php echo date('y年m月d日', $firstTime + ($w-1)*7*86400);?> - <?php echo date('y年m月d日', $firstTime + ($w)*7*86400);?>    <?php echo $weekArr[$w]."\n";?>
+            <span class="mr10 p3 <?php echo $insert ? 'js-insert-daily' : '' ?>" style="border:1px solid #ccc;"><?php echo $weekArr[$w]; ?></span>
+<?php if($insert):?>
+<script type="text/string"><?php echo date('y年m月d日', $firstTime + ($w-1)*7*86400);?> - <?php echo date('y年m月d日', $firstTime + ($w)*7*86400);?>    <?php echo $weekArr[$w]."\n";?>
 <?php echo $weeklys[$key]['content'];?>
 </script>
-                <?php endif;?>
-            </span>
+<?php endif;?>
             <?php endfor;?>
         </div>
     </form>
@@ -173,7 +171,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 
         // 插入周报
         $('.js-insert-daily').click(function(){
-            var html = $(this).find('.insert_weekly').html();
+            var html = $(this).next().html();
             TA.insertAtPoint($('#monthly_content')[0], '\n' + html + '\n');
         });
 

@@ -37,7 +37,7 @@ textarea { padding: 5px; line-height: 1.5; }
 .pl10{padding-left:10px;}
 .pr10{padding-right:10px;}
 .pl13{padding-left:13px;}
-.p3{padding: 3px; background: #ccc}
+.p3{padding: 3px 5px; background: #ccc}
 
 /*字体*/
 .f14{font-size:14px;}
