@@ -99,6 +99,9 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .set_list li label{float:left;width:90px;text-align:right;margin-right:10px;}
 .set_list li label a{font-weight:700;}
 .set_list li p{float:left;}
+.btn_6 { background: url(../images/btn_6.png) no-repeat center top; width: 87px; height: 25px; display: block; text-align: center; }
+a.btn_6 { color: #3f3f3f; text-decoration: none; }
+.btn_6:hover { background-position: center -25px; }
 .set_textarea {width:748px;height:60px;color:#555;padding:4px;border:1px solid #bdbdbd;font-size:12px;line-height:22px;
 }
 .set_list li p span{margin-right:12px;}

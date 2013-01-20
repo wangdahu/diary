@@ -30,7 +30,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag btn_6">选择汇报对象</a></label>
                     <p>
                         <textarea readonly name="daily" id="daily" class="set_textarea"><?php echo $subscribeStr['daily_str'];?></textarea>
                     </p>
@@ -43,7 +43,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2>周报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag btn_6">选择汇报对象</a></label>
                     <p>
                         <textarea readonly name="weekly" id="weekly" class="set_textarea"><?php echo $subscribeStr['weekly_str'];?></textarea>
                     </p>
@@ -56,7 +56,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2>月报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="javascript:;" class="opentag">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag btn_6">选择汇报对象</a></label>
                     <p>
                         <textarea readonly name="monthly" id="monthly" class="set_textarea"><?php echo $subscribeStr['monthly_str'];?></textarea>
                     </p>
