@@ -69,8 +69,9 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
+    <a href="<?php echo $backUrl; ?>" class="fl btn_back mr10"></a>
         <h2 class="content_tit clearfix">
-    <a href="<?php echo $backUrl; ?>" class="a_01 mg10" style="display:inline-block">返回</a>  <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."）";?>
+      <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."）";?>
         </h2>
        <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>

@@ -49,7 +49,7 @@ if($isReported){
              }
         ?>
     </p>
-    <a href="javascript:" class="fr dc mg10" id="js-selected_user" >组织架构</a>
+    <a href="javascript:" class="fr dc mg10" id="js-selected_user" ></a>
     <div class="data fr clearfix">
         <a href="daily?uid=<?php echo $uid;?>" class="<?php echo $type == 'daily' ? 'cur' : ''?>">今日</a>
         <a href="weekly?uid=<?php echo $uid;?>" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>

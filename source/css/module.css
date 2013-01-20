@@ -42,7 +42,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .down{float:right;width:38px;}
 .down:hover{background:url(../images/btn.png) -37px -35px no-repeat;}
 .data{border:1px solid #a3a3a3;border-right:none;}
-.data a{float:left;width:52px;border-right:1px solid #a3a3a3;display:block;line-height:23px;text-align:center;text-decoration:none;color:#757575;}
+.data a{float:left;width:52px;border-right:1px solid #a3a3a3;display:block;line-height:25px;text-align:center;text-decoration:none;color:#757575;}
 .data a:hover{background:#E3E3E3;}
 .data a.cur{background:#F58400;color:#fff;}
 /*----------- 今日工作 ----------*/
@@ -50,7 +50,10 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .content_tit{border-bottom:1px solid #dadada;line-height:22px;padding:10px 0 6px;}
 .content_tit p{float:left;}
 .content_tit p em{color:#f00;margin:0 3px;}
-.dc{float:right;padding:0 6px;color:#757575;text-decoration:none;}
+.dc{float:right;padding:0 6px;color:#757575;text-decoration:none; background: url(../images/btn_dept.png) no-repeat left top; height: 29px; width: 100px; margin-top: -1px; }
+.dc:hover { background-position: left -29px; }
+.btn_back { background: url(../images/btn_back.png) no-repeat center top; width: 80px; height: 30px; margin-top: 4px;}
+.btn_back:hover { background-position: center -30px; }
 .c_t{width:878px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b{width:878px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
 .c_c{width:852px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;}
