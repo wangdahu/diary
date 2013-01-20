@@ -50,7 +50,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .content_tit{border-bottom:1px solid #dadada;line-height:22px;padding:10px 0 6px;}
 .content_tit p{float:left;}
 .content_tit p em{color:#f00;margin:0 3px;}
-.dc{float:right;padding:0 6px;color:#757575;text-decoration:none; background: url(../images/btn_dept.png) no-repeat left top; height: 29px; width: 100px; margin-top: -1px; }
+.dc{float:right; color:#757575;text-decoration:none; background: url(../images/btn_dept.png) no-repeat left top; height: 29px; width: 100px; margin-top: -1px; }
 .dc:hover { background-position: left -29px; }
 .btn_back { background: url(../images/btn_back.png) no-repeat center top; width: 80px; height: 30px; margin-top: 4px;}
 .btn_back:hover { background-position: center -30px; }
@@ -138,4 +138,6 @@ a.btn_6 { color: #3f3f3f; text-decoration: none; }
 .has-comment { background-image: url(../images/comment.png); background-position: right top; background-repeat: no-repeat;}
 .calendar tbody td.no-report {background-image: url(../images/has-no-report.png); background-position: left top; background-repeat: no-repeat;}
 
+.js-tag a { color: white;}
+.tag a { text-decoration: none; }
 

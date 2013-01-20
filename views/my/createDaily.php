@@ -1,7 +1,7 @@
 <div id="daily-dialog-form" title="写日志" style="display: none">
     <form>
         <fieldset>
-            <textarea rows="10" style="width: 95%;" id="daily_content" data-limit="300"></textarea>
+            <textarea style="width: 95%; height: 195px;" id="daily_content" data-limit="300"></textarea>
             <input type="hidden" name="daily_id" id="daily_id"/>
         </fieldset>
     </form>
