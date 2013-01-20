@@ -65,13 +65,13 @@ if($forward < 0) { // 未来
             <p>今日工作：<em><?php echo $num;?> 项</em></p>
             <?php if($allowPay):?>
             <?php if($num):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
+            <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
             <?php else:?>
-            <a class="fr mr10 pay-disabled"></a>
+            <a class="fr pay-disabled"></a>
             <?php endif;?>
             <?php endif;?>
             <?php if(!$isReported):?>
-            <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
+            <a href="javascript:" class="write-<?php echo $type?> fr"></a>
             <?php endif;?>
         </h2>
         <?php if(!$num):?>

@@ -23,13 +23,13 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
             <p>周报</p>
             <?php if(!isset($from) && $allowPay):?>
             <?php if($weeklys):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
+            <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
             <?php else:?>
-            <a class="fr mr10 pay-disabled"></a>
+            <a class="fr pay-disabled"></a>
             <?php endif;?>
             <?php endif;?>
             <?php if(!isset($from) && !$isReported):?>
-            <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
+            <a href="javascript:" class="write-<?php echo $type?> fr"></a>
             <?php endif;?>
         </h2>
 

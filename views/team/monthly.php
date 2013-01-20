@@ -73,9 +73,9 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
             <p>月报</p>
             <?php if(!isset($from) && $allowPay):?>
             <?php if($monthlys):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
+            <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
             <?php else:?>
-            <a class="fr mr10 pay-disabled"></a>
+            <a class="fr pay-disabled"></a>
             <?php endif;?>
             <?php endif;?>
             <?php if(!isset($from) && !$isReported):?>

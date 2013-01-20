@@ -37,7 +37,7 @@ textarea { padding: 5px; line-height: 1.5; }
 .pl10{padding-left:10px;}
 .pr10{padding-right:10px;}
 .pl13{padding-left:13px;}
-.p3{padding: 3px;}
+.p3{padding: 3px; background: #ccc}
 
 /*字体*/
 .f14{font-size:14px;}
@@ -149,4 +149,4 @@ form .show-color-list .color-selected { border: 1px solid #666; }
 .emotion-list li { float: left; }
 .emotion-list li a { width: 24px; height: 24px; padding: 1px; display: block; }
 
-.js-insert-daily {cursor: pointer;}
+.js-insert-daily {cursor: pointer; border: 1px solid #68aee1; background: white;}
