@@ -180,8 +180,8 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
 
             <h2 class="mb10"></h2>
             <div class="form-action">
-                <button type="submit">确定</button>
-                <button type="reset">取消</button>
+                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form').reset()">取消</a>
+                <a class="a_01 fr10" href="javascript:" onclick="$(this).closest('form').submit()">确定</a>
             </div>
         </div>
     </form>

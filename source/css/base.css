@@ -53,7 +53,8 @@ textarea { padding: 5px; line-height: 1.5; }
 
 /*浮动*/
 .fl{float:left; }
-.fr{float:right; margin-right: 10px;}
+.fr10{float:right; margin-right: 10px;}
+.fr{float:right;}
 .clear {clear: both;}
 .clearfix:after {clear:both; content:'';display: block;font-size: 0;line-height: 0;visibility: hidden;width: 0;height: 0;}
 .clearfix {+display: inline-block;}
