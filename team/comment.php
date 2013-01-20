@@ -167,12 +167,12 @@ unset($titleList['count']);
             var textarea = $('#content')[0];
             textarea.focus();
             textarea.ownerDocument.execCommand('insertImage', false, src);
+            $(textarea).trigger('input');
             $(this).closest('.emotion-list').hide();
         }).click(function(e) {
             e.stopPropagation();
         });
 
-        
         $('#content').wordLimit();
     });
 </script>
