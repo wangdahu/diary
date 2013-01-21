@@ -17,14 +17,18 @@ if($filePath){
         if(!file_exists($filePath."/index.php")){
             die('访问错误');
         }else{
-            $file = $filePath."/index.php";
+            $url = '/diary/index.php/'.$filePath.'/index';
+            header("Location: $url");
+            exit;
         }
     }else{
         $file = $filePath.".php";
     }
     $currentModule = $pathArr[0];
 }else{
-    $file = "my/index.php";
+    $url = '/diary/index.php/my/index';
+    header("Location: $url");
+    exit;
 }
 // 加载所有类
 include "Init.php";
