@@ -18,9 +18,9 @@ if($isReported){
     <?php endif;?>
     <p class="fl mg10" title="<?php echo $reportStatus;?>"><img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /></p>
     <div class="data fr clearfix">
-        <a href="index" class="<?php echo $type == 'daily' ? 'cur' : ''?>">今日</a>
-        <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>
-        <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">本月</a>
+        <a href="index" class="<?php echo $type == 'daily' ? 'cur' : ''?>">日报</a>
+        <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">月报</a>
+        <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">月报</a>
     </div>
 </div>
 <!--功能操作结束-->

@@ -51,9 +51,9 @@ if($isReported){
     </p>
     <a href="javascript:" class="fr dc ml10" id="js-selected_user" ></a>
     <div class="data fr clearfix">
-        <a href="daily?uid=<?php echo $uid;?>" class="<?php echo $type == 'daily' ? 'cur' : ''?>">今日</a>
-        <a href="weekly?uid=<?php echo $uid;?>" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">本周</a>
-        <a href="monthly?uid=<?php echo $uid;?>" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">本月</a>
+        <a href="daily?uid=<?php echo $uid;?>" class="<?php echo $type == 'daily' ? 'cur' : ''?>">日报</a>
+        <a href="weekly?uid=<?php echo $uid;?>" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">周报</a>
+        <a href="monthly?uid=<?php echo $uid;?>" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">月报</a>
     </div>
 </div>
 <!--功能操作结束-->

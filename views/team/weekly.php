@@ -69,13 +69,13 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
             <div class="c_c">
                 <div>
                     <p style="line-height:30px;">
-                        <a href="<?php echo $url;?>" class="a_01 fr">进入</a>
-                        <strong><?php echo "周".$k." ".$v; ?></strong>
-                        <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
                         <?php
                              $dateForward = DiaryDaily::getForward($dateForwards[$v]);
                              $url = "/diary/index.php/my/index?forward=".$dateForward;
                         ?>
+                        <a href="<?php echo $url;?>" class="a_01 fr">进入</a>
+                        <strong><?php echo "周".$k." ".$v; ?></strong>
+                        <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
                     </p>
                 </div>
 
