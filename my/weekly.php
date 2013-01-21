@@ -91,7 +91,7 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
 <div id="weekly-dialog-form" title="写周报" style="display: none">
     <form>
         <fieldset>
-            <textarea style="width: 95%; height: 225px;" id="weekly_content" data-limit="1000"></textarea>
+            <textarea style="width: 95%; height: 220px;" id="weekly_content" data-limit="1000"></textarea>
             <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
         </fieldset>
         <div class="mt10">插入日报：
