@@ -63,6 +63,7 @@ textarea { padding: 5px; line-height: 1.5; }
 /*按钮 表单*/
 .a_01{width:43px;height:25px;line-height:25px;text-align:center;display:block;background:url(../images/btn.png) 0 -71px no-repeat;color:#3d3d3d;text-decoration:none;}
 .a_01:hover {background:url(../images/btn.png) -43px -71px no-repeat;}
+.a_01:active {background:url(../images/btn.png) -86px -71px no-repeat;}
 .a_02{width:88px;height:25px;text-align:center;background:url(../images/btn.png) 0 -106px no-repeat;display:block;}
 
 .select-color {margin-left: 2px; width:98px;height:30px;background:url(../images/select-normal.png) no-repeat;}
@@ -109,6 +110,7 @@ textarea { padding: 5px; line-height: 1.5; }
 .ui-dialog { border-radius: 0; border-color: rgba(61, 63, 73, .8); }
 .ui-dialog-titlebar { border-radius: 0; background: #009be8; border: none; color: #FFF; }
 .ui-dialog-buttonpane { background: #f5f7f9; padding: 3px 1em 5px 0 !important; }
+.ui-button .ui-button-text {line-height: 1.1}
 
 /* 设置*/
 .set_list li p label{margin-right:12px; width: auto;}
@@ -132,13 +134,13 @@ form .default-color {margin: 9px 5px; float: left; width: 12px; height: 12px;}
 .color-list-wrapper { float: left; margin: 8px 0 0 5px; padding: 2px; border: solid 1px transparent; cursor: pointer; }
 .color-list-wrapper div { width: 12px; height: 12px; background: #ccc; }
 .color-list { width: 12px; height: 12px; background: #ccc; margin-top: 1px; }
-form .show-color-list { margin: 9px 2px; border: 1px solid #ccc; width: 240px; display: none; padding-bottom: 10px; }
-form .show-color-list .color-selected { border: 1px solid #666; }
+form .show-color-list { margin: 9px 2px; border: 1px solid #939393; width: 240px; display: none; padding-bottom: 10px; }
+form .show-color-list .color-selected { border: 1px solid #939393; }
 
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 
 /* 选择标签浮动层 */
-.all-tag-floor { position:absolute; right: 0; top: 22px; border: 1px #ccc solid; width: 240px; line-height: 24px; z-index: 1; background: white; display: none; }
+.all-tag-floor { position:absolute; left: 0; top: 22px; border: 1px #ccc solid; width: 185px; line-height: 24px; z-index: 1; background: white; display: none; }
 
 .word-limit { position: absolute; bottom: 5px; color: #9B9B9B; font-size: 14px; font-family: Constantia, Georgia;}
 .word-exceed { color: #f00; }

@@ -117,7 +117,7 @@ if($forward < 0) { // 未来
                             <div>
                                 <label class="clearfix" style="cursor:default;">
                                     <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>" style="line-height:24px;height:24px;float: left;margin: 0 5px 0 10px;"/>
-                                    <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
+                                    <div class="color-list" style="float: left; margin: 6px 10px 6px 5px; background-color: <?php echo $tag['color'];?>">
                                     </div>
                                     <div ><?php echo $tag['tag']?></div>
                                 </label>
@@ -181,11 +181,14 @@ if($forward < 0) { // 未来
 
         // 删除某日志的所有标签
         $(".js-del-all").click(function(){
-            var diary_id = $(this).attr('data-diary_id');
-            if(confirm("确定要删除这条日志的所有标签？")){
+            var diary_id = $(this).attr('data-diary_id'),
+            all_tag = $(this).closest('.add-tag-wrapper').next(),
+            all_tag_floor = $(this).closest('.all-tag-floor');
+            if(confirm("确定要取消这条日志的所有标签？")){
                 $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, action:'del-diary-all-tag'}, function(json){
                     if(json != 0){
-                        location.reload();
+                        all_tag_floor.find('.js-operate_tag').prop('checked', false);
+                        all_tag.find('.js-tag').hide();
                     }else{
                         return false;
                     }

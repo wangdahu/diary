@@ -30,7 +30,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .content{width:898px;margin:0 auto;padding:0 2px 20px;background:url(../images/bg_02.png) repeat-y;}
 .todo{height:37px;background:url(../images/subnav_bg.png)  0 0 no-repeat;padding:11px 10px 0;line-height:25px; }
 .todo p { font-size: 16px; color: #000;}
-.todo .status{ border-left: 1px solid #E7E8EA; padding-left: 42px; line-height: 27px; }
+.todo .status{ border-left: 1px solid #E7E8EA; padding-left: 42px; line-height: 24px; }
 .top-reported {background: url(../images/already-report.png) 15px top no-repeat; }
 .top-wait-report {background: url(../images/wait-report.png) 15px top no-repeat;}
 .top-unreport {background: url(../images/no-report.png) 15px top no-repeat;}
@@ -67,7 +67,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .diary-operation .add-tag-wrapper, .diary-operation .delete, .diary-operation .daily-date, .diary-operation .tag-list { float: right; }
 .add-tag-wrapper { position: relative; }
 .delete{width:18px;height:21px;background:url(../images/ico_03.png) no-repeat center center; margin: 0 4px 0 6px; }
-.add_tag{display: block; width:21px;height:21px;background:url(../images/select-tag.png) no-repeat; }
+.add_tag{display: block; width:21px;height:21px;background:url(../images/select-tag.png) no-repeat;}
 .diary-operation .tag-list { margin-right: 4px; }
 .dtag{width:22px;height:22px;position:absolute;background:url(../images/del-tag.png) 0 0 no-repeat;z-index: 1}
 .date{float: right; padding-right: 30px; padding-top:3px;}
@@ -85,7 +85,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 /*----------- 发表评论 ----------*/
 .comment_f{overflow:hidden;padding-bottom:8px;}
 .expression{float:left;width:16px;height:16px;padding-top:5px;}
-.textarea_comment {width:842px;height:180px;color:#555;padding:4px;border:1px solid #dadada;font-size:12px;line-height:22px; overflow: auto;}
+.textarea_comment {width:842px;height:90px;color:#555;padding:4px;border:1px solid #dadada;font-size:12px;line-height:22px; overflow: auto;}
 /*----------- 设置 ----------*/
 .subnav{overflow:hidden;width:902px;height:39px;padding-top:9px;background:url(../images/subnav_bg.png) 0 0 no-repeat;}
 .subnav li{float:left;width:98px;background:url(../images/subnav_li.png) right 8px no-repeat;text-align:center;line-height:29px;}
@@ -141,3 +141,6 @@ a.btn_6 { color: #3f3f3f; text-decoration: none; }
 .js-tag a { color: white;}
 .tag a { text-decoration: none; }
 
+.manage-tag {line-height: 30px;}
+.manage-tag div {text-align: center;}
+.manage-tag div a{text-decoration: none; color: #3f3f3f}
