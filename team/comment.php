@@ -18,7 +18,7 @@ if(in_array($uid, $reportUserIds)) {
 }
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 
-$allUsers = DiaryUser::getUsers($reportUserIds+$commentUserIds);
+$allUsers = DiaryUser::getUsers(array_merge($reportUserIds, $commentUserIds));
 // 获取表情的title
 $emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
 $titleList = parse_ini_file($emotionsDir."faceList.ini");
