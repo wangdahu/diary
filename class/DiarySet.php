@@ -242,13 +242,16 @@ class DiarySet{
         $deptId = $diary->deptId;
         // 订阅对象
         $subscribeObject = self::subscribeObject($diary);
-        // $reportObject = self::reportObject($diary);
-        $reportObject = array();
-        $merge_data = array_merge_recursive($reportObject, $subscribeObject);
         $objectType = $type == 1 ? 'daily_object' : ($type == 2 ? 'weekly_object' : 'monthly_object');
-        $teamShowUser = array_unique($merge_data[$objectType]['user']);
-        $teamShowDept = array_unique($merge_data[$objectType]['dept']);
-        foreach($teamShowDept as $dept){
+        $subscribeUser = $subscribeObject[$objectType]['user'];
+        $subscribeDept = $subscribeObject[$objectType]['dept'];
+
+        // 汇报给我的用户
+        $reportObject = self::reportToMe($diary, $type);
+
+        $teamShowUser = array_unique(array_merge($reportObject, $subscribeUser));
+
+        foreach($subscribeDept as $dept){
             // 获取部门下的所有人
         }
         return $teamShowUser;
@@ -261,6 +264,21 @@ class DiarySet{
         $from_uid = $diary->uid;
         $from_dept = $diary->deptId;
         $sql = "select `uid` from `diary_subscribe_object` where `type` = $type and (`from_uid` = $from_uid or `from_dept` = $from_dept)";
+        $uids = array();
+        $result = $diary->db->query($sql);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $uids[] = (int)$row['uid'];
+        }
+        return $uids;
+    }
+
+    /**
+     * 获取汇报给我的所有对象
+     */
+    public static function reportToMe($diary, $type) {
+        $to_uid = $diary->uid;
+        $to_dept = $diary->deptId;
+        $sql = "select `uid` from `diary_report_object` where `type` = $type and (`to_uid` = $to_uid or `to_dept` = $to_dept)";
         $uids = array();
         $result = $diary->db->query($sql);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
