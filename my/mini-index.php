@@ -38,7 +38,6 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 }
 ?>
 
-<?php include "views/layouts/header.php"; ?>
 <?php include "views/my/mini-top.php"; ?>
 
 <div class="content">

@@ -1,3 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>写日志</title>
+    <script src="../../../../diary/source/jqueryUI/js/jquery-1.8.3.js"></script>
+    <script src="../../../../diary/source/jqueryUI/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <link rel="stylesheet" href="../../../../diary/source/jqueryUI/css/smoothness/jquery-ui-1.9.2.custom.min.css">
+    <link rel="stylesheet" href="../../../../diary/source/css/base.css">
+    <link rel="stylesheet" href="../../../../diary/source/css/module.css">
+    <link rel="stylesheet" href="../../../../diary/source/css/popup.css">
+</head>
+
+<body>
+    <div id="wrapper">
+
 <?php
 if($isReported){
     $url = "../../../../diary/source/images/already-report.png";
@@ -7,23 +23,6 @@ if($isReported){
     $reportStatus = "未汇报";
 }
 ?>
-<!--功能操作开始-->
-<div class="todo clearfix">
-    <?php if($type == 'daily'):?>
-    <p class="fl showObject"><?php echo date('Y年m月d日', $startTime);?>（周<?php echo $weekarray[date("w", $startTime)];?>）</p>
-    <?php elseif($type == 'weekly'):?>
-    <p class="fl"><?php echo date('Y年m月d日', $startTime);?>--<?php echo date('Y年m月d日', $endTime);?></p>
-    <?php elseif($type == 'monthly'):?>
-    <p class="fl"><?php echo $currentMonth;?></p>
-    <?php endif;?>
-    <p class="fl mg10" title="<?php echo $reportStatus;?>"><img src="<?php echo $url; ?>" alt="<?php echo $reportStatus;?>" /></p>
-    <div class="data fr clearfix">
-        <a href="index" class="<?php echo $type == 'daily' ? 'cur' : ''?>">日报</a>
-        <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">月报</a>
-        <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">月报</a>
-    </div>
-</div>
-<!--功能操作结束-->
 <script>
     // 补交
     $('.js-pay_diary').live('click', function() {
@@ -58,3 +57,4 @@ $.fn.extend({
     }
 });
 </script>
+<?php include dirname(dirname(__FILE__))."/layouts/footer.php"?>
