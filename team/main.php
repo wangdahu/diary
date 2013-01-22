@@ -30,9 +30,9 @@ $showObject = $forward < 0 ? false : true;
                      <img style="height: 56px; width: 56px;" src="<?php echo $user['photo']; ?>" />
                      </a>
                 </div>
-                <div class="info">
+                <div class="info ellipsis" style="width: 170px;">
                     <a href="<?php echo $url;?>">
-                        <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>）
+                        <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>-<?php echo $user['Title'];?>）
                     <div class="<?php echo $isr; ?>"><?php echo $reportStr;?></div>
                 </div>
             </li>

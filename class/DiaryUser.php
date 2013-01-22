@@ -34,6 +34,7 @@ class DiaryUser{
                 'dept_name' => $result[0]['depname'],
                 'corp_id' => $result[0]['AccountID'],
                 'LoginName' => $result[0]['LoginName'],
+                'Title' => $result[0]['Title'],
             );
         }else {
             return array(

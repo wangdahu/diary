@@ -1,7 +1,5 @@
 <?php
 $commentList = DiaryComment::getObjectComment($diary, $uid, $type, $object);
-$viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
-$viewCount = count($viewRecord);
 $commentUserIds = array();
 foreach($commentList as $comment) {
     $commentUserIds[] = $comment['uid'];
@@ -13,9 +11,14 @@ $reportUserIds = array();
 foreach($reportList as $report) {
     $reportUserIds[] = $report['object'];
 }
-if(in_array($uid, $reportUserIds)) {
-    DiaryViewRecord::addRecord($diary, $type, $uid, $object);
+$flag = 0;
+if(in_array($diary->uid, $reportUserIds)) {
+    $flag = 1;
 }
+DiaryViewRecord::addRecord($diary, $type, $uid, $object, $flag);
+
+$viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
+$viewCount = count($viewRecord);
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
 
 $allUsers = DiaryUser::getUsers(array_merge($reportUserIds, $commentUserIds));
@@ -44,7 +47,7 @@ unset($titleList['count']);
             <div class="comment_t">
                 <h2>
                     <span> <?php echo date('y-m-d H:i', $comment['add_time']); ?> </span>
-                    <a href="<?php echo $wiseucUrl;?>"><?php echo $allUsers[$comment['uid']]['UserName']; ?></a>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>）
+                    <a href="<?php echo $wiseucUrl;?>"><?php echo $allUsers[$comment['uid']]['UserName']; ?></a>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>-<?php echo $allUsers[$comment['uid']]['Title'];?>）
                 </h2>
                 <p><?php echo nl2br($comment['content']); ?></p>
             </div>

@@ -18,11 +18,11 @@ class DiaryViewRecord{
     /**
      * 添加阅读记录
      */
-    public static function addRecord($diary, $type, $uid, $object) {
+    public static function addRecord($diary, $type, $uid, $object, $flag) {
         $view_uid = $diary->uid;
         $view_time = time();
         if(!self::checkUser($diary, $type, $uid, $object)) {
-            $sql = "insert into `diary_view_record` (`type`,`view_uid`, `uid`, `object`, `view_time`) values ('$type', $view_uid, $uid, '$object', $view_time)";
+            $sql = "insert into `diary_view_record` (`type`,`view_uid`, `uid`, `object`, `view_time`, `flag`) values ('$type', $view_uid, $uid, '$object', $view_time, $flag)";
             return $diary->db->query($sql);
         }
         return true;
@@ -32,7 +32,7 @@ class DiaryViewRecord{
      * 获取阅读人数
      */
     public static function getViewRecord($diary, $type, $uid, $object) {
-        $sql = "select * from `diary_view_record` where `type` = '$type' and `uid` = $uid and `object` = '$object'";
+        $sql = "select * from `diary_view_record` where `type` = '$type' and `uid` = $uid and `object` = '$object' and `flag` = 1";
         $result = $diary->db->query($sql);
         $record = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
