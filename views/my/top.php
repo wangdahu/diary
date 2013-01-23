@@ -28,13 +28,21 @@ if($isReported){
     <?php endif;?>
     <p class="fl status mg15 <?php echo $reportCls?>" title="<?php echo $reportStatus;?>"><?php echo $reportStatus; ?></p>
     <div class="data fr clearfix">
-        <a href="index" class="<?php echo $type == 'daily' ? 'cur' : ''?>">日报</a>
-        <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">周报</a>
-        <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">月报</a>
+        <a href="index" class="<?php echo $type == 'daily' ? 'cur' : 'normal'?>">日报</a>
+        <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
+        <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : 'normal'?>">月报</a>
     </div>
 </div>
 <!--功能操作结束-->
 <script>
+    $(function(){
+        $('.normal').mouseover(function() {
+            $(this).addClass('data-hover');
+        }).mouseout(function() {
+            $(this).removeClass('data-hover');
+        });
+    });
+
     // 补交
     $('.js-pay_diary').live('click', function() {
         var type = '<?php echo $type;?>',
@@ -47,4 +55,3 @@ if($isReported){
         });
     });
 </script>
-

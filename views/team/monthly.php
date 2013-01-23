@@ -185,9 +185,10 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
 <script>
     $(function() {
         $('.js-hover').mouseover(function() {
-            // console.log(111);
+            $(this).find('div').addClass('hover');
             $(this).find('a').addClass('hover');
         }).mouseout(function() {
+            $(this).find('div').removeClass('hover');
             $(this).find('a').removeClass('hover');
         });
     });

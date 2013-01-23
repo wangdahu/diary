@@ -16,10 +16,20 @@ $weekarray=array("日","一","二","三","四","五","六");
     <?php endif;?>
     <a href="javascript:" class="fr dc ml10" style="margin-right: 18px;" id="js-selected_user"></a>
     <div class="data fr clearfix">
-        <a href="index" class="<?php echo $setDefault == 'index' ? 'cur' : ''?>">日报</a>
-        <a href="week" class="<?php echo $setDefault == 'week' ? 'cur' : ''?>">周报</a>
-        <a href="month" class="<?php echo $setDefault == 'month' ? 'cur' : ''?>">月报</a>
+        <a href="index" class="<?php echo $setDefault == 'index' ? 'cur' : 'normal'?>">日报</a>
+        <a href="week" class="<?php echo $setDefault == 'week' ? 'cur' : 'normal'?>">周报</a>
+        <a href="month" class="<?php echo $setDefault == 'month' ? 'cur' : 'normal'?>">月报</a>
     </div>
 </div>
 <!--功能操作结束-->
 <?php include 'plugins.php'; ?>
+
+<script>
+    $(function(){
+        $('.normal').mouseover(function() {
+            $(this).addClass('data-hover');
+        }).mouseout(function() {
+            $(this).removeClass('data-hover');
+        });
+    });
+</script>

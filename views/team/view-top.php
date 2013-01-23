@@ -51,10 +51,20 @@ if($isReported){
     </p>
     <a href="javascript:" class="fr dc ml10" id="js-selected_user" ></a>
     <div class="data fr clearfix">
-        <a href="daily?uid=<?php echo $uid;?>" class="<?php echo $type == 'daily' ? 'cur' : ''?>">日报</a>
-        <a href="weekly?uid=<?php echo $uid;?>" class="<?php echo $type == 'weekly' ? 'cur' : ''?>">周报</a>
-        <a href="monthly?uid=<?php echo $uid;?>" class="<?php echo $type == 'monthly' ? 'cur' : ''?>">月报</a>
+        <a href="daily?uid=<?php echo $uid;?>" class="<?php echo $type == 'daily' ? 'cur' : 'normal'?>">日报</a>
+        <a href="weekly?uid=<?php echo $uid;?>" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
+        <a href="monthly?uid=<?php echo $uid;?>" class="<?php echo $type == 'monthly' ? 'cur' : 'normal'?>">月报</a>
     </div>
 </div>
 <!--功能操作结束-->
 <?php include 'plugins.php';?>
+    
+<script>
+    $(function(){
+        $('.normal').mouseover(function() {
+            $(this).addClass('data-hover');
+        }).mouseout(function() {
+            $(this).removeClass('data-hover');
+        });
+    });
+</script>
