@@ -125,11 +125,13 @@ form .form-action{ float: right;}
 .mg15 {margin-left: 15px;}
 
 /* 标签 */
-.tag {border: 1px solid #ccc; width: 850px; padding: 0 auto 15px auto; text-align:left;}
+.tag { width: 868px; padding: 0 auto 15px auto; text-align:left;}
 .tag thead tr {background-color: #ccc; height: 38px; font-weight: bold; font-size: 14px;}
 .tag tbody tr {height: 32px; border-bottom: 1px solid #ccc;}
-.tag td {padding-left: 10px;}
+.tag td {padding-left: 10px; border-left: none;}
 .tag .td-right {text-align: right; padding-right: 20px;}
+.tag a { text-decoration: none; }
+
 form .default-color {margin: 9px 5px; float: left; width: 12px; height: 12px;}
 .color-list-wrapper { float: left; margin: 8px 0 0 5px; padding: 2px; border: solid 1px transparent; cursor: pointer; }
 .color-list-wrapper div { width: 12px; height: 12px; background: #ccc; }

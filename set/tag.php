@@ -16,13 +16,12 @@ $defaultColorId = rand(1,20);
         <!--标签设置开始-->
         <h2 class="pt25"><a href="javascript:;" class="tjbq js-add-tag" title="添加标签"></a></h2>
 
-        <div class="c_t mt10"></div>
-        <div class="c_c">
+        <div class="mt10"></div>
             <table class="tag">
                 <thead>
                     <tr>
                         <td>标签名称</td>
-                        <td>工作数</td>
+                        <td width="40">工作数</td>
                         <td class="td-right">操作</td>
                     </tr>
                 </thead>
@@ -30,7 +29,7 @@ $defaultColorId = rand(1,20);
                     <?php foreach($tagList as $tag):?>
                     <tr>
                         <td><div class="color-list" style="float: left; margin-right: 5px; background-color: <?php echo $colorList[$tag['color_id']]?>"></div><?php echo $tag['tag'];?></td>
-                        <td><?php echo $tag['count'];?></td>
+                        <td align="center"><?php echo $tag['count'];?></td>
                         <td class="td-right">
                             <a href="javascript:;" class="js-edit-tag" data-color="<?php echo $colorList[$tag['color_id']]; ?>" data-tag="<?php echo $tag['tag']; ?>" data-color_id="<?php echo $tag['color_id']; ?>" data-id="<?php echo $tag['id']; ?>">编辑</a>
                             <a href="javascript:;" class="js-delete-tag" data-id="<?php echo $tag['id']?>" data-tag="<?php echo $tag['tag']?>">删除</a>
@@ -39,9 +38,6 @@ $defaultColorId = rand(1,20);
                     <?php endforeach;?>
                 </tbody>
             </table>
-        </div>
-        <!--标签设置结束-->
-        <div class="c_b"></div>
     </div>
 </div>
 <?php include "views/layouts/footer.php"; ?>
