@@ -42,9 +42,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                     <p>
                         <textarea readonly name="daily" id="daily" class="set_textarea"><?php echo $reportStr['daily_str'];?></textarea>
                     </p>
+                    <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $reportObject['daily_object']['user']);?>"/>
+                    <input type="hidden" name="daily_dept_object" id="daily_dept_object" value="<?php echo implode(',', $reportObject['daily_object']['dept']);?>"/>
                 </li>
-                <input type="hidden" name="daily_user_object" id="daily_user_object" value="<?php echo implode(',', $reportObject['daily_object']['user']);?>"/>
-                <input type="hidden" name="daily_dept_object" id="daily_dept_object" value="<?php echo implode(',', $reportObject['daily_object']['dept']);?>"/>
                 <li>
                     <label>汇报时间</label>
                     <select name="dailyReport[hour]">
@@ -84,9 +84,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                     <p>
                         <textarea readonly name="weekly" id="weekly" class="set_textarea"><?php echo $reportStr['weekly_str'];?></textarea>
                     </p>
+                    <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $reportObject['weekly_object']['user']);?>"/>
+                    <input type="hidden" name="weekly_dept_object" id="weekly_dept_object" value="<?php echo implode(',', $reportObject['weekly_object']['dept']);?>"/>
                 </li>
-                <input type="hidden" name="weekly_user_object" id="weekly_user_object" value="<?php echo implode(',', $reportObject['weekly_object']['user']);?>"/>
-                <input type="hidden" name="weekly_dept_object" id="weekly_dept_object" value="<?php echo implode(',', $reportObject['weekly_object']['dept']);?>"/>
                 <li>
                     <label>汇报时间</label>
                     <p>
@@ -134,9 +134,9 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                     <p>
                         <textarea readonly name="monthly" id="monthly" class="set_textarea"><?php echo $reportStr['monthly_str'];?></textarea>
                     </p>
+                    <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $reportObject['monthly_object']['user']);?>"/>
+                    <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $reportObject['monthly_object']['dept']);?>"/>
                 </li>
-                <input type="hidden" name="monthly_user_object" id="monthly_user_object" value="<?php echo implode(',', $reportObject['monthly_object']['user']);?>"/>
-                <input type="hidden" name="monthly_dept_object" id="monthly_dept_object" value="<?php echo implode(',', $reportObject['monthly_object']['dept']);?>"/>
                 <li>
                     <label>汇报时间</label>
                     <p>

@@ -21,8 +21,8 @@
                   dpchoice1.inputempval = [];
                 */
                 /*部门组装格式 json串 [{"id":"1","name":"总部"},{"id":"2","name":"产品策划"}] */
-                var oldUsers = object.parent().parent().next().val(),
-                oldDepts = object.parent().parent().next().next().val();
+                var oldUsers = object.parent().next().next().val(),
+                oldDepts = object.parent().next().next().next().val();
                 depchoice1.inputval = [];
                 depchoice1.inputempval = [];
                 if(oldUsers){
@@ -74,7 +74,7 @@
                     };
                     var text = user_names.concat( dept_names).join('，');
                     object.parent().next().children().text(text);
-                    object.parent().parent().next().val(user_ids.join(','))
+                    object.parent().next().next().val(user_ids.join(','))
                         .next().val(dept_ids.join(','));
                 },
                 fun:function(val){/*外部函数*/

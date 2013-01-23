@@ -24,18 +24,6 @@ if($isReported){
 }
 ?>
 <script>
-    // 补交
-    $('.js-pay_diary').live('click', function() {
-        var type = '<?php echo $type;?>',
-        currentDate = '<?php echo $object; ?>',
-        showObject = $('.showObject').html();
-        $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject}, function(json) {
-            if(json != 0) {
-                location.reload();
-            }
-        });
-    });
-
 $.fn.extend({
     wordLimit: function() {
         this.each(function() {
@@ -57,4 +45,3 @@ $.fn.extend({
     }
 });
 </script>
-<?php include dirname(dirname(__FILE__))."/layouts/footer.php"?>
