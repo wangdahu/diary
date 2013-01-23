@@ -121,7 +121,7 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
             <table class="calendar">
                 <thead>
                     <tr>
-                        <td><?php echo $currentMonth;?></td>
+                        <td style="color: black; font-size: 20px;"><?php echo date('Y年m月', $startTime);?></td>
                         <td style="<?php echo $currentWeekth == 1 ? 'color:black;' : ''?>">星期一</td>
                         <td style="<?php echo $currentWeekth == 2 ? 'color:black;' : ''?>">星期二</td>
                         <td style="<?php echo $currentWeekth == 3 ? 'color:black;' : ''?>">星期三</td>
@@ -143,16 +143,22 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
                              }
                              $isFuture = ($firstTime + 7*$w*86400) > time();
                         ?>
-                        <td class="<?php echo in_array($thisWeek, $weekObject) ? 'has-comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo $currentWeek == $w ? 'td_blue' : 'td_l'?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report td_grey' : '';?> <?php echo $isFuture ? 'td_white' : '';?>" style="<?php echo 'border-width: 2px;';?>" >
+                        <td class="js-hover <?php echo in_array($thisWeek, $weekObject) ? 'has-comment' : ''?> <?php echo in_array($thisWeek, $noContentWeekly) ? 'td_grey' : '';?> <?php echo in_array($thisWeek, $noReportWeekly) ? 'no-report td_grey' : '';?> <?php echo $isFuture ? 'td_white' : '';?>" style="border:1px solid #aaa; width: 134px;" >
 
-                            <a href="<?php echo $url;?>">
-                                <div><?php echo $weekArr[$w]; ?></div>
-                            </a>
+                            <a href="<?php echo $url;?>"><div style="font: 14px 微软雅黑; color: <?php echo $currentWeek == $w ? '#000;' : '#9c9c9c;'?>"><?php echo $weekArr[$w]; ?></div></a>
                         </td>
                         <?php for($i = 0; $i < 7; $i++): ?>
                               <?php
                                    $thisTime = $firstTime + 7*$w*86400 + $i*86400;
                                    $j = date('j', $thisTime);
+                                   $thisColor = '';
+                                   if($currentWeek == $w && $j == $currentMonthDate) {
+                                       $thisColor = "color: #fff;";
+                                   }else {
+                                       if($thisTime > $endTime || $thisTime < $startTime) {
+                                           $thisColor = "color: #9c9c9c;";
+                                       }
+                                   }
                                    $thisDate = date('Y-m-d', $thisTime);
                                    $dateForward = DiaryDaily::getForward($firstTime + 7*$w*86400 + $i*86400);
                                    $url = "/diary/index.php/my/index?forward=".$dateForward;
@@ -160,12 +166,8 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
                                        $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
                                    }
                               ?>
-                            <td class="<?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report td_grey' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'has-comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
-                            <a href="<?php echo $url;?>">
-                                <div>
-                                    <?php echo $j;?>
-                                </div>
-                            </a>
+                            <td class="js-hover <?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo in_array($thisDate, $noContentDaily) ? 'td_grey' : '';?> <?php echo in_array($thisDate, $noReportDaily) ? 'no-report td_grey' : '';?> <?php echo in_array($thisDate, $dateObject) ? 'has-comment' : '';?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
+                            <a href="<?php echo $url;?>"><div style="font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></div></a>
                         </td>
                         <?php endfor;?>
                     </tr>
@@ -180,3 +182,13 @@ $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->Logi
     <?php include dirname(dirname(dirname(__FILE__)))."/team/comment.php"; ?>
     <?php endif;?>
 </div>
+<script>
+    $(function() {
+        $('.js-hover').mouseover(function() {
+            // console.log(111);
+            $(this).find('a').addClass('hover');
+        }).mouseout(function() {
+            $(this).find('a').removeClass('hover');
+        });
+    });
+</script>

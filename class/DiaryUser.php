@@ -43,6 +43,7 @@ class DiaryUser{
                 'dept_name' => '技术部',
                 'corp_id' => 131785,
                 'LoginName' => 'admin',
+                'Title' => '经理',
             );
         }
     }
