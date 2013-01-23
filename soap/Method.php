@@ -30,7 +30,7 @@ class Method {
             $endTime = mktime(0, 0, 0, date('m', $time)+1, 1, date('Y', $time)) - 1;
         }
         $configHost = $args['configHost'];
-        $url = $configHost."/diary/index.php/my/"$type;
+        $url = $configHost."/diary/index.php/my/".$type;
         $title = "写工作日志提醒";
 
         $user_ids = self::getAllObject($diary, $uid, $corpId, $type);
@@ -74,7 +74,7 @@ class Method {
             $content = "月报：".date('Y年m月', $time);
         }
         $configHost = $args['configHost'];
-        $url = $configHost."/diary/index.php/my/"$type;
+        $url = $configHost."/diary/index.php/my/".$type;
         $title = "提交工作日志";
         // 发送提醒
         self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);

@@ -43,7 +43,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .down:hover{background:url(../images/btn.png) -37px -35px no-repeat;}
 
 .data{ margin-right: 2px; font-size: 14px;}
-.data a{float:left;width:53px; height: 29px; line-height: 29px; display:block; text-align:center;text-decoration:none;color:#757575;}
+.data a{float:left;width:53px; height: 29px; line-height: 26px; display:block;  text-align:center;text-decoration:none;color:#757575;}
 .data a.cur{background:url(../images/date-selected.png) 0 0 no-repeat;color:#fff;}
 .data a.normal{background:url(../images/date.png) 0 0 no-repeat;}
 .data a.data-hover{background:url(../images/date-hover.png) 0 0 no-repeat;}
