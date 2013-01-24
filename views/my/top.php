@@ -49,7 +49,9 @@ if($isReported){
         currentDate = '<?php echo $object; ?>',
         showObject = $('.showObject').html();
         $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject}, function(json) {
-            if(json != 0) {
+            if(json == 0) {
+                alert('补交失败，请设置汇报对象');
+            }else {
                 location.reload();
             }
         });

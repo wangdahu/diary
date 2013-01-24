@@ -1,6 +1,9 @@
 <?php
 $showObject = $forward < 0 ? false : true;
-echo "<pre>"; var_dump($teamShowObject);
+$users = DiaryUser::getUsers($teamShowObject);
+$reportUsers = DiaryReport::getDateReports($diary, $type, $object);
+$commentUsers = DiaryComment::getDateComments($diary, $type, $object);
+$viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
 ?>
 <?php if($showObject):?>
 <div class="content">
@@ -9,30 +12,34 @@ echo "<pre>"; var_dump($teamShowObject);
         <ul class="dy clearfix">
             <?php foreach($teamShowObject as $uid): ?>
             <?php
-                 $user = DiaryUser::getInfo($uid);
+                 $user = $users[$uid];
                  $url = "daily?forward=$forward&uid=$uid";
                  if($setDefault === 'week'){
                      $url = "weekly?forward=$forward&uid=$uid";
                  }elseif($setDefault === 'month'){
                      $url = "monthly?forward=$forward&uid=$uid";
                  }
-                 $status = DiaryViewRecord::checkUser($diary, $type, $uid, $object);
-                 $cls = $status ? '' : 'unread';
-                 if(DiaryComment::checkUserObjectComment($diary, $uid, $type, $object)) {
-                     $cls .= ' has-comment';
-                 }
-                 $isReport = DiaryReport::checkReport($diary, $type, $object, $uid);
+                 $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
+                 $isReport = in_array($uid, $reportUsers);
                  $isr = $isReport ? "mini-report" : "mini-unreport";
                  $reportStr = $isReport ? "已汇报" : "未汇报";
+                 if(in_array($uid, $viewUsers) || !$isReport) {
+                     $cls = '';
+                 }else {
+                     $cls = 'unread';
+                 }
+                 if(in_array($uid, $commentUsers)) {
+                     $cls .= ' has-comment';
+                 }
             ?>
-            <li class="clearfix <?php echo $cls; ?>">
+            <li data-url="<?php echo $url;?>" class="js-href clearfix <?php echo $cls; ?>" style="cursor: pointer;">
                 <div class="pic">
-                    <a href="<?php echo $url;?>">
-                     <img style="height: 56px; width: 56px;" src="<?php echo $user['photo']; ?>" />
+                    <a href="<?php echo $wiseucUrl;?>" class="wiseuc-url">
+                     <img style="height: 56px; width: 56px;" class="wiseuc-url" src="<?php echo $user['photo']; ?>" />
                      </a>
                 </div>
                 <div class="info ellipsis" style="width: 170px;">
-                    <a href="<?php echo $url;?>"><?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>-<?php echo $user['Title'];?>）
+                    <a href="<?php echo $wiseucUrl;?>" class="wiseuc-url"><?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>-<?php echo $user['Title'];?>）
                     <div class="<?php echo $isr; ?>"><?php echo $reportStr;?></div>
                 </div>
             </li>
@@ -42,3 +49,14 @@ echo "<pre>"; var_dump($teamShowObject);
     </div>
 </div>
 <?php endif;?>
+<script>
+    $(function() {
+        $('.js-href').click(function(e) {
+            var target = $(e.target),
+            url = $(this).data('url');
+            if(!target.is('.wiseuc-url')) {
+                location.href = url;
+            }
+        });
+    });
+</script>

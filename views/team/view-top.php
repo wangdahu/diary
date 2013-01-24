@@ -58,7 +58,7 @@ if($isReported){
 </div>
 <!--功能操作结束-->
 <?php include 'plugins.php';?>
-    
+
 <script>
     $(function(){
         $('.normal').mouseover(function() {

@@ -16,6 +16,19 @@ class DiaryViewRecord{
     }
 
     /**
+     * 获取用户的当前时间点是否已查看
+     */
+    public static function getDateViews($diary, $type, $object, $uid) {
+        $sql = "select `uid` from `diary_view_record` where `type` = '$type' and `view_uid` = $uid and `object` = '$object' group by `uid`";
+        $result = $diary->db->query($sql);
+        $users = array();
+        while($row = $result->fetch_assoc()) {
+            $users[] = $row['uid'];
+        }
+        return $users;
+    }
+
+    /**
      * 添加阅读记录
      */
     public static function addRecord($diary, $type, $uid, $object, $flag) {

@@ -94,36 +94,32 @@ class DiaryDaily{
         return $tagList;
     }
 
-    public static function noReportDaily($diary, $firstTime, $lastTime, $type, $uid = null) {
+    public static function getReportDailys($diary, $firstTime, $lastTime, $uid = null) {
         $uid = $uid ? $uid :$diary->uid;
-        $uninStr = '%Y-%m-%d';
-        $sql = "select FROM_UNIXTIME(`show_time`, '$uninStr') as new_time from `diary_info` where `type` = $type and `uid` = $uid and (`show_time` between $firstTime and $lastTime) group by `new_time`";
+        $sql = "SELECT `date` FROM `diary_report_record` where `uid` = $uid and `type` = 'daily' and `date` between '$firstTime' and '$lastTime' group by `date`";
         $result = $diary->db->query($sql);
-        $infoList = array();
-        while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $infoList[] = $type == 1 ? $row['new_time'] : date('Y-W', strtoTime($row['new_time']));
+        $dailys = array();
+        while($row = $result->fetch_assoc()){
+            $dailys[] = $row['date'];
         }
+        return $dailys;
+    }
 
-        $typeArr = array(1=>'daily', 2=>'weekly', 3=> 'monthly');
-        $firstDate = $type == 1 ? date('Y-m-d', $firstTime) : date('Y-W', $firstTime);
-        $lastDate = $type == 1 ? date('Y-m-d', $lastTime) : date('Y-W', $lastTime);
-
-        if($infoList){
-            $reportList = array();
-            $reportSql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$typeArr[$type]' and (`date` between '$firstDate' and '$lastDate') group by `date`";
-            $reportResult = $diary->db->query($reportSql);
-            while($reportRow = $reportResult->fetch_array(MYSQLI_ASSOC)) {
-                $reportList[] = $reportRow['date'];
-            }
-            return array_values(array_diff($infoList,$reportList));
+    public static function getReportWeeklys($diary, $weeks, $uid = null) {
+        $uid = $uid ? $uid :$diary->uid;
+        $sql = "SELECT `date` FROM `diary_report_record` where `uid` = $uid and `type` = 'weekly' and `date` in ($weeks) group by `date`";
+        $result = $diary->db->query($sql);
+        $weeklys = array();
+        while($row = $result->fetch_assoc()){
+            $weeklys[] = $row['date'];
         }
-        return $infoList;
+        return $weeklys;
     }
 
     /**
      * 获取无内容的日报
      */
-    public static function noContentDaily($diary, $firstTime, $lastTime, $type, $uid = null) {
+    public static function getHasContentDates($diary, $firstTime, $lastTime, $type, $uid = null) {
         $uid = $uid ? $uid :$diary->uid;
         $uninStr = '%Y-%m-%d';
         $sql = "select FROM_UNIXTIME(`show_time`, '$uninStr') as new_time from `diary_info` where `type` = $type and `uid` = $uid and (`show_time` between $firstTime and $lastTime) group by `new_time`";
@@ -132,18 +128,7 @@ class DiaryDaily{
         while($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $infoList[] = $type == 1 ? $row['new_time'] : date('Y-W', strtoTime($row['new_time']));
         }
-        $lastTime = $lastTime > strtotime('today') ? strtoTime('today') : $lastTime; // 大于今天则值匹配今天之前的
-        if($type == 1) {
-            $allDateArr = array_map(function($value) {
-                    return date('Y-m-d', $value);
-                }, range($firstTime, $lastTime, 86400));
-        }elseif($type == 2) {
-            $allDateArr = array_map(function($value) {
-                    return date('Y-W', $value);
-                }, range($firstTime, $lastTime, 86400*7));
-        }
-
-        return array_values(array_diff($allDateArr, $infoList));
+        return $infoList;
     }
 
     /**

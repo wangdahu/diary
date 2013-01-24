@@ -45,7 +45,7 @@ unset($titleList['count']);
         <div class="c_c clearfix">
             <div class="pic"><a href="<?php echo $wiseucUrl;?>"><img src="<?php echo $allUsers[$comment['uid']]['photo']; ?>" alt="" /></a></div>
             <div class="comment_t">
-                <h2>
+                <h2 class="user-info">
                     <span> <?php echo date('y-m-d H:i', $comment['add_time']); ?> </span>
                     <a href="<?php echo $wiseucUrl;?>"><?php echo $allUsers[$comment['uid']]['UserName']; ?></a>（<?php echo $allUsers[$comment['uid']]['dept_name']; ?>-<?php echo $allUsers[$comment['uid']]['Title'];?>）
                 </h2>

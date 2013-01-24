@@ -49,4 +49,17 @@ class DiaryReport {
         }
         return 0;
     }
+
+    /**
+     * 获取当前时间汇报的人员列表
+     */
+    public static function getDateReports($diary, $type, $date) {
+        $sql = "SELECT `uid` FROM `diary_report_record` where `type` = '".$type."' and `date` = '".$date."' group by `uid`";
+        $result = $diary->db->query($sql);
+        $users = array();
+        while($row = $result->fetch_assoc()){
+            $users[] = $row['uid'];
+        }
+        return $users;
+    }
 }

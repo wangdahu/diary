@@ -2,27 +2,29 @@
 class DiaryUser{
 
     public static function base($ids, $type=0){
-        $config = Diary::getConfig(); // 网站的基本配置
-        $host = "http://".$config['host']."/Interface/www/op/stdserver.php?wsdl";
-        $soap = new soapClient($host);
-        $_session_arr = Session::instance()->get();
-        $_arr = array(
-            'AccountID' => $_session_arr['entInfo']['AccountID'], // 企业id
-            'id' => $ids,     // 人员id
-            'type' => $type,     // 0为人员，1为获取部门人员
-            'keycode' => $config['keyCode'],  // 验证码
-        );
+        if($ids) {
+            $config = Diary::getConfig(); // 网站的基本配置
+            $host = "http://".$config['host']."/Interface/www/op/stdserver.php?wsdl";
+            $soap = new soapClient($host);
+            $_session_arr = Session::instance()->get();
+            $_arr = array(
+                'AccountID' => $_session_arr['entInfo']['AccountID'], // 企业id
+                'id' => $ids,     // 人员id
+                'type' => $type,     // 0为人员，1为获取部门人员
+                'keycode' => $config['keyCode'],  // 验证码
+            );
 
-        try {
-            $_arr = json_encode($_arr);
-            $result = $soap->doAct('getuserinfo', $_arr);
-            $_msg = json_decode($result, true);
-            $_msg_arr = json_decode($_msg['msg'], true);
-        } catch(Exception $e) {
-            var_dump($e);
-            exit();
+            try {
+                $_arr = json_encode($_arr);
+                $result = $soap->doAct('getuserinfo', $_arr);
+                $_msg = json_decode($result, true);
+                $_msg_arr = json_decode($_msg['msg'], true);
+            } catch(Exception $e) {
+                var_dump($e);
+                exit();
+            }
+            return $_msg_arr;
         }
-        return $_msg_arr;
     }
 
     public static function getInfo($id){

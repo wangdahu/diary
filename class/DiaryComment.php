@@ -28,6 +28,19 @@ class DiaryComment{
     }
 
     /**
+     * 获取当前时间点那些用户有评论
+     */
+    public static function getDateComments($diary, $type, $object){
+        $sql = "select `to_uid` from `diary_comment` where `type` = '$type' and `object` = '$object' group by `to_uid`";
+        $result = $diary->db->query($sql);
+        $users = array();
+        while($row = $result->fetch_assoc()) {
+            $users[] = $row['to_uid'];
+        }
+        return $users;
+    }
+
+    /**
      * 获取时间段内哪些时间点有评论
      */
     public static function getWhichDate($diary, $to_uid, $type, $firstDate, $lastDate){
