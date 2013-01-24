@@ -11,11 +11,14 @@ $reportUserIds = array();
 foreach($reportList as $report) {
     $reportUserIds[] = $report['object'];
 }
-$flag = 0;
-if(in_array($diary->uid, $reportUserIds)) {
-    $flag = 1;
+
+if($isReported) {
+    $flag = 0;
+    if(in_array($diary->uid, $reportUserIds)) {
+        $flag = 1;
+    }
+    DiaryViewRecord::addRecord($diary, $type, $uid, $object, $flag);
 }
-DiaryViewRecord::addRecord($diary, $type, $uid, $object, $flag);
 
 $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
 $viewCount = count($viewRecord);
