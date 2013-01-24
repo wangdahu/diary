@@ -1,5 +1,6 @@
 <?php
 $showObject = $forward < 0 ? false : true;
+echo "<pre>"; var_dump($teamShowObject);
 ?>
 <?php if($showObject):?>
 <div class="content">
@@ -31,8 +32,7 @@ $showObject = $forward < 0 ? false : true;
                      </a>
                 </div>
                 <div class="info ellipsis" style="width: 170px;">
-                    <a href="<?php echo $url;?>">
-                        <?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>-<?php echo $user['Title'];?>）
+                    <a href="<?php echo $url;?>"><?php echo $user['UserName']; ?></a>（<?php echo $user['dept_name']; ?>-<?php echo $user['Title'];?>）
                     <div class="<?php echo $isr; ?>"><?php echo $reportStr;?></div>
                 </div>
             </li>

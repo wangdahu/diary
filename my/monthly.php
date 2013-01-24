@@ -115,7 +115,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 "取消": function() {
                     $(this).dialog("close");
                 }
-            },
+            }
         });
 
         // 新增和编辑月报

@@ -21,7 +21,7 @@ $defaultColorId = rand(1,20);
                 <thead>
                     <tr>
                         <td>标签名称</td>
-                        <td width="40">工作数</td>
+                        <td width="50">工作数</td>
                         <td class="td-right">操作</td>
                     </tr>
                 </thead>
