@@ -36,7 +36,7 @@ class DiaryViewRecord{
         $result = $diary->db->query($sql);
         $record = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            $record[] = $row;
+            $record[$row['view_uid']] = $row;
         }
         return $record;
     }

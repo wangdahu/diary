@@ -88,7 +88,7 @@ unset($titleList['count']);
 #commit-dialog-form table {width: 375px;}
 #commit-dialog-form td{ border: 1px solid #ccc; text-align: center;}
 </style>
-<div id="commit-dialog-form" title="汇报统计">
+<div id="commit-dialog-form" title="汇报统计" style="display:none;">
     <div style="text-align: center;margin-bottom:10px; padding:5px; border-bottom: 1px solid #000;">
         <h3><?php echo $object;?><?php echo $typeCommitArr[$type];?></h3>
     </div>
