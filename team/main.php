@@ -5,10 +5,10 @@ $reportUsers = DiaryReport::getDateReports($diary, $type, $object);
 $commentUsers = DiaryComment::getDateComments($diary, $type, $object);
 $viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
 ?>
-<?php if($showObject):?>
 <div class="content">
+    <?php if($showObject):?>
     <div class="set_bar mb25">
-        <!--标签设置开始-->
+        <!--人员列表开始-->
         <ul class="dy clearfix">
             <?php foreach($teamShowObject as $uid): ?>
             <?php
@@ -45,10 +45,25 @@ $viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
             </li>
             <?php endforeach;?>
         </ul>
-        <!--标签设置结束-->
+        <!--人员列表结束-->
     </div>
+    <?php else:?>
+    
+    <div class="content_bar mb25">
+        <div class="c_t"></div>
+        <div class="c_c">
+            <div class="c_c_c">
+                <div>
+                    <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
+                        <strong>暂时没有用户汇报了日志！</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="c_b"></div>
+    </div>
+    <?php endif;?>
 </div>
-<?php endif;?>
 <script>
     $(function() {
         $('.js-href').click(function(e) {
