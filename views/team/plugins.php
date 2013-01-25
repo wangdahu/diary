@@ -28,11 +28,14 @@
                 rs:function(val) {/*获得结果函数*/
                     var jsonVal = $.parseJSON(val),
                     users = jsonVal[1];
-                    console.log(users);
-                    var id = users[0]['id'];
-                    var type = '<?php echo $type;?>',
-                    forward = '<?php echo $forward;?>';
-                    location.href  = '/diary/index.php/team/'+type+'?forward='+forward+'&uid='+id;
+                    if(users.length) {
+                        var id = users[0]['id'];
+                        var type = '<?php echo $type;?>',
+                        forward = '<?php echo $forward;?>';
+                        location.href  = '/diary/index.php/team/'+type+'?forward='+forward+'&uid='+id;
+                    }else {
+                        alert('请选择人员');
+                    }
                     $('#mask').hide();
                 },
                 fun:function(val){/*外部函数*/

@@ -119,7 +119,7 @@ if($forward < 0) { // 未来
                                     <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>" style="line-height:24px;height:24px;float: left;margin: 0 5px 0 10px;"/>
                                     <div class="color-list" style="float: left; margin: 6px 10px 6px 5px; background-color: <?php echo $tag['color'];?>">
                                     </div>
-                                    <div ><?php echo $tag['tag']?></div>
+                                    <div class="ellipsis" title="<?php echo $tag['tag']?>" ><?php echo $tag['tag']?></div>
                                 </label>
                             </div>
                             <?php endforeach;?>
