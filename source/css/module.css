@@ -58,7 +58,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .btn_back:hover { background-position: center -30px; }
 .c_t{width:878px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat; font-size: 0; }
 .c_b{width:878px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
-.c_c{width:852px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px;}
+.c_c{width:852px;border:1px solid #dadada; border-radius: 5px; background:#fff;padding:8px 12px;}
 .c_t_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
 .c_c_1{width:802px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px; position:relative; }
@@ -67,8 +67,9 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .c_c_c h2 a{color:#3f3f3f;}
 .zhan{position:absolute;right:12px;bottom:8px;font:700 14px/22px "宋体";}
 .diary-operation .add-tag-wrapper, .diary-operation .delete, .diary-operation .daily-date, .diary-operation .tag-list { float: right; }
-.add-tag-wrapper { position: relative; }
-.delete{width:18px;height:21px;background:url(../images/ico_03.png) no-repeat center center; margin: 0 4px 0 6px; }
+.add-tag-wrapper { position: relative; display: none; }
+.delete{width:18px;height:21px;background:url(../images/ico_03.png) no-repeat center center; margin: 0 4px 0 6px; display: none; }
+.c_c:hover .add-tag-wrapper, .c_c:hover .delete { display: block; }
 .add_tag{display: block; width:21px;height:21px;background:url(../images/select-tag.png) no-repeat;}
 .diary-operation .tag-list { margin-right: 4px; }
 .dtag{width:22px;height:22px;position:absolute;background:url(../images/del-tag.png) 0 0 no-repeat;z-index: 1}

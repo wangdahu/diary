@@ -75,8 +75,7 @@ if($forward < 0) { // 未来
             <?php endif;?>
         </h2>
         <?php if(!$num):?>
-        <div class="c_t mt10"></div>
-        <div class="c_c">
+        <div class="c_c mt10">
             <div class="c_c_c">
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
@@ -85,11 +84,9 @@ if($forward < 0) { // 未来
                 </div>
             </div>
         </div>
-        <div class="c_b"></div>
         <?php else:?>
         <?php foreach($dailys as $daily):?>
-        <div class="c_t mt10"></div>
-        <div class="c_c">
+        <div class="c_c mt10">
             <div class="c_c_c">
                 <?php if($isReported):?>
                 <div>
@@ -149,7 +146,6 @@ if($forward < 0) { // 未来
                 </div>
             </div>
         </div>
-        <div class="c_b"></div>
         <?php endforeach;?>
         <?php endif;?>
     </div>
