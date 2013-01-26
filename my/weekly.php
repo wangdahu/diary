@@ -91,7 +91,7 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
 <div id="weekly-dialog-form" title="写周报" style="display: none">
     <form>
         <fieldset>
-            <textarea style="width: 95%; height: 220px;" id="weekly_content" data-limit="1000"></textarea>
+            <textarea style="width: 494px; height: 220px;" id="weekly_content" data-limit="1000"></textarea>
             <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
         </fieldset>
         <div class="mt10">插入日报：
@@ -116,8 +116,9 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
         $("#weekly-dialog-form").dialog({
             autoOpen: false,
             height: 350,
-            width: 520,
+            width: 530,
             modal: true,
+            resizable: false,
             open: function(){
                 $("#weekly_content").select();
                 $('#weekly_content').wordLimit();
