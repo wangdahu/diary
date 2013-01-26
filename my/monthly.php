@@ -28,14 +28,18 @@ $showCommit = false;
 if($forward < 0) { // 未来
     $isReported = $allowPay = false;
 }else if($forward == 0) { // 本月
-    // 是否已过汇报时间
-    $reportTime = DiarySet::reportTime($diary);
-    $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
-    $isReported = $allowPay = false;
-    if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
-        $isReported = DiaryReport::checkReport($diary, $type, $object);
-        $allowPay  = $isReported ? false : true;
+    $isReported = DiaryReport::checkReport($diary, $type, $object);
+    if($isReported) {
+        $allowPay  = false;
         $showCommit = true;
+    }else {
+        // 是否已过汇报时间
+        $reportTime = DiarySet::reportTime($diary);
+        $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
+        $allowPay = false;
+        if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
+            $allowPay  = $showCommit = true;
+        }
     }
 }else { // 过去
     $isReported = DiaryReport::checkReport($diary, $type, $object);

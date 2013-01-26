@@ -34,7 +34,7 @@ unset($titleList['count']);
 <!--评论开始-->
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
-        <p>评论<strong style="color: red">（<?php echo count($commentList); ?>条）</strong></p>
+        <p>评论<strong >（<?php echo count($commentList); ?>条）</strong></p>
         <?php if($reportCount):?>
         <a href="javascript:;" class="fr js-view_record">
             汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人
@@ -62,7 +62,7 @@ unset($titleList['count']);
 <!--评论结束-->
 <!--发表评论开始-->
 <form method="post" id="comment-form">
-    <div class="content_bar">
+    <div style="padding: 0 10px;">
         <div class="c_t"></div>
         <div class="c_c">
             <div class="comment_f">

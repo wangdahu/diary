@@ -44,7 +44,7 @@ if($isReported){
     });
 
     // 补交
-    $('.js-pay_diary').live('click', function() {
+    $(document.body).on('click', '.js-pay_diary', function() {
         var type = '<?php echo $type;?>',
         currentDate = '<?php echo $object; ?>',
         showObject = $('.showObject').html();

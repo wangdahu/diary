@@ -46,6 +46,7 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 // 当前月历中哪些天有评论
 $firstDate = date('Y-m-d', $firstTime);
 $lastDate = date('Y-m-d', $lastTime);
+
 $dateObject = DiaryComment::getWhichDate($diary, $uid, 'daily', $firstDate, $lastDate);
 $weekObject = DiaryComment::getWhichDate($diary, $uid, 'weekly', date('Y-W', strtotime($firstDate)), date('Y-W', strtotime($lastDate)));
 
@@ -115,7 +116,7 @@ $hasContentDates = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
     </div>
     <!--本月总结结束-->
     <!--日历开始-->
-    <div class="content_bar">
+    <div style="padding: 0 10px;">
         <div class="c_t mt10"></div>
         <div class="c_c">
             <table class="calendar">
@@ -165,30 +166,23 @@ $hasContentDates = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                    if(isset($from)) {
                                        $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
                                    }
-$noReport = !in_array($thisDate, $reportDailys) && $thisTime < time();
-$hasContent = in_array($thisDate, $hasContentDates);
-$hasComment = in_array($thisDate, $dateObject);
-$class = '';
-if($noReport && $hasContent && $hasComment) {
-    $class = "unreport-content-comments";
-}else {
-    if($noReport) {
-        if($hasComment) {
-            $class = "unreport-comments";
-        }else if($hasContent) {
-            $class = "unreport-contents";
-        }else {
-            $class = "unreport";
-        }
-    }else {
-        if($hasComment) {
-            $class = "comments";
-        }
-    }
-}
-?>
-                            <td class="js-hover <?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo $class;?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
-                            <a href="<?php echo $url;?>"><div style="font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></div></a>
+                                   $noReport = !in_array($thisDate, $reportDailys) && $thisTime < time();
+                                   $hasContent = in_array($thisDate, $hasContentDates);
+                                   $hasComment = in_array($thisDate, $dateObject);
+                               ?>
+                            <td class="js-hover <?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
+                                <div class="icon-wrapper">
+                                    <?php if($noReport):?>
+                                    <span class="unreport"></span>
+                                    <?php endif;?>
+                                    <?php if($hasComment):?>
+                                    <span class="comments"></span>
+                                    <?php endif;?>
+                                    <?php if($noReport && $hasContent):?>
+                                    <span class="has-content"></span>
+                                    <?php endif;?>
+                                    <a href="<?php echo $url;?>" style="width: 100%;top:50%; margin-top: -13px;font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></a>
+                                </div>
                         </td>
                         <?php endfor;?>
                     </tr>

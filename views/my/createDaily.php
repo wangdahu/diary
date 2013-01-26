@@ -11,7 +11,7 @@
     $(function() {
         $("#daily-dialog-form").dialog({
             autoOpen: false,
-            height: 300,
+            height: 301,
             width: 530,
             modal: true,
             resizable: false,

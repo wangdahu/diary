@@ -39,14 +39,18 @@ $showCommit = false;
 if($forward < 0) { // 未来
     $isReported = $allowPay = false;
 }else if($forward == 0) { // 今天
-    // 是否已过汇报时间
-    $reportTime = DiarySet::reportTime($diary);
-    $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
-    $isReported = $allowPay = false;
-    if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-        $isReported = DiaryReport::checkReport($diary, $type, $object);
-        $allowPay  = $isReported ? false : true;
-        $showCommit = $isReported;
+    $isReported = DiaryReport::checkReport($diary, $type, $object);
+    if($isReported) {
+        $allowPay  = false;
+        $showCommit = true;
+    }else {
+        // 是否已过汇报时间
+        $reportTime = DiarySet::reportTime($diary);
+        $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
+        $allowPay = false;
+        if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
+            $allowPay = $showCommit = true;
+        }
     }
 }else{ // 过去
     $isReported = DiaryReport::checkReport($diary, $type, $object);
@@ -250,5 +254,10 @@ if($forward < 0) { // 未来
             });
         });
 
+        $('.c_c').mouseenter(function() {
+            $(this).find('.add-tag-wrapper,.delete').css('visibility', 'visible');
+        }).mouseleave(function() {
+            $(this).find('.add-tag-wrapper,.delete').css('visibility', 'hidden');
+        });
     });
 </script>
