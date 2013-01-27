@@ -60,6 +60,7 @@ $reportWeeklys = DiaryDaily::getReportWeeklys($diary, $weekStr, $uid);
 $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
 
 $hasContentDates = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime, 1, $uid);
+$hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime, 2, $uid);
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -143,10 +144,24 @@ $hasContentDates = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                 $url = "/diary/index.php/team/weekly?forward=".$weekForward."&uid=".$uid;
                              }
                              $isFuture = ($firstTime + 7*$w*86400) > time();
+                             $noReport = !in_array($thisWeek, $reportWeeklys) && !$isFuture;
+                             $hasContent = in_array($thisWeek, $hasContentWeeks);
+                             $hasComment = in_array($thisWeek, $weekObject);
                         ?>
-                        <td class="js-hover <?php echo in_array($thisWeek, $weekObject) ? 'has-comment' : ''?> <?php echo (!in_array($thisWeek, $reportWeeklys) && !$isFuture) ? 'no-report' : '';?> <?php echo $isFuture ? 'td_white' : '';?>" style="border:1px solid #aaa; width: 134px;" >
+                        <td class="js-hover <?php echo $isFuture ? 'td_white' : '';?>" style="border:1px solid #aaa; width: 134px;" >
+                                <div class="icon-wrapper">
+                                    <?php if($noReport):?>
+                                    <span class="unreport"></span>
+                                    <?php endif;?>
+                                    <?php if($noReport && $hasContent):?>
+                                    <span class="has-content"></span>
+                                    <?php endif;?>
+                                    <?php if($hasComment):?>
+                                    <span class="comments"></span>
+                                    <?php endif;?>
+                                    <a style="width: 100%; top:50%; margin-top: -9px; font: 14px 微软雅黑; color: <?php echo $currentWeek >= $w ? '#000;' : '#9c9c9c;'?>" href="<?php echo $url;?>"><?php echo $weekArr[$w]; ?></a>
+                                </div>
 
-                            <a href="<?php echo $url;?>"><div style="font: 14px 微软雅黑; color: <?php echo $currentWeek >= $w ? '#000;' : '#9c9c9c;'?>"><?php echo $weekArr[$w]; ?></div></a>
                         </td>
                         <?php for($i = 0; $i < 7; $i++): ?>
                               <?php
