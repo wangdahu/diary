@@ -1,5 +1,22 @@
 <?php
 class Method {
+
+    /*
+    *返回值函数
+    */
+    public static function output($_flag,$_msg,$_stats_tag,$_is_json = false) {
+        $_arr = array(
+            'flag' => $_flag,
+            'msg' => $_msg,
+            'info' => $_stats_tag
+        );
+        if ($_is_json) {
+            return JSON_ENCODE($_arr);
+        }else {
+            return $_arr;
+        }
+    }
+
     /**
      * 发送汇报
      */
@@ -55,71 +72,108 @@ class Method {
     /**
      * 发送提醒
      */
-    public static function sendRemind($diary, $params) {
-        // 参数
-        $args = json_decode(base64_decode($params), true);
-        $type = $args['diaryType'];
-        $uid = $args['uid'];
-        $corpId = $args['corpId'];
-        $loginName = $args['loginName'];
-        $host = $args['host'];
-        $time = $args['nextTime'];
-        $weekarray = array("日","一","二","三","四","五","六");
-        if($type == 'daily') {
-            $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
-        }elseif($type == 'weekly') {
-            $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
-            $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $mondayTime + 7*86400 -1);
-        }elseif($type == 'monthly') {
-            $content = "月报：".date('Y年m月', $time);
+    public static function sendRemind($params) {
+        try {
+            $diary = classdb::getdb();
+            // 参数
+            $args = json_decode(base64_decode($params), true);
+
+            $type = $args['diaryType'];
+            $uid = $args['uid'];
+            $corpId = $args['corpId'];
+            $loginName = $args['loginName'];
+            $host = $args['host'];
+            $time = $args['nextTime'];
+            $weekarray = array("日","一","二","三","四","五","六");
+            if($type == 'daily') {
+                $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
+            }elseif($type == 'weekly') {
+                $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
+                $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $mondayTime + 7*86400 -1);
+            }elseif($type == 'monthly') {
+                $content = "月报：".date('Y年m月', $time);
+            }
+            $configHost = $args['configHost'];
+            $url = $configHost."/diary/index.php/my/".$type;
+            $title = "提交工作日志";
+
+            // 发送提醒
+            $keyCode = $args['keyCode'];
+            $_send_status = self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);
+
+            // by HJ
+            if(!$_send_status) {
+                return method::output(1, "消息推送失败！", '501', true);
+            }
+
+            // 插入下次提醒
+            $_insert_status = self::insertPolling($diary, $args);
+
+            if($_insert_status) {
+                return method::output(1, "操作成功！", '500', true);
+            }
+
+            return method::output(0, "操作失败！", '502', true);
+        }catch(Exception $e) {
+            return method::output(0, $e->getMessage(), '501', true);
         }
-        $configHost = $args['configHost'];
-        $url = $configHost."/diary/index.php/my/".$type;
-        $title = "提交工作日志";
-        // 发送提醒
-        self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);
-        // 插入下次提醒
-        self::insertPolling($diary, $args);
 
     }
 
-    public static function insertPolling($diary, $args) {
-        $uid = $args['uid'];
-        $loginName = $args['loginName'];
-        $corpId = $args['corpId'];
-        $soapUrl = $args['soapUrl'];
-        $host = $args['host'];
-        $awoke = $args['awoke'];
-        $funName = $args['function'];
-        $type = $awoke == 1 ? 'report' : 'remind';
-        $configHost = $configHost;
-        $keyCode = $args['keyCode'];
+    public static function insertPolling($diary, $args)
+    {
+        try
+        {
+            $uid = $args['uid'];
+            $loginName = $args['loginName'];
+            $corpId = $args['corpId'];
+            $soapUrl = $args['soapUrl'];
+            $host = $args['host'];
+            $awoke = $args['awoke'];
+            $funName = $args['funName'];
 
-        $nextInfo = self::nextTime($diary, $uid, $corpId, $type);
-        $nextTime = $nextInfo['nextTime'];
-        $diaryType = $nextInfo['diaryType'];
-        $args = compact('uid', 'corpId', 'diaryType', 'nextTime', 'awoke', 'soapUrl', 'funName', 'host', 'loginName', 'configHost');
+            $type = $awoke == 1 ? 'report' : 'remind';
+            $configHost = $args['configHost'];
 
-        $soap = new soapClient($host);
-        $argsStr = base64_encode(json_encode($args));
-        $_arr = array(
-            'AccountID' => $corpId, // 企业id
-            'userid' => $uid,     // 人员id
-            'func' => $funName, // sendRepot,sendRemind
-            'args' => $argsStr,
-            'type' => 0,     // 0为日志
-            'awoke' => $awoke, // 提醒类型（0=>'remind', 1=>'report'）
-            'soapurl' => $soapUrl,
-            'times' => date('Y-m-d H:i:s', $nextTime),     // 0为人员，1为获取部门人员
-            'keycode' => $keyCode,  // 验证码
-        );
-        try {
+            $keyCode = $args['keyCode'];
+
+            $nextInfo = self::nextTime($diary, $uid, $corpId, $type);
+
+            $nextTime = $nextInfo['nextTime'];
+            $diaryType = $nextInfo['diaryType'];
+            $args = compact('uid', 'corpId', 'diaryType', 'nextTime', 'awoke', 'soapUrl', 'funName', 'host', 'loginName', 'configHost');
+
+            $soap = new soapClient($host);
+            $argsStr = base64_encode(json_encode($args));
+            $_arr = array(
+                'AccountID' => $corpId, // 企业id
+                'userid' => $uid,     // 人员id
+                'func' => $funName, // sendRepot,sendRemind
+                'args' => $argsStr,
+                'type' => 0,     // 0为日志
+                'awoke' => $awoke, // 提醒类型（0=>'remind', 1=>'report'）
+                'soapurl' => $soapUrl,
+                'times' => date('Y-m-d H:i:s', $nextTime),     // 0为人员，1为获取部门人员
+                'keycode' => $keyCode,  // 验证码
+            );
+
             $_arr = json_encode($_arr);
             $result = $soap->doAct('polling', $_arr);
             $_msg = json_decode($result, true);
-            $_msg_arr = json_decode($_msg['msg'], true);
-        } catch(Exception $e) {
-            var_dump($e);exit();
+
+            if ($_msg['flag'])
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        catch(Exception $e)
+        {
+            return false;
         }
     }
 
@@ -130,11 +184,12 @@ class Method {
         $now = time();
         $func = $type.'Time';
         $type = ucwords($type);
-        if($type == 'remind') {
+        if($type == 'Remind') {
             $time = self::remindTime($diary, $uid, $corpId);
         }else {
             $time = self::reportTime($diary, $uid, $corpId);
         }
+
         // 日报下次提交时间
         $dailyTime = strtotime(date('Y-m-d ').$time['daily'.$type]['hour'].":".$time['daily'.$type]['minute']);
         $dailyTime = $dailyTime < $now ? $dailyTime+86400 : $dailyTime;
@@ -149,6 +204,7 @@ class Method {
         }else{
             $weeklyTime = strtotime(date('Y-m-d ').$weeklyHourTime) - ($w-$time['weekly'.$type]['w'])*86400;
         }
+
         $weeklyTime = $weeklyTime < $now ? $weeklyTime+7*86400 : $weeklyTime;
         // 月报下次提交时间
         $monthlyTime = strtotime(date('Y-m-').$time['monthly'.$type]['date']." ".$time['monthly'.$type]['hour'].":".$time['monthly'.$type]['minute']);
@@ -162,6 +218,7 @@ class Method {
         }elseif($nextTime == $monthlyTime) {
             $diaryType = 'monthly';
         }
+
         return compact('diaryType', 'nextTime');
     }
 
@@ -269,26 +326,43 @@ class Method {
     }
 
 
-    public static function send($host, $keyCode, $loginName, $userLoginNames, $title, $content, $url) {
-        $host = $host;
-        $soap = new soapClient($host);
+    public static function send($host, $keyCode, $loginName, $userLoginNames, $title, $content, $url)
+    {
+        try
+        {
+            $soap = new soapClient($host);
 
-        $msg = array(
-            'sendname' => $login_name, // 发送人登陆名
-            'receive' => $receive, // 接受者id
-            'title' => $title, // 标题
-            'content' => $content, // 内容
-            'url' => $url, // 地址
-            'keycode' => $keyCode,  // 验证码
-            'style' => 1,  // 验证码
-        );
-        try {
+            $msg = array(
+                'sendname' => $loginName, // 发送人登陆名
+                'receive' => $userLoginNames, // 接受者账户(数组)
+                'title' => $title, // 标题
+                'content' => $content, // 内容
+                'url' => $url, // 地址
+                'keycode' => $keyCode,  // 验证码
+                'style' => 1,  // 验证码
+            );
+
             $_arr = json_encode($msg);
+
             $result = $soap->doAct('sendmsgs', $_arr);
+
             $_msg = json_decode($result, true);
-            $_msg_arr = json_decode($_msg['msg'], true);
-        } catch(Exception $e) {
-            var_dump($e);exit();
+
+            if ($_msg['flag'])
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            #$_msg_arr = json_decode($_msg['msg'], true);
+
+        }
+        catch(Exception $e)
+        {
+            return false;
         }
     }
 
