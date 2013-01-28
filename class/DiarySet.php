@@ -399,4 +399,13 @@ class DiarySet{
         return compact('diaryType', 'nextTime');
     }
 
+    public static function alert($msg, $url = null) {
+        $str = '<script type="text/javascript">';
+        $str.= "alert('".$msg."');";
+
+        if ($url) {
+            $str.="window.location.href='{$url}';";
+        }
+        echo $str.='</script>';
+    }
 }
