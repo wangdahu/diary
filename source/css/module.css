@@ -57,7 +57,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .btn_back { background: url(../images/btn_back.png) no-repeat center top; width: 80px; height: 30px; margin-top: 4px;}
 .btn_back:hover { background-position: center -30px; }
 .c_c{width:852px;border:1px solid #dadada; border-radius: 5px; background:#fff;padding:8px 12px;}
-.content_bar .c_c:hover { border-color: #09f; }
+.content_bar .c_c:hover { background-color: whiteSmoke; }
 .c_t_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 0 no-repeat;}
 .c_b_1{width:828px;height:5px;background:url(../images/bg_03.png) 0 -15px no-repeat;}
 .c_c_1{width:802px;border-left:1px solid #dadada;border-right:1px solid #dadada;background:#fff;padding:3px 12px; position:relative; }

@@ -119,8 +119,8 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
     $(function() {
         $("#weekly-dialog-form").dialog({
             autoOpen: false,
-            height: 350,
-            width: 530,
+            height: 352,
+            width: 532,
             modal: true,
             resizable: false,
             open: function(){
@@ -128,7 +128,7 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
                 $('#weekly_content').wordLimit();
             },
             buttons: {
-                "写周报": function(){
+                "确定": function(){
                     var content = $("#weekly_content").val(),
                     id = $("#weekly-dialog-form").find("#weekly_id").val();
                     if(!content.length){

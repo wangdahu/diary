@@ -11,8 +11,8 @@
     $(function() {
         $("#daily-dialog-form").dialog({
             autoOpen: false,
-            height: 301,
-            width: 530,
+            height: 303,
+            width: 532,
             modal: true,
             resizable: false,
             open: function(){
@@ -20,7 +20,7 @@
                 $('#daily_content').wordLimit();
             },
             buttons: {
-                "写日志": function(){
+                "确定": function(){
                     var content = $("#daily_content").val(),
                     id = $("#daily-dialog-form").find("#daily_id").val();
                     if(!content.length){

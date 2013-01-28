@@ -12,7 +12,7 @@ $defaultColorId = rand(1,20);
 <?php include "views/layouts/header.php"; ?>
 <?php include "views/set/top.php"; ?>
 <div class="content">
-    <div class="set_bar mb25" style="margin-left: -10px;">
+    <div class="set_bar mb25">
         <!--标签设置开始-->
         <h2 class="pt25"><a href="javascript:;" class="tjbq js-add-tag" title="添加标签"></a></h2>
 

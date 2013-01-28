@@ -8,7 +8,7 @@ $.fn.extend({
             }
             textarea.data('init', 1);
             textarea.parent().css('position', 'relative');
-            wordIndicator = $('<span class="word-limit"><span>0</span> / <span>' + limit + '</span><input id="word_valid" type="hidden"/></span>').css('right', textarea.parent().width() - textarea.width()).insertAfter(textarea);
+            wordIndicator = $('<span class="word-limit"><span>0</span> / <span>' + limit + '</span><input id="word_valid" type="hidden"/></span>').css('right', 2 + textarea.parent().width() - textarea.width()).insertAfter(textarea);
             textarea.bind('input keyup', function() {
                 var len = this.nodeName == 'TEXTAREA' ? this.value.length
                     : this.innerHTML.replace(/<img[^>]*>/gi, '1').replace(/<\/?\w+[^>]*>|[\r\n]+/g, '').length;

@@ -194,7 +194,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                     <span class="comments"></span>
                                     <?php endif;?>
                                     <?php if($noReport && $hasContent):?>
-                                    <span class="has-content"></span>
+                                    <span class="has-content" style="top: 0; left: 0;"></span>
                                     <?php endif;?>
                                     <a href="<?php echo $url;?>" style="width: 100%;top:50%; margin-top: -13px;font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></a>
                                 </div>

@@ -92,8 +92,8 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $(function() {
         $("#monthly-dialog-form").dialog({
             autoOpen: false,
-            height: 350,
-            width: 530,
+            height: 352,
+            width: 532,
             modal: true,
             resizable: false,
             open: function(){
@@ -101,7 +101,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $('#monthly_content').wordLimit();
             },
             buttons: {
-                "写月报": function(){
+                "确定": function(){
                     var content = $("#monthly_content").val();
                     if(!content.length){
                         alert('请填写日志内容');

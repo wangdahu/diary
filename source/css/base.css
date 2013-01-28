@@ -128,7 +128,7 @@ form .form-action{ float: right;}
 .mg15 {margin-left: 15px;}
 
 /* 标签 */
-.tag { width: 868px; padding: 0 auto 15px auto; text-align:left;}
+.tag { width: 858px; padding: 0 auto 15px auto; text-align:left;}
 .tag thead tr {background-color: #ccc; height: 38px; font-weight: bold; font-size: 14px;}
 .tag tbody tr {height: 32px; border-bottom: 1px solid #ccc;}
 .tag td {padding-left: 10px; border-left: none;}
