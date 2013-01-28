@@ -28,7 +28,7 @@ $defaultColorId = rand(1,20);
                 <tbody>
                     <?php foreach($tagList as $tag):?>
                     <tr>
-                        <td><div class="color-list" style="float: left; margin-right: 5px; background-color: <?php echo $colorList[$tag['color_id']]?>"></div><a href="/diary/index.php/my/tagDaily?tag=$tag['id']"><?php echo $tag['tag'];?></a></td>
+                        <td><div class="color-list" style="float: left; margin-right: 5px; background-color: <?php echo $colorList[$tag['color_id']]?>"></div><a href="/diary/index.php/my/tagDaily?tag=<?php echo $tag['id']; ?>"><?php echo $tag['tag'];?></a></td>
                         <td align="center"><?php echo $tag['count'];?></td>
                         <td class="td-right">
                             <a href="javascript:;" class="js-edit-tag" data-color="<?php echo $colorList[$tag['color_id']]; ?>" data-tag="<?php echo $tag['tag']; ?>" data-color_id="<?php echo $tag['color_id']; ?>" data-id="<?php echo $tag['id']; ?>">编辑</a>
