@@ -348,6 +348,7 @@ class DiarySet{
     }
 
     public static function deptStr($dept_ids) {
+        return '';
         if($dept_ids){
             $depts = DiaryDept::getDepts($dept_ids);
             $name = array();

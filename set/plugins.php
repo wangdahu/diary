@@ -70,7 +70,7 @@
                     };
                     for(var i=0; i<depts.length; i++){
                         dept_ids.push(depts[i]['id']);
-                        dept_names.push("["+depts[i]['name'] + "]");
+                        // dept_names.push("["+depts[i]['name'] + "]");
                     };
                     var text = user_names.concat( dept_names).join('，');
                     object.parent().next().children().text(text);
