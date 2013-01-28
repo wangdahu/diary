@@ -159,7 +159,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                     <?php if($hasComment):?>
                                     <span class="comments"></span>
                                     <?php endif;?>
-                                    <a style="width: 100%; top:50%; margin-top: -9px; font: 14px 微软雅黑; color: <?php echo $currentWeek >= $w ? '#000;' : '#9c9c9c;'?>" href="<?php echo $url;?>"><?php echo $weekArr[$w]; ?></a>
+                                    <a style="width: 100%; top:50%; margin-top: -9px; left: 0; font: 14px 微软雅黑; color: <?php echo $currentWeek >= $w ? '#000;' : '#9c9c9c;'?>" href="<?php echo $url;?>"><?php echo $weekArr[$w]; ?></a>
                                 </div>
 
                         </td>
@@ -196,7 +196,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                     <?php if($noReport && $hasContent):?>
                                     <span class="has-content" style="top: 0; left: 0;"></span>
                                     <?php endif;?>
-                                    <a href="<?php echo $url;?>" style="width: 100%;top:50%; margin-top: -13px;font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></a>
+                                    <a href="<?php echo $url;?>" style="width: 100%; top:50%; left:0; margin-top: -13px;font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></a>
                                 </div>
                         </td>
                         <?php endfor;?>
