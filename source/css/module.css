@@ -10,7 +10,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .application{float:left;width:24px;height:33px;padding-top:7px;position:relative;margin-left:15px;z-index:400;}
 .app{display:block;height:23px;background:url(../images/topbar_btn.png) 0 0 no-repeat;}
 .app span{display:none;}
-.applicationBox{position:absolute;left:0;border:1px solid #323232;background:#f1f1f1;width:270px;height:108px;display:none;}
+.applicationBox{position:absolute;left:0;top:39px;border:1px solid #323232;background:#f1f1f1;width:270px;height:108px;display:none;}
 .app_b{display:block;}
 .applicationBox ul{border:1px solid #fff;padding:0 17px;width:234px;overflow:hidden;}
 .applicationBox ul li{float:left;width:60px;padding:20px 9px;}
