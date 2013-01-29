@@ -66,7 +66,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
 
 $today = date('Y-m-d');
 
-$workingDay = DiarySet::workingTime($diary, $diary->uid);
+$workingDay = DiarySet::workingTime($diary, $uid);
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -130,13 +130,13 @@ $workingDay = DiarySet::workingTime($diary, $diary->uid);
                 <thead>
                     <tr>
                         <td style="color: black; font-size: 20px;"><?php echo date('Y年m月', $startTime);?></td>
-                        <td class="<?php echo in_array(1, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 1 ? 'color:black;' : ''?>">星期一</td>
-                        <td class="<?php echo in_array(2, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 2 ? 'color:black;' : ''?>">星期二</td>
-                        <td class="<?php echo in_array(3, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 3 ? 'color:black;' : ''?>">星期三</td>
-                        <td class="<?php echo in_array(4, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 4 ? 'color:black;' : ''?>">星期四</td>
-                        <td class="<?php echo in_array(5, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 5 ? 'color:black;' : ''?>">星期五</td>
-                        <td class="<?php echo in_array(6, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 6 ? 'color:black;' : ''?>">星期六</td>
-                        <td class="<?php echo in_array(7, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 0 ? 'color:black;' : ''?>">星期日</td>
+                        <td class="<?php echo !in_array(1, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 1 ? 'color:black;' : ''?>">星期一</td>
+                        <td class="<?php echo !in_array(2, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 2 ? 'color:black;' : ''?>">星期二</td>
+                        <td class="<?php echo !in_array(3, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 3 ? 'color:black;' : ''?>">星期三</td>
+                        <td class="<?php echo !in_array(4, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 4 ? 'color:black;' : ''?>">星期四</td>
+                        <td class="<?php echo !in_array(5, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 5 ? 'color:black;' : ''?>">星期五</td>
+                        <td class="<?php echo !in_array(6, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 6 ? 'color:black;' : ''?>">星期六</td>
+                        <td class="<?php echo !in_array(7, $workingDay) ? 'holiday' : ''; ?>" style="<?php echo $currentWeekth == 0 ? 'color:black;' : ''?>">星期日</td>
                     </tr>
                 </thead>
                 <tbody>
