@@ -34,4 +34,5 @@ if($filePath){
 include "Init.php";
 
 $diary = new Diary();
+$diary->isSetReport = DiarySet::isSetReportObject($diary);
 include $file;

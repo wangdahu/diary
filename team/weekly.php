@@ -44,6 +44,7 @@ if($forward == 0) { // 本周
 
 ?>
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
 <?php if($showDiary):?>
 <?php include "views/team/weekly.php"; ?>

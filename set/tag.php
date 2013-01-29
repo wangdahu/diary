@@ -2,7 +2,6 @@
 $title = "标签设置";
 $setDefault = 'tag';
 
-include dirname(dirname(__FILE__))."/class/DiaryDaily.php";
 // 获取颜色列表
 $colorList = DiaryDaily::getColorList($diary);
 $tagList = DiaryDaily::getTagList($diary);
@@ -10,6 +9,7 @@ $tagList = DiaryDaily::getTagList($diary);
 $defaultColorId = rand(1,20);
 ?>
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/set/top.php"; ?>
 <div class="content">
     <div class="set_bar mb25">

@@ -197,6 +197,14 @@ class DiarySet{
         return $report;
     }
 
+    public static function isSetReportObject($diary) {
+        $reportObject = self::reportObject($diary);
+        if(!$reportObject['daily_object']['user'] && !$reportObject['weekly_object']['user'] && !$reportObject['monthly_object']['user']) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 保存汇报对象
      */

@@ -28,6 +28,7 @@ $teamShowObject = DiarySet::teamShowObject($diary, 1);
 ?>
 
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/team/top.php"; ?>
 <?php include "main.php"; ?>
 <?php include "views/layouts/footer.php"; ?>

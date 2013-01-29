@@ -11,6 +11,7 @@ $tagName = $userTags[$tagId]['tag'];
 ?>
 
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/my/tag-top.php"; ?>
 
 <div class="content">

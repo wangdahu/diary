@@ -44,6 +44,7 @@ $forwardTitle = '日报';
 ?>
 
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
 <?php if($forward >= 0):?>
 <?php

@@ -60,6 +60,7 @@ if($forward < 0) { // 未来
 ?>
 
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/my/top.php"; ?>
 
 <div class="content">

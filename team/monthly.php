@@ -47,6 +47,7 @@ if($forward == 0) { // 本月
 }
 ?>
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/team/view-top.php"; ?>
 <?php if($showDiary):?>
 <?php include "views/team/monthly.php"; ?>

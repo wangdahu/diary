@@ -12,6 +12,7 @@ class Diary{
     public $dailyRemind; // 日报默认提醒时间
     public $weeklyRemind;
     public $monthlyRemind;
+    public $isSetReport;
 
     public function __construct(){
         if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
@@ -84,4 +85,5 @@ class Diary{
             'keyCode' => 'gzRN53VWRF9BYUXo',
         );
     }
+
 }

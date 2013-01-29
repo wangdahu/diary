@@ -13,6 +13,7 @@ $tagName = $userTags[$tagId]['tag'];
 ?>
 
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/team/tag-top.php"; ?>
 
 <div class="content">

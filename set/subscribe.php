@@ -17,6 +17,7 @@ $subscribeObject = DiarySet::subscribeObject($diary, $diary->uid);
 $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
 ?>
 <?php include "views/layouts/header.php"; ?>
+<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/set/top.php"; ?>
 
 <div class="content">
