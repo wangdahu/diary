@@ -31,6 +31,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .todo{height:37px;background:url(../images/subnav_bg.png)  0 0 no-repeat;padding:11px 10px 0;line-height:25px; }
 .todo p { font-size: 16px; color: #000;}
 .todo .status{ border-left: 1px solid #E7E8EA; padding-left: 42px; line-height: 24px; }
+.todo .left-border {border-left:1px solid #E7E8EA; height: 24px; margin-left: 10px;}
 .top-reported {background: url(../images/already-report.png) 15px top no-repeat; }
 .top-wait-report {background: url(../images/wait-report.png) 15px top no-repeat;}
 .top-unreport {background: url(../images/no-report.png) 15px top no-repeat;}

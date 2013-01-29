@@ -16,6 +16,7 @@ if($isReported){
 <!--功能操作开始-->
 <div class="todo clearfix">
     <a href="" class="a_01 fl">刷新</a>
+    <span class="fl left-border"></span>
     <?php if($type == 'daily'):?>
     <div class="pags fl clearfix"><a href="index?forward=<?php echo $forwardDays;?>" class="up" title="上一天"></a><a href="index?forward=<?php echo $backwardDays;?>" class="down" title="下一天"></a></div>
     <p class="fl showObject"><?php echo date('Y年m月d日', $startTime);?> 周<?php echo $weekarray[date("w", $startTime)];?></p>

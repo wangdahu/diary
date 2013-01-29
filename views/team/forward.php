@@ -1,5 +1,8 @@
 <?php
 $user = DiaryUser::getInfo($uid);
+$myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+$userLogin = URLEncode(Base64_encode($user['LoginName']));
+$wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
 ?>
 <div class="content">
     <!--本月总结开始-->

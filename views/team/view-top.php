@@ -11,6 +11,7 @@ if($isReported){
 <!--功能操作开始-->
 <div class="todo clearfix">
     <a href="" class="a_01 fl">刷新</a>
+    <span class="fl left-border"></span>
     <?php if($type == 'daily'):?>
     <div class="pags fl clearfix">
         <a href="daily?forward=<?php echo $forwardDays;?>&uid=<?php echo $uid;?>" class="up" title="上一天"></a>
