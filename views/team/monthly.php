@@ -172,6 +172,7 @@ $today = date('Y-m-d');
                                    $thisTime = $firstTime + 7*$w*86400 + $i*86400;
                                    $j = date('j', $thisTime);
                                    $thisColor = '';
+                                   $thisDate = date('Y-m-d', $thisTime);
                                    if($thisDate == $today) {
                                        $thisColor = "color: #fff;";
                                    }else {
@@ -179,7 +180,6 @@ $today = date('Y-m-d');
                                            $thisColor = "color: #9c9c9c;";
                                        }
                                    }
-                                   $thisDate = date('Y-m-d', $thisTime);
                                    $dateForward = DiaryDaily::getForward($firstTime + 7*$w*86400 + $i*86400);
                                    $url = "/diary/index.php/my/index?forward=".$dateForward;
                                    if(isset($from)) {
