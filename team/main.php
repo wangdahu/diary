@@ -6,7 +6,7 @@ $commentUsers = DiaryComment::getDateComments($diary, $type, $object);
 $viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
 ?>
 <div class="content">
-    <?php if($showObject):?>
+    <?php if($showObject && $teamShowObject):?>
     <div class="set_bar mb25">
         <!--人员列表开始-->
         <ul class="dy clearfix">
@@ -50,7 +50,6 @@ $viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
         <!--人员列表结束-->
     </div>
     <?php else:?>
-
     <div class="content_bar mb25">
         <div class="c_t"></div>
         <div class="c_c">

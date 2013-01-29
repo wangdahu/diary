@@ -20,42 +20,56 @@ class Method {
     /**
      * 发送汇报
      */
-    public static function sendReport($diary, $params) {
-        // 参数
-        $args = json_decode(base64_decode($params), true);
-        $type = $args['diaryType'];
-        $uid = $args['uid'];
-        $corpId = $args['corpId'];
-        $loginName = $args['loginName'];
-        $host = $args['host'];
-        $time = $args['nextTime'];
-        $weekarray = array("日","一","二","三","四","五","六");
-        if($type == 'daily') {
-            $diaryType = 1;
-            $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
-            $startTime = $time;
-            $endTime = $time + 86400 -1;
-        }elseif($type == 'weekly') {
-            $diaryType = 2;
-            $startTime = $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
-            $endTime = $mondayTime + 7*86400 -1;
-            $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $endTime);
-        }elseif($type == 'monthly') {
-            $diaryType = 3;
-            $content = "月报：".date('Y年m月', $time);
-            $startTime = strtotime(date('Y-m', $time));
-            $endTime = mktime(0, 0, 0, date('m', $time)+1, 1, date('Y', $time)) - 1;
-        }
-        $configHost = $args['configHost'];
-        $url = $configHost."/diary/index.php/my/".$type;
-        $title = "写工作日志提醒";
+    public static function sendReport($params) {
+        try {
+            $diary = classdb::getdb();
+            // 参数
+            $args = json_decode(base64_decode($params), true);
+            $type = $args['diaryType'];
+            $uid = $args['uid'];
+            $corpId = $args['corpId'];
+            $loginName = $args['loginName'];
+            $host = $args['host'];
+            $time = $args['nextTime'];
+            $keyCode = $args['keyCode'];
+            $weekarray = array("日","一","二","三","四","五","六");
+            if($type == 'daily') {
+                $diaryType = 1;
+                $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
+                $startTime = $time;
+                $endTime = $time + 86400 -1;
+            }elseif($type == 'weekly') {
+                $diaryType = 2;
+                $startTime = $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
+                $endTime = $mondayTime + 7*86400 -1;
+                $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $endTime);
+            }elseif($type == 'monthly') {
+                $diaryType = 3;
+                $content = "月报：".date('Y年m月', $time);
+                $startTime = strtotime(date('Y-m', $time));
+                $endTime = mktime(0, 0, 0, date('m', $time)+1, 1, date('Y', $time)) - 1;
+            }
+            $configHost = $args['configHost'];
+            $url = $configHost."/diary/index.php/team/".$type;
+            $title = "汇报提醒";
 
-        $user_ids = self::getAllObject($diary, $uid, $corpId, $type);
-        $users = self::users($host, $keyCode, $corpId, $user_ids, 0);
-        // 发送提醒
-        self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);
-        // 插入下次提醒
-        self::insertPolling($diary, $args);
+            $user_ids = self::getAllObject($diary, $uid, $corpId, $type);
+            $users = self::users($host, $keyCode, $corpId, $user_ids, 0);
+            // 发送提醒
+            $_send_status = self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);
+            if(!$_send_status) {
+                return method::output(1, "消息推送失败！", '501', true);
+            }
+            // 插入下次提醒
+            $_insert_status = self::insertPolling($diary, $args);
+            if($_insert_status) {
+                return method::output(1, "操作成功！", '500', true);
+            }
+            return method::output(0, "操作失败！", '502', true);
+
+        }catch(Exception $e) {
+            return method::output(0, $e->getMessage(), '501', true);
+        }
 
     }
 
@@ -95,7 +109,7 @@ class Method {
             }
             $configHost = $args['configHost'];
             $url = $configHost."/diary/index.php/my/".$type;
-            $title = "提交工作日志";
+            $title = "写工作日志提醒";
 
             // 发送提醒
             $keyCode = $args['keyCode'];
@@ -120,10 +134,8 @@ class Method {
 
     }
 
-    public static function insertPolling($diary, $args)
-    {
-        try
-        {
+    public static function insertPolling($diary, $args) {
+        try{
             $uid = $args['uid'];
             $loginName = $args['loginName'];
             $corpId = $args['corpId'];
@@ -161,18 +173,12 @@ class Method {
             $result = $soap->doAct('polling', $_arr);
             $_msg = json_decode($result, true);
 
-            if ($_msg['flag'])
-            {
+            if($_msg['flag']) {
                 return true;
-            }
-            else
-            {
+            }else {
                 return false;
             }
-
-        }
-        catch(Exception $e)
-        {
+        }catch(Exception $e) {
             return false;
         }
     }
@@ -326,12 +332,9 @@ class Method {
     }
 
 
-    public static function send($host, $keyCode, $loginName, $userLoginNames, $title, $content, $url)
-    {
-        try
-        {
+    public static function send($host, $keyCode, $loginName, $userLoginNames, $title, $content, $url) {
+        try{
             $soap = new soapClient($host);
-
             $msg = array(
                 'sendname' => $loginName, // 发送人登陆名
                 'receive' => $userLoginNames, // 接受者账户(数组)
@@ -343,25 +346,14 @@ class Method {
             );
 
             $_arr = json_encode($msg);
-
             $result = $soap->doAct('sendmsgs', $_arr);
-
             $_msg = json_decode($result, true);
-
-            if ($_msg['flag'])
-            {
+            if($_msg['flag']) {
                 return true;
-            }
-            else
-            {
+            }else{
                 return false;
             }
-
-            #$_msg_arr = json_decode($_msg['msg'], true);
-
-        }
-        catch(Exception $e)
-        {
+        }catch(Exception $e) {
             return false;
         }
     }

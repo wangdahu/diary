@@ -11,7 +11,6 @@ if($_POST){
     $monthly_depts = explode(',', $_POST['monthly_dept_object']);
     // 设置订阅对象
     DiarySet::saveSubscribeObject($diary, $daily_users, $daily_depts, $weekly_users, $weekly_depts, $monthly_users, $monthly_depts);
-    DiarySet::alert('设置成功');
 }
 
 $subscribeObject = DiarySet::subscribeObject($diary, $diary->uid);
@@ -30,7 +29,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="javascript:;" class="opentag btn_6">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag btn_6">选择订阅对象</a></label>
                     <p>
                         <textarea readonly name="daily" id="daily" class="set_textarea"><?php echo $subscribeStr['daily_str'];?></textarea>
                     </p>
@@ -43,7 +42,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2>周报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="javascript:;" class="opentag btn_6">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag btn_6">选择订阅对象</a></label>
                     <p>
                         <textarea readonly name="weekly" id="weekly" class="set_textarea"><?php echo $subscribeStr['weekly_str'];?></textarea>
                     </p>
@@ -56,7 +55,7 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
             <h2>月报</h2>
             <ul class="set_list">
                 <li>
-                    <label><a href="javascript:;" class="opentag btn_6">选择汇报对象</a></label>
+                    <label><a href="javascript:;" class="opentag btn_6">选择订阅对象</a></label>
                     <p>
                         <textarea readonly name="monthly" id="monthly" class="set_textarea"><?php echo $subscribeStr['monthly_str'];?></textarea>
                     </p>
@@ -82,3 +81,8 @@ $subscribeStr = DiarySet::getNameAndDeptStr($subscribeObject);
     });
 </script>
 <?php include "plugins.php"; ?>
+<?php
+if($_POST) {
+    DiarySet::alert('设置成功');
+}
+?>

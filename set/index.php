@@ -14,7 +14,6 @@ if($_POST){
     // 设置循环
     DiaryLoop::insertPolling(0, 'sendRemind');
     DiaryLoop::insertPolling(1, 'sendReport');
-    DiarySet::alert('设置成功');
 }
 
 $hours = range(0, 23);
@@ -196,3 +195,8 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
     });
 </script>
 <?php include "plugins.php"; ?>
+<?php
+if($_POST) {
+    DiarySet::alert('设置成功');
+}
+?>

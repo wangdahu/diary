@@ -8,7 +8,6 @@ if($_POST){
     // 设置循环
     DiaryLoop::insertPolling(0, 'sendRemind');
     DiaryLoop::insertPolling(1, 'sendReport');
-    DiarySet::alert('设置成功');
 }
 
 $hours = range(0, 24);
@@ -157,3 +156,8 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
     </form>
 </div>
 <?php include "views/layouts/footer.php"; ?>
+<?php
+if($_POST) {
+    DiarySet::alert('设置成功');
+}
+?>

@@ -8,7 +8,6 @@ if(isset($_POST['working_time'])){
     // 设置循环
     DiaryLoop::insertPolling(0, 'sendRemind');
     DiaryLoop::insertPolling(1, 'sendReport');
-    DiarySet::alert('设置成功');
 }
 
 $list = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四', '5' => '周五', '6' => '周六', '7' => '周日');
@@ -46,3 +45,8 @@ $selected = DiarySet::workingTime($diary, $diary->uid);
     </div>
 </form>
 <?php include "views/layouts/footer.php"; ?>
+<?php
+if($_POST) {
+    DiarySet::alert('设置成功');
+}
+?>

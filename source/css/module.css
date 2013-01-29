@@ -136,6 +136,7 @@ a.btn_6 { color: #3f3f3f; text-decoration: none; }
 .calendar tbody td.td_l{width:130px;border:1px solid #aaa;}
 .calendar tbody td.td_grey{background-color:#e5e5e5;}
 .calendar tbody td.td_white{background-color:white;}
+.holiday { background: url(../images/holiday.png) no-repeat 70px 5px; }
 
 .icon-wrapper { position: relative; height: 71px; }
 .icon-wrapper * { position: absolute; width: 16px; height: 16px; display: block; }
