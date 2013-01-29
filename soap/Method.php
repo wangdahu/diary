@@ -25,13 +25,15 @@ class Method {
             $diary = classdb::getdb();
             // 参数
             $args = json_decode(base64_decode($params), true);
+
             $type = $args['diaryType'];
             $uid = $args['uid'];
             $corpId = $args['corpId'];
+            $deptId = $args['deptId'];
             $loginName = $args['loginName'];
             $host = $args['host'];
             $time = $args['nextTime'];
-            $keyCode = $args['keyCode'];
+            $keycode = $args['keycode'];
             $weekarray = array("日","一","二","三","四","五","六");
             if($type == 'daily') {
                 $diaryType = 1;
@@ -53,10 +55,11 @@ class Method {
             $url = $configHost."/diary/index.php/team/".$type;
             $title = "汇报提醒";
 
-            $user_ids = self::getAllObject($diary, $uid, $corpId, $type);
-            $users = self::users($host, $keyCode, $corpId, $user_ids, 0);
+            $user_ids = self::getAllObject($diary, $uid, $deptId, $type);
+
+            $users = self::users($host, $keycode, $corpId, $user_ids, 0);
             // 发送提醒
-            $_send_status = self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);
+            $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url);
             if(!$_send_status) {
                 return method::output(1, "消息推送失败！", '501', true);
             }
@@ -91,10 +94,10 @@ class Method {
             $diary = classdb::getdb();
             // 参数
             $args = json_decode(base64_decode($params), true);
-
             $type = $args['diaryType'];
             $uid = $args['uid'];
             $corpId = $args['corpId'];
+            $deptId = $args['deptId'];
             $loginName = $args['loginName'];
             $host = $args['host'];
             $time = $args['nextTime'];
@@ -112,14 +115,13 @@ class Method {
             $title = "写工作日志提醒";
 
             // 发送提醒
-            $keyCode = $args['keyCode'];
-            $_send_status = self::send($host, $keyCode, $loginName, array($loginName), $title, $content, $url);
+            $keycode = $args['keycode'];
+            $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url);
 
             // by HJ
             if(!$_send_status) {
                 return method::output(1, "消息推送失败！", '501', true);
             }
-
             // 插入下次提醒
             $_insert_status = self::insertPolling($diary, $args);
 
@@ -139,6 +141,7 @@ class Method {
             $uid = $args['uid'];
             $loginName = $args['loginName'];
             $corpId = $args['corpId'];
+            $deptId = $args['deptId'];
             $soapUrl = $args['soapUrl'];
             $host = $args['host'];
             $awoke = $args['awoke'];
@@ -147,13 +150,13 @@ class Method {
             $type = $awoke == 1 ? 'report' : 'remind';
             $configHost = $args['configHost'];
 
-            $keyCode = $args['keyCode'];
+            $keycode = $args['keycode'];
 
             $nextInfo = self::nextTime($diary, $uid, $corpId, $type);
 
             $nextTime = $nextInfo['nextTime'];
             $diaryType = $nextInfo['diaryType'];
-            $args = compact('uid', 'corpId', 'diaryType', 'nextTime', 'awoke', 'soapUrl', 'funName', 'host', 'loginName', 'configHost');
+            $args = compact('uid', 'corpId', 'deptId', 'diaryType', 'nextTime', 'awoke', 'soapUrl', 'funName', 'host', 'loginName', 'configHost', 'keycode');
 
             $soap = new soapClient($host);
             $argsStr = base64_encode(json_encode($args));
@@ -166,7 +169,7 @@ class Method {
                 'awoke' => $awoke, // 提醒类型（0=>'remind', 1=>'report'）
                 'soapurl' => $soapUrl,
                 'times' => date('Y-m-d H:i:s', $nextTime),     // 0为人员，1为获取部门人员
-                'keycode' => $keyCode,  // 验证码
+                'keycode' => $keycode,  // 验证码
             );
 
             $_arr = json_encode($_arr);
@@ -224,7 +227,6 @@ class Method {
         }elseif($nextTime == $monthlyTime) {
             $diaryType = 'monthly';
         }
-
         return compact('diaryType', 'nextTime');
     }
 
@@ -274,10 +276,10 @@ class Method {
     /**
      * 获取要汇报和已订阅我的所有对象
      */
-    public static function getAllObject($diary, $uid, $corpId, $type) {
+    public static function getAllObject($diary, $uid, $deptId, $type) {
         $reportObject = self::reportObject($diary, $uid); // 我汇报的对象
-        $subscribeMy = self::subscribeMy($diary, $uid, $type);
-        $objectType = $type == 1 ? 'daily_object' : ($type == 2 ? 'weekly_object' : 'monthly_object');
+        $subscribeMy = self::subscribeMy($diary, $uid, $deptId, $type);
+        $objectType = $type.'_object';
         $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
         $allDepts = array_unique($reportObject[$objectType]['dept']);
         return $allUsers;
@@ -291,7 +293,6 @@ class Method {
         $result = $diary->db->query($sql);
 
         $report['daily_object']['user'] = $report['daily_object']['dept'] = $report['weekly_object']['user'] = $report['weekly_object']['dept'] = $report['monthly_object']['user'] = $report['monthly_object']['dept'] = array();
-
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             if($row['type'] == 1){ // 日报汇报对象
                 if($row['to_uid']){
@@ -319,10 +320,16 @@ class Method {
     /**
      * 获取订阅我的日志的所有对象
      */
-    public static function subscribeMy($diary, $uid, $corpId, $type) {
+    public static function subscribeMy($diary, $uid, $deptId, $type) {
         $from_uid = $uid;
         $from_dept = $deptId;
-        $sql = "select `uid` from `diary_subscribe_object` where `type` = $type and (`from_uid` = $from_uid or `from_dept` = $from_dept)";
+        $diaryType = 1;
+        if($type == 'weekly') {
+            $diaryType = 2;
+        }else if($type == 'monthly') {
+            $diaryType = 3;
+        }
+        $sql = "select `uid` from `diary_subscribe_object` where `type` = $diaryType and (`from_uid` = $from_uid or `from_dept` = $from_dept)";
         $uids = array();
         $result = $diary->db->query($sql);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -332,7 +339,7 @@ class Method {
     }
 
 
-    public static function send($host, $keyCode, $loginName, $userLoginNames, $title, $content, $url) {
+    public static function send($host, $keycode, $loginName, $userLoginNames, $title, $content, $url) {
         try{
             $soap = new soapClient($host);
             $msg = array(
@@ -341,7 +348,7 @@ class Method {
                 'title' => $title, // 标题
                 'content' => $content, // 内容
                 'url' => $url, // 地址
-                'keycode' => $keyCode,  // 验证码
+                'keycode' => $keycode,  // 验证码
                 'style' => 1,  // 验证码
             );
 
@@ -358,13 +365,13 @@ class Method {
         }
     }
 
-    public static function users($host, $keyCode, $corpId, $ids, $type=0){
+    public static function users($host, $keycode, $corpId, $ids, $type=0){
         $soap = new soapClient($host);
         $_arr = array(
             'AccountID' => $corpId, // 企业id
             'id' => $ids,     // 人员id
             'type' => $type,     // 0为人员，1为获取部门人员
-            'keycode' => $keyCode,  // 验证码
+            'keycode' => $keycode,  // 验证码
         );
 
         try {

@@ -4,7 +4,6 @@ include dirname(dirname(dirname(__FILE__))).'/vars.php';
 include_once dirname(__FILE__).'/DB.php';
 
 include_once dirname(__FILE__).'/Method.php';
-
 class classdb {
 	public static function getdb() {
 		return new DB();
