@@ -70,7 +70,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .delete{width:18px;height:21px;background:url(../images/ico_03.png) no-repeat center center; margin: 0 4px 0 6px; visibility: hidden; }
 .add_tag{display: block; width:21px;height:21px;background:url(../images/select-tag.png) no-repeat;}
 .diary-operation .tag-list { margin-right: 4px; }
-.dtag{width:22px;height:22px;position:absolute;background:url(../images/del-tag.png) 0 0 no-repeat;z-index: 1}
+.dtag{width:22px;height:22px;position:absolute;background:url(../images/del-tag.png) 0 0 no-repeat;z-index: 1000}
 .date{float: right; padding-right: 30px; padding-top:3px;}
 .daily-date{color:#8f8f8f}
 /*----------- 评论 ----------*/
