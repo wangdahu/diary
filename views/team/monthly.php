@@ -163,7 +163,7 @@ $today = date('Y-m-d');
                                     <?php if($hasComment):?>
                                     <span class="comments"></span>
                                     <?php endif;?>
-                                    <a style="width: 100%; top:50%; margin-top: -9px; left: 0; font: 14px 微软雅黑; color: <?php echo $currentWeek >= $w ? '#000;' : '#9c9c9c;'?>" href="<?php echo $url;?>"><?php echo $weekArr[$w]; ?></a>
+                                    <a style="width: 100%; height: 100%; left: 0; font-size: 14px; font-family: 微软雅黑; color: <?php echo $currentWeek >= $w ? '#000;' : '#9c9c9c;'?>" href="<?php echo $url;?>"><?php echo $weekArr[$w]; ?></a>
                                 </div>
 
                         </td>
@@ -200,7 +200,7 @@ $today = date('Y-m-d');
                                     <?php if($noReport && $hasContent):?>
                                     <span class="has-content" style="top: 0; left: 0;"></span>
                                     <?php endif;?>
-                                    <a href="<?php echo $url;?>" style="width: 100%; top:50%; left:0; margin-top: -13px;font: 20px Arial; <?php echo $thisColor;?>"><?php echo $j;?></a>
+                                    <a href="<?php echo $url;?>" style="height: 100%;width: 100%;  left:0;  font-family: Arial;font-size: 20px; <?php echo $thisColor;?>"><?php echo $j;?></a>
                                 </div>
                         </td>
                         <?php endfor;?>

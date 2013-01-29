@@ -42,7 +42,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .down{float:right;width:38px;}
 .down:hover{background:url(../images/btn.png) -37px -35px no-repeat;}
 
-.data{ margin-right: 2px; font-size: 14px;}
+.data{ margin-right: 2px; font-size: 14px; margin-top: -2px;}
 .data a{float:left;width:53px; height: 29px; line-height: 26px; display:block;  text-align:center;text-decoration:none;color:#757575;}
 .data a.cur{background:url(../images/date-selected.png) 0 0 no-repeat;color:#fff;}
 .data a.normal{background:url(../images/date.png) 0 0 no-repeat;}
@@ -52,7 +52,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .content_tit{border-bottom:1px solid #dadada;line-height:22px;padding:10px 0 6px;}
 .content_tit p{float:left;}
 .content_tit p em{margin:0 3px;}
-.dc{float:right; color:#757575;text-decoration:none; background: url(../images/btn_dept.png) no-repeat left top; height: 29px; width: 100px; margin-top: -1px; }
+.dc{float:right; color:#757575;text-decoration:none; background: url(../images/btn_dept.png) no-repeat left top; height: 29px; width: 100px; margin-top: -2px; }
 .dc:hover { background-position: left -29px; }
 .btn_back { background: url(../images/btn_back.png) no-repeat center top; width: 80px; height: 30px; margin-top: 4px;}
 .btn_back:hover { background-position: center -30px; }
