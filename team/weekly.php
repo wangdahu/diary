@@ -1,5 +1,6 @@
 <?php
 $title = "周报-团队日志";
+$forwardTitle = "周报";
 $type = 'weekly';
 
 // 当前周的周一时间戳
@@ -46,5 +47,7 @@ if($forward == 0) { // 本周
 <?php include "views/team/view-top.php"; ?>
 <?php if($showDiary):?>
 <?php include "views/team/weekly.php"; ?>
+<?php else:?>
+<?php include "views/team/forward.php"; ?>
 <?php endif;?>
 <?php include "views/layouts/footer.php"; ?>

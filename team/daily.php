@@ -39,6 +39,7 @@ if($forward == 0) { // 本日
     $isReported = DiaryReport::checkReport($diary, $type, $object, $uid);
     $showCommit = true;
 }
+$forwardTitle = '日报';
 // echo "<pre>"; var_dump($isReported);
 ?>
 
@@ -134,5 +135,7 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
     <!--今日工作结束-->
     <?php include "comment.php"; ?>
 </div>
+<?php else:?>
+<?php include "views/team/forward.php"; ?>
 <?php endif;?>
 <?php include "views/layouts/footer.php"; ?>

@@ -1,5 +1,6 @@
 <?php
 $title = "月报-团队日志";
+$forwardTitle = "月报";
 $type = 'monthly';
 
 // 向前向后翻天
@@ -30,7 +31,7 @@ $showCommit = false;
 $allowPay = false;
 $isReported = true;
 // 判断是否为补交/未汇报/已汇报
-if($forward == 0) { // 本周
+if($forward == 0) { // 本月
     // 是否已过汇报时间
     $reportTime = DiarySet::reportTime($diary, $uid);
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
@@ -49,5 +50,7 @@ if($forward == 0) { // 本周
 <?php include "views/team/view-top.php"; ?>
 <?php if($showDiary):?>
 <?php include "views/team/monthly.php"; ?>
+<?php else:?>
+<?php include "views/team/forward.php"; ?>
 <?php endif;?>
 <?php include "views/layouts/footer.php"; ?>
