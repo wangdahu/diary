@@ -1,6 +1,7 @@
 <?php
-$wiseucUrl = "wisetong://message/?uid=".$userInfo['LoginName']."&myid=".$diary->LoginName;
-
+$myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+$userLogin = URLEncode(Base64_encode($userInfo['LoginName']));
+$wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
 ?>
 <!--功能操作开始-->
 <div class="todo clearfix">

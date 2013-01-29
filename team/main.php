@@ -19,7 +19,9 @@ $viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
                  }elseif($setDefault === 'month'){
                      $url = "monthly?forward=$forward&uid=$uid";
                  }
-                 $wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
+                 $myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+                 $userLogin = URLEncode(Base64_encode($user['LoginName']));
+                 $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
                  $isReport = in_array($uid, $reportUsers);
                  $isr = $isReport ? "mini-report" : "mini-unreport";
                  $reportStr = $isReport ? "已汇报" : "未汇报";
@@ -48,7 +50,7 @@ $viewUsers = DiaryViewRecord::getDateViews($diary, $type, $object, $diary->uid);
         <!--人员列表结束-->
     </div>
     <?php else:?>
-    
+
     <div class="content_bar mb25">
         <div class="c_t"></div>
         <div class="c_c">

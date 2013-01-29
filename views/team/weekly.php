@@ -9,7 +9,10 @@ $weeklys = array();
 while($row = $result->fetch_assoc()){
     $weeklys = $row;
 };
-$wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
+
+$myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+$userLogin = URLEncode(Base64_encode($user['LoginName']));
+$wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
 ?>
 <div class="content">
     <!--今日工作开始-->

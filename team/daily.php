@@ -63,7 +63,9 @@ if($isReported) {
     };
     $num = count($dailys);
 }
-$wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
+$myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+$userLogin = URLEncode(Base64_encode($user['LoginName']));
+$wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
 ?>
 
 <div class="content">

@@ -57,7 +57,9 @@ for($w = 0; $w < $maxWeek; $w++) {
 }
 $weekStr = '"'.implode('","', $weeks).'"';
 $reportWeeklys = DiaryDaily::getReportWeeklys($diary, $weekStr, $uid);
-$wiseucUrl = "wisetong://message/?uid=".$user['LoginName']."&myid=".$diary->LoginName;
+$myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+$userLogin = URLEncode(Base64_encode($user['LoginName']));
+$wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
 
 $hasContentDates = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime, 1, $uid);
 $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime, 2, $uid);

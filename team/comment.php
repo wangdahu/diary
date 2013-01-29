@@ -42,7 +42,11 @@ unset($titleList['count']);
         <?php endif;?>
     </h2>
     <?php foreach($commentList as $comment): ?>
-    <?php $wiseucUrl = "wisetong://message/?uid=".$allUsers[$comment['uid']]['LoginName']."&myid=".$diary->LoginName;?>
+    <?php
+        $myselfLogin = URLEncode(Base64_encode($diary->LoginName));
+        $userLogin = URLEncode(Base64_encode($allUsers[$comment['uid']]['LoginName']));
+        $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
+    ?>
     <div class="comment_box">
         <div class="c_t"></div>
         <div class="c_c clearfix">
