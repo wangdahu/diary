@@ -63,6 +63,8 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
 
 $hasContentDates = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime, 1, $uid);
 $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime, 2, $uid);
+
+$today = date('Y-m-d');
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -150,7 +152,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                              $hasContent = in_array($thisWeek, $hasContentWeeks);
                              $hasComment = in_array($thisWeek, $weekObject);
                         ?>
-                        <td class="js-hover <?php echo $isFuture ? 'td_white' : '';?>" style="border:1px solid #aaa; width: 134px;" >
+                        <td class="js-hover" style="border:1px solid #aaa; width: 134px;" >
                                 <div class="icon-wrapper">
                                     <?php if($noReport):?>
                                     <span class="unreport"></span>
@@ -170,7 +172,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                    $thisTime = $firstTime + 7*$w*86400 + $i*86400;
                                    $j = date('j', $thisTime);
                                    $thisColor = '';
-                                   if($currentWeek == $w && $j == $currentMonthDate) {
+                                   if($thisDate == $today) {
                                        $thisColor = "color: #fff;";
                                    }else {
                                        if($thisTime > $currentTime) {
@@ -187,7 +189,7 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
                                    $hasContent = in_array($thisDate, $hasContentDates);
                                    $hasComment = in_array($thisDate, $dateObject);
                                ?>
-                            <td class="js-hover <?php echo ($currentWeek == $w && $j == $currentMonthDate) ? 'td_blue' : ''; ?> <?php echo $thisTime > time() ? 'td_white' : '';?>" >
+                            <td class="js-hover <?php echo ($thisDate == $today) ? 'td_blue' : 'td_white'; ?>" >
                                 <div class="icon-wrapper">
                                     <?php if($noReport):?>
                                     <span class="unreport"></span>
