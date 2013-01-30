@@ -4,15 +4,21 @@ $commentUserIds = array();
 foreach($commentList as $comment) {
     $commentUserIds[] = $comment['uid'];
 }
-// 查询汇报总人数
-$reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
-$reportCount = count($reportList);
 $reportUserIds = array();
-foreach($reportList as $report) {
-    $reportUserIds[] = $report['object'];
-}
-
 if($isReported) {
+    // 获取汇报设置对象
+    $reportUser = DiarySet::reportObject($diary);
+    $onlyReport = $reportUserIds = $reportUser[$type.'_object']['user'];
+
+    // 查询汇报总人数
+    $reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
+    $reportCount = count($reportList);
+
+    foreach($reportList as $key => $report) {
+        if(!in_array($report['object'], $reportUserIds)) {
+            unset($reportList[$key]);
+        }
+    }
     $flag = 0;
     if(in_array($diary->uid, $reportUserIds)) {
         $flag = 1;
@@ -23,7 +29,6 @@ if($isReported) {
 $viewRecord = DiaryViewRecord::getViewRecord($diary, $type, $uid, $object);
 $viewCount = count($viewRecord);
 $typeCommitArr = array('daily' => '日报', 'weekly' => '周报', 'monthly' => '月报');
-
 $allUsers = DiaryUser::getUsers(array_merge($reportUserIds, $commentUserIds));
 // 获取表情的title
 $emotionsDir = dirname(dirname(__FILE__))."/source/emotions/";
@@ -35,7 +40,7 @@ unset($titleList['count']);
 <div class="content_bar">
     <h2 class="content_tit clearfix mb10">
         <p>评论<strong >（<?php echo count($commentList); ?>条）</strong></p>
-        <?php if($reportCount):?>
+        <?php if($isReported && $reportCount):?>
         <a href="javascript:;" class="fr js-view_record">
             汇报：<?php echo $viewCount; ?>/<?php echo $reportCount; ?>人
         </a>
@@ -95,6 +100,7 @@ unset($titleList['count']);
 #commit-dialog-form table {width: 375px;}
 #commit-dialog-form td{ border: 1px solid #ccc; text-align: center;}
 </style>
+<?php if($isReported): ?>
 <div id="commit-dialog-form" title="汇报统计" style="display:none;">
     <div style="text-align: center;margin-bottom:10px; padding:5px; border-bottom: 1px solid #000;">
         <h3><?php echo $object;?><?php echo $typeCommitArr[$type];?></h3>
@@ -114,7 +120,7 @@ unset($titleList['count']);
         <?php endforeach;?>
     </table>
 </div>
-
+<?php endif;?>
 <script>
     $(function() {
         $("#commit-dialog-form").dialog({

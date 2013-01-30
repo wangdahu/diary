@@ -55,20 +55,21 @@ class DiaryUser{
     }
 
     public static function getUsers($user_ids){
+        $user_ids = array_unique($user_ids);
         $result = array();
         if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
             if($user_ids){
                 $users = self::base($user_ids);
                 if(count($users) != count($user_ids)){
-                    foreach($user_ids as $id){
-                        if(isset($users[$id])) {
-                            $user = $users[$id];
-                            $user['dept_name'] = $user['depname'];
-                            $user['photo'] = '../../source/images/img_01.png';
-                            $result[$user['PID']] = $user;
-                        }else {
-                            $result[$id] = self::delUserInfo($id);
-                        }
+                    foreach($users as $user) {
+                        $user['dept_name'] = $user['depname'];
+                        $user['photo'] = '../../source/images/img_01.png';
+                        $result[$user['PID']] = $user;
+                        $returnIds[] = $user['PID'];
+                    }
+                    $delIds = array_diff($user_ids, $returnIds);
+                    foreach($delIds as $id){
+                        $result[$id] = self::delUserInfo($id);
                     }
                 }else {
                     foreach($users as $user){
