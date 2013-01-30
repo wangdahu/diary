@@ -33,7 +33,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <h2 class="pt25">日报</h2>
             <ul class="set_list">
                 <li>
-                    <label>汇报时间</label>
+                    <label>提醒时间</label>
                     <select name="dailyRemind[hour]">
                         <?php foreach($hours as $hour):?>
                         <option <?php echo $remindSet['dailyRemind']['hour'] == $hour ? 'selected' : ''; ?> value="<?php echo $hour; ?>">
@@ -50,7 +50,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     </select>
                 </li>
                 <li>
-                    <label>汇报方式</label>
+                    <label>提醒方式</label>
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
@@ -67,7 +67,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <h2>周报</h2>
             <ul class="set_list">
                 <li>
-                    <label>汇报时间</label>
+                    <label>提醒时间</label>
                     <p>
                         <?php foreach($weeks as $key => $val):?>
                         <label>
@@ -92,7 +92,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     </p>
                 </li>
                 <li>
-                    <label>汇报方式</label>
+                    <label>提醒方式</label>
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
@@ -109,7 +109,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <h2>月报</h2>
             <ul class="set_list">
                 <li>
-                    <label>汇报时间</label>
+                    <label>提醒时间</label>
                     <p>
                         <select name="monthlyRemind[date]">
                             <?php foreach($months as $month):?>
@@ -135,7 +135,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     </p>
                 </li>
                 <li>
-                    <label>汇报方式</label>
+                    <label>提醒方式</label>
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
@@ -150,7 +150,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
             <!--月报设置结束-->
             <h2 class="mb10"></h2>
             <div class="form-action">
-                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form').reset()">撤消</a>
+                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form')[0].reset()">撤消</a>
                 <a class="a_01 fr10" href="javascript:" onclick="$(this).closest('form').submit()">保存</a>
             </div>
         </div>

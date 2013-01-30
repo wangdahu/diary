@@ -27,7 +27,6 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
 $reportStr = DiarySet::getNameAndDeptStr($reportObject);
 ?>
 <?php include "views/layouts/header.php"; ?>
-<?php include "views/layouts/diary-header.php"; ?>
 <?php include "views/set/top.php"; ?>
 <div class="content">
     <form id="report-set-form" method="post">
@@ -181,7 +180,7 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
 
             <h2 class="mb10"></h2>
             <div class="form-action">
-                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form').reset()">撤消</a>
+                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form')[0].reset()">撤消</a>
                 <a class="a_01 fr10" href="javascript:" onclick="$(this).closest('form').submit()">保存</a>
             </div>
         </div>

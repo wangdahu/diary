@@ -55,10 +55,12 @@ class DiaryUser{
         if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
             if($user_ids){
                 $users = self::base($user_ids);
-                foreach($users as $user){
-                    $user['dept_name'] = $user['depname'];
-                    $user['photo'] = '../../source/images/img_01.png';
-                    $result[$user['PID']] = $user;
+                if($users) {
+                    foreach($users as $user){
+                        $user['dept_name'] = $user['depname'];
+                        $user['photo'] = '../../source/images/img_01.png';
+                        $result[$user['PID']] = $user;
+                    }
                 }
             }
         } else {

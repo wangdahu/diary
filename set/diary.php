@@ -38,7 +38,7 @@ $selected = DiarySet::workingTime($diary, $diary->uid);
             </ul>
             <h2 class="mb10"></h2>
             <div class="form-action">
-                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form').reset()">撤消</a>
+                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form')[0].reset()">撤消</a>
                 <a class="a_01 fr10" href="javascript:" onclick="$(this).closest('form').submit()">保存</a>
             </div>
         </div>

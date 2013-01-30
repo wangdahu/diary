@@ -85,9 +85,9 @@ class DiaryLoop{
         $soap = new soapClient($host);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             try {
-                $result = $soap->doAct('sendReport', $row['args']);
-                $_msg = json_decode($result, true);
-                $_msg_arr = json_decode($_msg['msg'], true);
+                $msg = $soap->doAct('sendReport', $row['args']);
+                $_msg = json_decode($msg, true);
+                $_msg_arr = json_decode($_msg['msg'], true);exit;
             } catch(Exception $e) {
                 var_dump($e);exit();
             }

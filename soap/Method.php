@@ -56,7 +56,12 @@ class Method {
             $title = "汇报提醒";
 
             $user_ids = self::getAllObject($diary, $uid, $deptId, $type);
-
+			
+			if ( ! $user_ids)
+			{
+				return method::output(0, "获得汇报对象失败！", '503', true);
+			}
+			
             $users = self::users($host, $keycode, $corpId, $user_ids, 0);
             // 发送提醒
             $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url);
@@ -90,18 +95,23 @@ class Method {
      * 发送提醒
      */
     public static function sendRemind($params) {
+			
         try {
             $diary = classdb::getdb();
+			
             // 参数
             $args = json_decode(base64_decode($params), true);
+			
             $type = $args['diaryType'];
             $uid = $args['uid'];
             $corpId = $args['corpId'];
             $deptId = $args['deptId'];
             $loginName = $args['loginName'];
+			
             $host = $args['host'];
             $time = $args['nextTime'];
             $weekarray = array("日","一","二","三","四","五","六");
+			
             if($type == 'daily') {
                 $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
             }elseif($type == 'weekly') {
@@ -116,12 +126,14 @@ class Method {
 
             // 发送提醒
             $keycode = $args['keycode'];
+
             $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url);
 
             // by HJ
             if(!$_send_status) {
-                return method::output(1, "消息推送失败！", '501', true);
+                return method::output(0, "消息推送失败！", '501', true);
             }
+
             // 插入下次提醒
             $_insert_status = self::insertPolling($diary, $args);
 
@@ -131,7 +143,7 @@ class Method {
 
             return method::output(0, "操作失败！", '502', true);
         }catch(Exception $e) {
-            return method::output(0, $e->getMessage(), '501', true);
+            return method::output(0, $e->getMessage(), '503', true);
         }
 
     }
@@ -277,7 +289,14 @@ class Method {
      * 获取要汇报和已订阅我的所有对象
      */
     public static function getAllObject($diary, $uid, $deptId, $type) {
-        $reportObject = self::reportObject($diary, $uid); // 我汇报的对象
+
+		$reportObject = self::reportObject($diary, $uid); // 我汇报的对象
+
+		if ( ! $reportObject)
+		{
+			return false;
+		}
+		
         $subscribeMy = self::subscribeMy($diary, $uid, $deptId, $type);
         $objectType = $type.'_object';
         $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
@@ -291,9 +310,16 @@ class Method {
     public static function reportObject($diary, $uid){
         $sql = "select * from `diary_report_object` where `uid` = $uid";
         $result = $diary->db->query($sql);
-
+		
+		if ( ! $result)
+		{
+			return false;
+		}
+		
         $report['daily_object']['user'] = $report['daily_object']['dept'] = $report['weekly_object']['user'] = $report['weekly_object']['dept'] = $report['monthly_object']['user'] = $report['monthly_object']['dept'] = array();
-        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+        
+		while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		
             if($row['type'] == 1){ // 日报汇报对象
                 if($row['to_uid']){
                     $report['daily_object']['user'][] = $row['to_uid'];
