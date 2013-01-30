@@ -30,14 +30,18 @@ class DiaryUser{
     public static function getInfo($id){
         if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
             $result = self::base(array($id));
-            return array(
-                'photo' => '../../source/images/img_01.png',
-                'UserName' => $result[0]['UserName'],
-                'dept_name' => $result[0]['depname'],
-                'corp_id' => $result[0]['AccountID'],
-                'LoginName' => $result[0]['LoginName'],
-                'Title' => $result[0]['Title'],
-            );
+            if($result) {
+                return array(
+                    'photo' => '../../source/images/img_01.png',
+                    'UserName' => $result[0]['UserName'],
+                    'dept_name' => $result[0]['depname'],
+                    'corp_id' => $result[0]['AccountID'],
+                    'LoginName' => $result[0]['LoginName'],
+                    'Title' => $result[0]['Title'],
+                );
+            }else {
+                return self::delUserInfo($id);
+            }
         }else {
             return array(
                 'photo' => '../../source/images/img_01.png',
@@ -55,7 +59,18 @@ class DiaryUser{
         if(file_exists(dirname(dirname(dirname(__FILE__)))."/vars.php")) {
             if($user_ids){
                 $users = self::base($user_ids);
-                if($users) {
+                if(count($users) != count($user_ids)){
+                    foreach($user_ids as $id){
+                        if(isset($users[$id])) {
+                            $user = $users[$id];
+                            $user['dept_name'] = $user['depname'];
+                            $user['photo'] = '../../source/images/img_01.png';
+                            $result[$user['PID']] = $user;
+                        }else {
+                            $result[$id] = self::delUserInfo($id);
+                        }
+                    }
+                }else {
                     foreach($users as $user){
                         $user['dept_name'] = $user['depname'];
                         $user['photo'] = '../../source/images/img_01.png';
@@ -71,6 +86,17 @@ class DiaryUser{
             }
         }
         return $result;
+    }
+
+    public static function delUserInfo($id) {
+        return array(
+            'photo' => '../../source/images/img_01.png',
+            'UserName' => '用户已删除',
+            'dept_name' => '已删除',
+            'corp_id' => 0,
+            'LoginName' => '已删除',
+            'Title' => '已删除',
+        );
     }
 
 }
