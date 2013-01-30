@@ -66,8 +66,12 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
         </div>
         <div class="c_b"></div>
         <?php endif;?>
+
+        <?php if(!isset($from) && $weekDate): ?>
+        <h2 class="content_tit clearfix">
+            <p>本周工作：<?php echo $dailyNum; ?>项</p>
+        </h2>
         <?php
-            if(!isset($from) && $weekDate):
             $reportDailys = DiaryDaily::getReportDailys($diary, date('Y-m-d', $startTime), date('Y-m-d', $endTime));
             foreach($weekDate as $k => $v):
 $date = date('Y-m-d', $dateForwards[$v]);

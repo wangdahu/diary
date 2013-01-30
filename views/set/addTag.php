@@ -1,7 +1,7 @@
 <div id="tag-dialog-form" style="display:none;" title="添加标签">
     <form method="post">
         <fieldset>
-            <input id="tag" name="tag" size="35" maxlength="40" placeholder="输入标签名称" style="line-height: 24px;"/>
+            <input id="tag" name="tag" maxlength="40" placeholder="输入标签名称" style="line-height: 24px; width: 240px;"/>
             <div style="margin: 10px -3px ; ">
                 <div class="select-color" style="line-height: 30px;">
                     <div class="default-color" style="background-color: <?php echo $colorList[$defaultColorId];?>;"></div><span>选择颜色</span>
@@ -23,8 +23,8 @@
     $(function(){
         $("#tag-dialog-form").dialog({
             autoOpen: false,
-            height: 210,
-            width: 330,
+            height: 200,
+            width: 270,
             modal: true,
             open: function(){
                 $("#tag-dialog-form").keypress(function(e) {

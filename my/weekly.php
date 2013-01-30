@@ -37,7 +37,9 @@ $dailySql = "select * from `diary_info` where `uid` = $uid and `corp_id` = $corp
 $result = $diary->db->query($dailySql);
 
 $dailys = array();
+$dailyNum = 0;
 while($row = $result->fetch_array(MYSQLI_ASSOC)){
+    $dailyNum ++;
     $dailys[date('y.m.d', $row['show_time'])][] = $row;
 };
 
