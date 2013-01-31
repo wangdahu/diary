@@ -48,8 +48,9 @@ if($isReported){
     $(document.body).on('click', '.js-pay_diary', function() {
         var type = '<?php echo $type;?>',
         currentDate = '<?php echo $object; ?>',
+        startTime = '<?php echo $startTime; ?>',
         showObject = $('.showObject').html();
-        $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject}, function(json) {
+        $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject, startTime: startTime}, function(json) {
             if(json == 0) {
                 alert('补交失败，请设置汇报对象');
             }else {

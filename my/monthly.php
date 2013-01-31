@@ -4,6 +4,16 @@ $type = 'monthly';
 
 // 向前向后翻月
 $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
+if(!$forward) {
+    $startTime = isset($_GET['startTime']) ? (int)$_GET['startTime'] : 0;
+    if($startTime) {
+        $nowYear = date('Y');
+        $nowMonth = date('m');
+        $timeYear = date('Y',$startTime);
+        $timeMonth = date('m',$startTime);
+        $forward = ($nowYear - $timeYear)*12 + $nowMonth - $timeMonth;
+    }
+}
 if($forward){
     $forwardMonths = $forward + 1;
     $backwardMonths = $forward - 1;

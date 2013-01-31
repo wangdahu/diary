@@ -7,6 +7,12 @@ $type = 'weekly';
 $mondayTime = date('w') == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
 // 向前向后翻天
 $forward = isset($_GET['forward']) ? $_GET['forward'] : 0;
+if(!$forward) {
+    $startTime = isset($_GET['startTime']) ? (int)$_GET['startTime'] : 0;
+    if($startTime) {
+        $forward = floor(($mondayTime - $startTime)/(7*86400));
+    }
+}
 if($forward){
     $forwardWeeks = $forward + 1;
     $backwardWeeks = $forward - 1;

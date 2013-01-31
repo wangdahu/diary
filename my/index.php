@@ -8,6 +8,12 @@ $corpId = $diary->corpId;
 
 // 向前向后翻天
 $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
+if(!$forward) {
+    $startTime = isset($_GET['startTime']) ? (int)$_GET['startTime'] : 0;
+    if($startTime) {
+        $forward = floor((strtotime('today') - $startTime)/86400);
+    }
+}
 if($forward){
     $forwardDays = $forward + 1;
     $backwardDays = $forward - 1;

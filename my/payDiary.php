@@ -1,14 +1,21 @@
 <?php
 if($_POST){
     $currentDate = $_POST['currentDate'];
+    $startTime = (int)$_POST['startTime'];
     $type = $_POST['type'];
     $showObject = $_POST['showObject'];
-    echo payDiary($diary, $type, $currentDate, $showObject);
+    echo payDiary($diary, $type, $currentDate, $showObject, $startTime);
 }
 
-function payDiary($diary, $type, $currentDate, $showObject) {
+function payDiary($diary, $type, $currentDate, $showObject, $startTime) {
+    if($type == 'daily') {
+        $diaryType = 1;
+    }else if($type == 'weekly') {
+        $diaryType = 2;
+    }else{
+        $diaryType = 3;
+    }
     // 要发送汇报消息的用户列表
-    $diaryType = $type == 'daily' ? 1 : ($type == 'weekly' ? 2 : 3);
     $allUsers = DiarySet::getAllObject($diary, $diaryType);
     $uid = $diary->uid;
     $reportTime = time();
@@ -24,7 +31,7 @@ function payDiary($diary, $type, $currentDate, $showObject) {
         $content = $showObject;
         $title = "补交工作日志";
         $config = Diary::getConfig();
-        $url = "http://".$config['host']."/diary/index.php/team/".$type."?uid=".$uid;
+        $url = "http://".$config['host']."/diary/index.php/team/".$type."?uid=".$uid."&startTime=".$startTime;
         DiaryMsg::send($allUsers, $title, $content, $url);
         return 1;
     }else {

@@ -5,6 +5,12 @@ $weekarray = array("日","一","二","三","四","五","六");
 
 // 向前向后翻天
 $forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
+if(!$forward) {
+    $startTime = isset($_GET['startTime']) ? (int)$_GET['startTime'] : 0;
+    if($startTime) {
+        $forward = floor((strtotime('today') - $startTime)/86400);
+    }
+}
 $showDiary = $forward < 0 ? false : true;
 if($forward){
     $forwardDays = $forward + 1;

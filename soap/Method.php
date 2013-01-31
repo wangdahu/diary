@@ -55,7 +55,7 @@ class Method {
                 $endTime = mktime(0, 0, 0, date('m', $time)+1, 1, date('Y', $time)) - 1;
             }
             $configHost = $args['configHost'];
-            $url = $configHost."/diary/index.php/team/".$type;
+            $url = $configHost."/diary/index.php/team/".$type."?uid=".$uid."&startTime=".$startTime;
             $title = "汇报提醒";
             $existsContents = self::existsContent($diary, $uid, $startTime, $endTime, $diaryType);
             $isReported = self::checkReport($diary, $type, $currentDate, $uid);
@@ -133,15 +133,19 @@ class Method {
             $weekarray = array("日","一","二","三","四","五","六");
 
             if($type == 'daily') {
+                $type = 'index';
+                $currentDate = date('Y-m-d');
+                $startTime = strtotime($currentDate);
                 $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
             }elseif($type == 'weekly') {
-                $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
+                $startTime = $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
                 $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $mondayTime + 7*86400 -1);
             }elseif($type == 'monthly') {
+                $startTime = strtotime(date('Y-m', $time));
                 $content = "月报：".date('Y年m月', $time);
             }
             $configHost = $args['configHost'];
-            $url = $configHost."/diary/index.php/my/".$type;
+            $url = $configHost."/diary/index.php/my/".$type."?startTime=".$startTime;
             $title = "写工作日志提醒";
 
             // 发送提醒
