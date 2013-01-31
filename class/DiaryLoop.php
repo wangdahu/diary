@@ -70,11 +70,10 @@ class DiaryLoop{
     }
 
     public static function testMy($diary) {
-        $sql = "select * from `t_polling_plugin` where `pid` = 476";
+        $sql = "select * from `t_polling_plugin` where `pid` = 84";
         $result = $diary->db->query($sql);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             $args = json_decode(base64_decode($row['args']), true);
-            echo "<pre>"; var_dump($args);
         }
         $sql = "select * from `t_polling_plugin` where `pid` = 476 and `awoke` = 1 ";
         $result = $diary->db->query($sql);
@@ -86,9 +85,13 @@ class DiaryLoop{
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             try {
                 $msg = $soap->doAct('sendReport', $row['args']);
+                echo "<pre>"; var_dump(date('Y-m-d H:i:s'));
+                echo "<pre>"; var_dump($msg);
                 $_msg = json_decode($msg, true);
-                $_msg_arr = json_decode($_msg['msg'], true);exit;
+                echo "<pre>"; var_dump($_msg);exit;
+                $_msg_arr = json_decode($_msg['msg'], true);
             } catch(Exception $e) {
+                echo "<pre>"; var_dump(2222);
                 var_dump($e);exit();
             }
         }

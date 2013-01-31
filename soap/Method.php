@@ -36,16 +36,19 @@ class Method {
             $keycode = $args['keycode'];
             $weekarray = array("日","一","二","三","四","五","六");
             if($type == 'daily') {
+                $currentDate = date('Y-m-d');
                 $diaryType = 1;
                 $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
-                $startTime = $time;
-                $endTime = $time + 86400 -1;
+                $startTime = strtotime($currentDate);
+                $endTime = $startTime + 86400 -1;
             }elseif($type == 'weekly') {
+                $currentDate = date('Y-W');
                 $diaryType = 2;
                 $startTime = $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
-                $endTime = $mondayTime + 7*86400 -1;
+                $endTime = $startTime + 7*86400 -1;
                 $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $endTime);
             }elseif($type == 'monthly') {
+                $currentDate = date('Y-m');
                 $diaryType = 3;
                 $content = "月报：".date('Y年m月', $time);
                 $startTime = strtotime(date('Y-m', $time));
@@ -54,20 +57,37 @@ class Method {
             $configHost = $args['configHost'];
             $url = $configHost."/diary/index.php/team/".$type;
             $title = "汇报提醒";
+            $existsContents = self::existsContent($diary, $uid, $startTime, $endTime, $diaryType);
+            $isReported = self::checkReport($diary, $type, $currentDate, $uid);
+            if($existsContents && !$isReported) { // 有内容切位汇报才发送汇报
+                $user_ids = self::getAllObject($diary, $uid, $deptId, $type);
+                if($user_ids) {
+                    $reportTime = time();
+                    $users = self::users($host, $keycode, $corpId, $user_ids, 0);
+                    // 判断是否需要汇报（未写日志，或者已汇报都不提醒）
+                    $loginNameArr = array();
+                    if($users) {
+                        foreach($users as $user) {
+                            $loginNameArr[] = $user['LoginName'];
+                            $object = $user['PID'];
+                            $selectSql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$type' and `object` = $object and `date` = '$currentDate'";
+                            $result = $diary->db->query($selectSql);
+                            if(!$result->fetch_assoc()) {
+                                $sql = "insert into `diary_report_record` (`uid`, `type`, `object`, `date`, `report_time`, `repay`) values ($uid, '$type', $object, '$currentDate', $reportTime, 0)";
+                                $diary->db->query($sql);
+                            }
+                        }
+                        // 发送提醒
+                        $_send_status = self::send($host, $keycode, $loginName, $loginNameArr, $title, $content, $url);
+                        if(!$_send_status) {
+                            return method::output(1, "消息推送失败！", '501', true);
+                        }
+                    }
 
-            $user_ids = self::getAllObject($diary, $uid, $deptId, $type);
-			
-			if ( ! $user_ids)
-			{
-				return method::output(0, "获得汇报对象失败！", '503', true);
-			}
-			
-            $users = self::users($host, $keycode, $corpId, $user_ids, 0);
-            // 发送提醒
-            $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url);
-            if(!$_send_status) {
-                return method::output(1, "消息推送失败！", '501', true);
+                }
             }
+
+
             // 插入下次提醒
             $_insert_status = self::insertPolling($diary, $args);
             if($_insert_status) {
@@ -82,9 +102,9 @@ class Method {
     }
 
     public static function existsContent($diary, $uid, $startTime, $endTime, $type) {
-        $sql = "select * from `diary_info` where `uid` = $uid and `type` = $type and `show_time` between ($startTime and $endTime)";
+        $sql = "select * from `diary_info` where `uid` = $uid and `type` = $type and `show_time` between $startTime and $endTime limit 1";
         if($result = $diary->db->query($sql)){
-            if($result->num_rows()) {
+            if($result->fetch_array(MYSQLI_ASSOC)) {
                 return true;
             }
         }
@@ -95,23 +115,23 @@ class Method {
      * 发送提醒
      */
     public static function sendRemind($params) {
-			
+
         try {
             $diary = classdb::getdb();
-			
+
             // 参数
             $args = json_decode(base64_decode($params), true);
-			
+
             $type = $args['diaryType'];
             $uid = $args['uid'];
             $corpId = $args['corpId'];
             $deptId = $args['deptId'];
             $loginName = $args['loginName'];
-			
+
             $host = $args['host'];
             $time = $args['nextTime'];
             $weekarray = array("日","一","二","三","四","五","六");
-			
+
             if($type == 'daily') {
                 $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
             }elseif($type == 'weekly') {
@@ -213,7 +233,7 @@ class Method {
 
         // 日报下次提交时间
         $dailyTime = strtotime(date('Y-m-d ').$time['daily'.$type]['hour'].":".$time['daily'.$type]['minute']);
-        $dailyTime = $dailyTime > $now ? $dailyTime+86400 : $dailyTime;
+        $dailyTime = $dailyTime < $now ? $dailyTime+86400 : $dailyTime;
 
         // 周报下次提交时间
         $w = date('w') ? date('w') : 7; // 周日转换成7
@@ -226,11 +246,11 @@ class Method {
             $weeklyTime = strtotime(date('Y-m-d ').$weeklyHourTime) - ($w-$time['weekly'.$type]['w'])*86400;
         }
 
-        $weeklyTime = $weeklyTime > $now ? $weeklyTime+7*86400 : $weeklyTime;
+        $weeklyTime = $weeklyTime < $now ? $weeklyTime+7*86400 : $weeklyTime;
         // 月报下次提交时间
         $monthlyTime = strtotime(date('Y-m-').$time['monthly'.$type]['date']." ".$time['monthly'.$type]['hour'].":".$time['monthly'.$type]['minute']);
         $nextMonthTime = mktime(date('H', $monthlyTime), date('i', $monthlyTime), 0, date('m', $monthlyTime)+1, date('d', $monthlyTime), date('Y', $monthlyTime));
-        $monthlyTime = $monthlyTime > $now ? $nextMonthTime : $monthlyTime;
+        $monthlyTime = $monthlyTime < $now ? $nextMonthTime : $monthlyTime;
 
         $nextTime = min($dailyTime, $weeklyTime, $monthlyTime);
         $diaryType = 'daily';
@@ -290,13 +310,13 @@ class Method {
      */
     public static function getAllObject($diary, $uid, $deptId, $type) {
 
-		$reportObject = self::reportObject($diary, $uid); // 我汇报的对象
+        $reportObject = self::reportObject($diary, $uid); // 我汇报的对象
 
-		if ( ! $reportObject)
-		{
-			return false;
-		}
-		
+        if ( ! $reportObject)
+        {
+            return false;
+        }
+
         $subscribeMy = self::subscribeMy($diary, $uid, $deptId, $type);
         $objectType = $type.'_object';
         $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
@@ -310,16 +330,15 @@ class Method {
     public static function reportObject($diary, $uid){
         $sql = "select * from `diary_report_object` where `uid` = $uid";
         $result = $diary->db->query($sql);
-		
-		if ( ! $result)
-		{
-			return false;
-		}
-		
+
+        if(!$result) {
+            return false;
+        }
+
         $report['daily_object']['user'] = $report['daily_object']['dept'] = $report['weekly_object']['user'] = $report['weekly_object']['dept'] = $report['monthly_object']['user'] = $report['monthly_object']['dept'] = array();
-        
-		while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		
+
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+
             if($row['type'] == 1){ // 日报汇报对象
                 if($row['to_uid']){
                     $report['daily_object']['user'][] = $row['to_uid'];
@@ -412,4 +431,16 @@ class Method {
         return $_msg_arr;
     }
 
+
+    /**
+     * 是否汇报
+     */
+    public static function checkReport($diary, $type, $currentDate, $uid){
+        $sql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$type' and `date` = '$currentDate' limit 1";
+        $result = $diary->db->query($sql);
+        while($row = $result->fetch_assoc()){
+            return true;
+        }
+        return false;
+    }
 }
