@@ -6,18 +6,12 @@ foreach($commentList as $comment) {
 }
 $reportUserIds = array();
 if($isReported) {
-    // 获取汇报设置对象
-    $reportUser = DiarySet::reportObject($diary);
-    $onlyReport = $reportUserIds = $reportUser[$type.'_object']['user'];
-
     // 查询汇报总人数
     $reportList = DiaryReport::getReportList($diary, $type, $object, $uid);
     $reportCount = count($reportList);
-
-    foreach($reportList as $key => $report) {
-        if(!in_array($report['object'], $reportUserIds)) {
-            unset($reportList[$key]);
-        }
+    $reportUserIds = array();
+    foreach($reportList as $report) {
+        $reportUserIds[] = $report['object'];
     }
     $flag = 0;
     if(in_array($diary->uid, $reportUserIds)) {
