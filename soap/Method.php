@@ -55,7 +55,7 @@ class Method {
                 $endTime = mktime(0, 0, 0, date('m', $time)+1, 1, date('Y', $time)) - 1;
             }
             $configHost = $args['configHost'];
-            $url = $configHost."/diary/index.php/team/".$type."?uid=".$uid."&startTime=".$startTime;
+            $url = "/diary/index.php/team/".$type."?uid=".$uid."&startTime=".$startTime;
             $title = "汇报提醒";
             $existsContents = self::existsContent($diary, $uid, $startTime, $endTime, $diaryType);
             $isReported = self::checkReport($diary, $type, $currentDate, $uid);
@@ -144,7 +144,7 @@ class Method {
                 $content = "月报：".date('Y年m月', $time);
             }
             $configHost = $args['configHost'];
-            $url = $configHost."/diary/index.php/my/".$type."?startTime=".$startTime;
+            $url = "/diary/index.php/my/".$type."?startTime=".$startTime;
             $title = "写工作日志提醒";
 
             // 发送提醒
