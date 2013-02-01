@@ -16,7 +16,6 @@ class DiaryMsg{
         $_session_arr = Session::instance()->get();
 
         $users = DiaryUser::base($user_ids);
-
         if($users) {
             foreach($users as $user) {
                 $receive[] = $user['LoginName'];
@@ -29,6 +28,8 @@ class DiaryMsg{
                 'url' => $url, // 地址
                 'keycode' => $config['keyCode'],  // 验证码
                 'style' => 1,  // 验证码
+                'showtype' => 'weblog',
+                'opttype' => 'views',
             );
             try {
                 $_arr = json_encode($msg);

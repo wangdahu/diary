@@ -78,7 +78,7 @@ class Method {
                             }
                         }
                         // 发送提醒
-                        $_send_status = self::send($host, $keycode, $loginName, $loginNameArr, $title, $content, $url);
+                        $_send_status = self::send($host, $keycode, $loginName, $loginNameArr, $title, $content, $url, 'views');
                         if(!$_send_status) {
                             return method::output(1, "消息推送失败！", '501', true);
                         }
@@ -115,7 +115,6 @@ class Method {
      * 发送提醒
      */
     public static function sendRemind($params) {
-
         try {
             $diary = classdb::getdb();
 
@@ -151,7 +150,9 @@ class Method {
             // 发送提醒
             $keycode = $args['keycode'];
 
-            $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url);
+            $msgArr = array('daily'=>'day', 'weekly'=>'week', 'monthly'=>'month');
+            $opttype = $msgArr[$type];
+            $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url, $opttype);
 
             // by HJ
             if(!$_send_status) {
@@ -388,7 +389,7 @@ class Method {
     }
 
 
-    public static function send($host, $keycode, $loginName, $userLoginNames, $title, $content, $url) {
+    public static function send($host, $keycode, $loginName, $userLoginNames, $title, $content, $url, $opttype) {
         try{
             $soap = new soapClient($host);
             $msg = array(
@@ -399,6 +400,8 @@ class Method {
                 'url' => $url, // 地址
                 'keycode' => $keycode,  // 验证码
                 'style' => 1,  // 验证码
+                'showtype' => 'weblog',
+                'opttype' => $opttype,
             );
 
             $_arr = json_encode($msg);
