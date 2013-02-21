@@ -18,7 +18,7 @@ if($_POST){
 
 $hours = range(0, 23);
 $minutes = range(0, 55, 5);
-$months = range(1, 28);
+$months = range(20, 28);
 $ways = array('email'=>'邮件', 'sms'=>'短信', 'mms'=>'彩信', 'remind'=>'汇讯提醒');
 // 获取汇报设置
 $reportSet = DiarySet::reportTime($diary);
