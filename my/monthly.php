@@ -81,7 +81,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
             <textarea style="width: 494px; height: 220px;" id="monthly_content" data-limit="1000"></textarea>
             <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
         </fieldset>
-        <div class="mt10">插入日报：
+        <div class="mt10">插入周报：
             <?php for($w = 0; $w < $maxWeek; $w++):?>
                   <?php
                        $key = date('Y-W', $firstTime + $w*7*86400);
