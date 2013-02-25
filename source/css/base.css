@@ -81,6 +81,10 @@ textarea { padding: 5px; line-height: 1.5; }
 .pay-diary:hover { background:url(../images/pay_hover.png) no-repeat;}
 .pay-disabled { margin: -5px 0 -5px 5px; width:88px;height:28px;background:url(../images/pay_disabled.png) no-repeat;display:block;}
 
+.enter-daily{ margin-top: -5px; width:86px;height:26px;background:url(../images/enter-diary.png) no-repeat;display:block;}
+.enter-daily:hover { background:url(../images/enter-diary_hover.png) no-repeat;}
+.enter-daily:active { background:url(../images/enter-diary_active.png) no-repeat;}
+
 .a_01:hover,.a_02:hover{color:#3d3d3d;text-decoration:none;}
 
 /*分页*/

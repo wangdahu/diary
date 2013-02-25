@@ -39,26 +39,28 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 ?>
 
 <?php include "views/my/mini-top.php"; ?>
-
+<style>
+    .content {width: 300px; height: 540px;}
+    .diary-content {padding: 5px;}
+    .c_c { width: 280px; padding:0px; border-radius: 0; }
+    .daily-date { float: left !important; padding-left: 5px;}
+    .all-tag-floor {right: 0; left: auto;}
+    .tag-list { float: left !important; margin-bottom: 3px;}
+</style>
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
-            <p>今日工作：<em><?php echo $num;?> 项</em></p>
-            <?php if($allowPay):?>
-            <?php if($num):?>
-            <a href="javascript:" class="fr mr10 pay-diary js-pay_diary"></a>
-            <?php else:?>
-            <a class="fr mr10 pay-disabled"></a>
-            <?php endif;?>
-            <?php endif;?>
-            <?php if(!$isReported):?>
-            <a href="javascript:" class="write-<?php echo $type?> fr mr10"></a>
-            <?php endif;?>
+            <div class="data fl clearfix">
+                <a href="/diary/index.php/my/mini-index" class="<?php echo $type == 'daily' ? 'cur' : 'normal'?>">日报</a>
+                <a href="/diary/index.php/my/mini-weekly" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
+                <a href="/diary/index.php/my/mini-monthly" class="<?php echo $type == 'monthly' ? 'cur' : 'normal'?>">月报</a>
+            </div>
+            <div> <a href="/diary/index.php/my/index" class="enter-daily fr" style="margin-top: 0;"></a> </div>
         </h2>
-        <?php if(!$num):?>
-        <div class="c_t mt10"></div>
-        <div class="c_c">
+        <div>
+            <?php if(!$num):?>
+        <div class="c_c mt10">
             <div class="c_c_c">
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
@@ -67,18 +69,16 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
                 </div>
             </div>
         </div>
-        <div class="c_b"></div>
         <?php else:?>
         <?php foreach($dailys as $daily):?>
-        <div class="c_t mt10"></div>
-        <div class="c_c">
+        <div class="c_c mt10">
             <div class="c_c_c">
                 <?php if($isReported):?>
-                <div>
+                <div class="diary-content">
                     <p><?php echo nl2br($daily['content']); ?></p>
                 </div>
                 <?php else:?>
-                <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary diary-content" style="cursor: pointer">
                     <p><?php echo nl2br($daily['content']); ?></p>
                     <div style="display:none;"><?php echo $daily['content'];?></div>
                 </div>
@@ -97,13 +97,11 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
                         <div class="js-all-tag all-tag-floor" >
                             <?php foreach($userTags as $tag):?>
                             <div>
-                                <label>
-                                    <div style="float: left;margin: 5px 5px 5px 10px;">
-                                        <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
+                                <label class="clearfix" style="cursor:default;">
+                                    <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>" style="line-height:24px;height:24px;float: left;margin: 0 5px 0 10px;"/>
+                                    <div class="color-list" style="float: left; margin: 6px 10px 6px 5px; background-color: <?php echo $tag['color'];?>">
                                     </div>
-                                    <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
-                                    </div>
-                                    <div ><?php echo $tag['tag']?></div>
+                                    <div class="ellipsis" title="<?php echo $tag['tag']?>" ><?php echo $tag['tag']?></div>
                                 </label>
                             </div>
                             <?php endforeach;?>
@@ -115,9 +113,12 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
                         <?php foreach($userTags as $tag):?>
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
                             <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                                <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
+                                <a style="text-decoration: none;" href="<?php echo $url;?>">
                                 <span style="margin:4px;">
                                     <?php echo $tag['tag'];?>
                                 </span>
+                                </a>
                             </div>
                             <?php if(!$isReported):?>
                             <div class="js-del_tag" style="float: left; display:none;">
@@ -130,18 +131,30 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
                 </div>
             </div>
         </div>
-        <div class="c_b"></div>
         <?php endforeach;?>
         <?php endif;?>
     </div>
-</div>
+        <div style="margin-top: 10px; margin-bottom: 10px;">
+            <div>
+                <textarea id="diary_content" style="width: 270px; height: 150px; border: 1px solid #dadada;" placeholder="来，随手记录您今天的工作"></textarea>
+            </div>
+            <div class="form-action" style="margin-top: 10px;">
+                <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form')[0].reset()">撤消</a>
+                <a class="a_01 fr10" href="javascript:" onclick="$(this).closest('form').submit()">保存</a>
+            </div>
+        </div>
+    </div>
 
-<?php include "views/layouts/footer.php"; ?>
+</div>
 <?php include "views/set/addTag.php"; ?>
-<?php include "views/my/createDaily.php"; ?>
+
+</div>
+</body>
+</html>
 
 <script>
     $(function() {
+
         // 删除日志
         $(".js-del_daily").click(function(){
             var id = $(this).attr('data-diary_id');
@@ -158,11 +171,14 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 
         // 删除某日志的所有标签
         $(".js-del-all").click(function(){
-            var diary_id = $(this).attr('data-diary_id');
-            if(confirm("确定要删除这条日志的所有标签？")){
+            var diary_id = $(this).attr('data-diary_id'),
+            all_tag = $(this).closest('.add-tag-wrapper').next(),
+            all_tag_floor = $(this).closest('.all-tag-floor');
+            if(confirm("确定要取消这条日志的所有标签？")){
                 $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, action:'del-diary-all-tag'}, function(json){
                     if(json != 0){
-                        location.reload();
+                        all_tag_floor.find('.js-operate_tag').prop('checked', false);
+                        all_tag.find('.js-tag').hide();
                     }else{
                         return false;
                     }
@@ -173,22 +189,18 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 
         // 单个标签操作
         $(".js-tag").mouseover(function(){
-            $(this).find('.js-del_tag').toggle();
+            $(this).find('.js-del_tag').show();
         }).mouseout(function(){
-            $(this).find('.js-del_tag').toggle();
+            $(this).find('.js-del_tag').hide();
         });
 
-        // 操作标签
-        $('.js-opterate_tag').click(function(){
-            $(this).next().toggle();
-        });
-        // 点击其他地方隐藏
+        // 标签操作，点击其他地方隐藏
         $(document).click(function(e) {
             var target = $(e.target);
-            if(target && target.is('.js-opterate_tag')) {
-                return;
+            if(target.is('.js-opterate_tag')) {
+                target.next().toggle();
             }
-            $('.js-opterate_tag').next().hide();
+            $('.js-opterate_tag').not(target).next().hide();
         });
         $('.js-all-tag').click(function(e) {
             e.stopPropagation();
@@ -199,11 +211,11 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
             var js_tag = $(this).closest('.js-tag'),
             diary_id = js_tag.attr('data-diary_id'),
             tag_id = js_tag.attr('data-tag_id');
-            var tag_input = js_tag.parent().parent().next().find("#tag_"+tag_id);
+            var tag_input = js_tag.parent().prev().find("#tag_"+tag_id);
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
                 if(json != 0) {
-                    tag_input.attr('checked', false);
-                    js_tag.remove();
+                    tag_input.prop('checked', false);
+                    js_tag.toggle();
                 }else {
                     alert('操作失败');
                     return false;
@@ -211,30 +223,40 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
             });
             return false;
         });
-
+        
         // 删除/添加 某日志的某个标签
         $(".js-operate_tag").change(function(){
             var diary_id = $(this).attr('data-diary_id'),
             tag_id = $(this).attr('data-tag_id'),
-            action = !!$(this).attr('checked') ? 'add-diary-tag' : 'del-diary-tag';
+            action = !!$(this).prop('checked') ? 'add-diary-tag' : 'del-diary-tag';
             var len = $(this).closest('.js-all-tag').find(':checked').length;
             if(len > 5){
-                $(this).attr('checked', false);
+                this.checked = false;
                 alert('单个日志不能超过五个标签哦');
                 return false;
             }
-            var color = $(this).parent().next().css('background-color'),
-            tag = $(this).parent().next().next().html();
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:action}, function(json) {
                 if(json != 0) {
                     $('#tag-list-'+diary_id).find('#diary_tag_'+tag_id).toggle();
                 }else {
                     alert('操作失败');
-                    return false;
                 }
             });
-            return false;
         });
 
+
+
+        $('.c_c').mouseenter(function() {
+            $(this).find('.add-tag-wrapper,.delete').css('visibility', 'visible');
+        }).mouseleave(function() {
+            $(this).find('.add-tag-wrapper,.delete').css('visibility', 'hidden');
+        });
+
+        $('.js-edit_diary').click(function() {
+            var content = $(this).find("div").html();
+            $('#diary_content').val(content);
+            console.log(content);
+        });
+    
     });
 </script>

@@ -38,8 +38,8 @@ class Method {
             if($type == 'daily') {
                 $currentDate = date('Y-m-d');
                 $diaryType = 1;
-                $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
                 $startTime = strtotime($currentDate);
+                $content = "日报：".date('Y年m月d日', $startTime)."（周". $weekarray[date("w", $startTime)]."）";
                 $endTime = $startTime + 86400 -1;
             }elseif($type == 'weekly') {
                 $currentDate = date('Y-W');
@@ -130,12 +130,15 @@ class Method {
             $host = $args['host'];
             $time = $args['nextTime'];
             $weekarray = array("日","一","二","三","四","五","六");
-
+            $isRemind = true;
             if($type == 'daily') {
                 $type = 'index';
                 $currentDate = date('Y-m-d');
                 $startTime = strtotime($currentDate);
-                $content = "日报：".date('Y年m月d日', $time)."（周". $weekarray[date("w", $time)]."）";
+                $w = date("w", $startTime);
+                $content = "日报：".date('Y年m月d日', $startTime)."（周". $weekarray[$w]."）";
+                $setW = $w ? $w : 7;
+                $isRemind = self::isWorkingDay($diary, $uid, $setw);
             }elseif($type == 'weekly') {
                 $startTime = $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
                 $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $mondayTime + 7*86400 -1);
@@ -150,13 +153,13 @@ class Method {
             $keycode = $args['keycode'];
             $typeArr = array('index'=>'day', 'weekly'=>'week', 'monthly'=>'month');
             $opttype = $typeArr[$type];
-            $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url, $opttype);
-
-            // by HJ
-            if(!$_send_status) {
-                return method::output(0, "消息推送失败！", '501', true);
+            if($isRemind) {
+                $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url, $opttype);
+                // by HJ
+                if(!$_send_status) {
+                    return method::output(0, "消息推送失败！", '501', true);
+                }
             }
-
             // 插入下次提醒
             $_insert_status = self::insertPolling($diary, $args);
 
@@ -309,17 +312,29 @@ class Method {
     }
 
     /**
+     * 获取当前日是否为用户工作日
+     */
+    public stats function isWorkingDay($diary, $uid, $w) {
+        $sql = "select * from `diary_set` where `uid` = $uid";
+        $result = $diary->db->query($sql);
+        $workingArr = array(1, 2, 3, 4, 5);
+        if($row = $result->fetch_assoc()) {
+            $workingArr = json_decode($row['working_time'], true);
+        }
+        if(in_array($w, $working)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 获取要汇报和已订阅我的所有对象
      */
     public static function getAllObject($diary, $uid, $deptId, $type) {
-
         $reportObject = self::reportObject($diary, $uid); // 我汇报的对象
-
-        if ( ! $reportObject)
-        {
+        if(!$reportObject) {
             return false;
         }
-
         $subscribeMy = self::subscribeMy($diary, $uid, $deptId, $type);
         $objectType = $type.'_object';
         $allUsers = array_unique(array_merge($reportObject[$objectType]['user'], $subscribeMy));
