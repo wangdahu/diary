@@ -146,12 +146,10 @@ class Method {
             $configHost = $args['configHost'];
             $url = "/diary/index.php/my/".$type."?startTime=".$startTime;
             $title = "写工作日志提醒";
-
             // 发送提醒
             $keycode = $args['keycode'];
-
-            $msgArr = array('daily'=>'day', 'weekly'=>'week', 'monthly'=>'month');
-            $opttype = $msgArr[$type];
+            $typeArr = array('index'=>'day', 'weekly'=>'week', 'monthly'=>'month');
+            $opttype = $typeArr[$type];
             $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url, $opttype);
 
             // by HJ

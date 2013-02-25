@@ -69,13 +69,20 @@ class DiaryLoop{
         }
     }
 
-    public static function testMy($diary) {
-        $sql = "select * from `t_polling_plugin` where `pid` = 84";
+    public static function testMy($diary, $testType) {
+        echo "test".$testType;
+        $sql = "select * from `t_polling_plugin` where `pid` = 609";
         $result = $diary->db->query($sql);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             $args = json_decode(base64_decode($row['args']), true);
         }
-        $sql = "select * from `t_polling_plugin` where `pid` = 476 and `awoke` = 1 ";
+        if($testType == 'testReport') {
+            $sendFunction = 'sendReport';
+            $sql = "select * from `t_polling_plugin` where `pid` = 609 and `awoke` = 1 ";
+        }else {
+            $sendFunction = 'sendRemind';
+            $sql = "select * from `t_polling_plugin` where `pid` = 609 and `awoke` = 0 ";
+        }
         $result = $diary->db->query($sql);
         $config = Diary::getConfig(); // 网站的基本配置
         $keyCode = $config['keyCode'];
@@ -84,7 +91,7 @@ class DiaryLoop{
         $soap = new soapClient($host);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             try {
-                $msg = $soap->doAct('sendReport', $row['args']);
+                $msg = $soap->doAct($sendFunction, $row['args']);
                 echo "<pre>"; var_dump(date('Y-m-d H:i:s'));
                 echo "<pre>"; var_dump($msg);
                 $_msg = json_decode($msg, true);
