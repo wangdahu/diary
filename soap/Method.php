@@ -138,7 +138,7 @@ class Method {
                 $w = date("w", $startTime);
                 $content = "日报：".date('Y年m月d日', $startTime)."（周". $weekarray[$w]."）";
                 $setW = $w ? $w : 7;
-                $isRemind = self::isWorkingDay($diary, $uid, $setw);
+                $isRemind = self::isWorkingDay($diary, $uid, $setW);
             }elseif($type == 'weekly') {
                 $startTime = $mondayTime = date('w', $time) == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
                 $content = "周报：".date('Y年m月d日', $mondayTime)."--".date('Y年m月d日', $mondayTime + 7*86400 -1);
@@ -314,14 +314,16 @@ class Method {
     /**
      * 获取当前日是否为用户工作日
      */
-    public stats function isWorkingDay($diary, $uid, $w) {
+    public static function isWorkingDay($diary, $uid, $w) {
         $sql = "select * from `diary_set` where `uid` = $uid";
-        $result = $diary->db->query($sql);
         $workingArr = array(1, 2, 3, 4, 5);
-        if($row = $result->fetch_assoc()) {
-            $workingArr = json_decode($row['working_time'], true);
+        if($result = $diary->db->query($sql)){
+            $row = $result->fetch_object();
+            if($row){
+                $workingArr = json_decode($row->working_time, true);
+            }
         }
-        if(in_array($w, $working)) {
+        if(in_array($w, $workingArr)) {
             return true;
         }
         return false;
