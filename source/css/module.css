@@ -67,7 +67,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 .c_c_c h2 a{color:#3f3f3f;}
 .zhan{position:absolute;right:12px;bottom:8px;font:700 14px/22px "宋体";}
 .diary-operation .add-tag-wrapper, .diary-operation .delete, .diary-operation .daily-date, .diary-operation .tag-list { float: right; }
-.add-tag-wrapper { position: relative; z-index: 120; margin-left: 20px;}
+.add-tag-wrapper { position: relative; margin-left: 20px;}
 .delete{width:18px;height:21px;background:url(../images/ico_03.png) no-repeat center center; margin: 0 4px 0 6px; }
 .add_tag{display: block; width:21px;height:21px;background:url(../images/select-tag.png) no-repeat;}
 .diary-operation .tag-list { margin-right: 4px; }

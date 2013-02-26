@@ -1,28 +1,13 @@
 <?php
-$title = "我的日志";
+$title = "写日志";
 $type = 'daily';
+$mini = true;
 $weekarray = array("日","一","二","三","四","五","六");
 
 $uid = $diary->uid;
 $corpId = $diary->corpId;
 
-// 向前向后翻天
-$forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
-if(!$forward) {
-    $startTime = isset($_GET['startTime']) ? (int)$_GET['startTime'] : 0;
-    if($startTime) {
-        $forward = floor((strtotime('today') - $startTime)/86400);
-    }
-}
-if($forward){
-    $forwardDays = $forward + 1;
-    $backwardDays = $forward - 1;
-    $object = date('Y-m-d',time() - $forward*86400);
-}else{
-    $forwardDays = 1;
-    $backwardDays = -1;
-    $object = date('Y-m-d',time());
-}
+$object = date('Y-m-d',time());
 $startTime = strtotime($object);
 $endTime = $startTime + 86400 - 1;
 
@@ -38,53 +23,35 @@ $num = count($dailys);
 $userTags = DiaryDaily::getUserTags($diary);
 // 获取颜色列表
 $colorList = DiaryDaily::getColorList($diary);
+$tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
-$showCommit = false;
-// 判断是否为补交/未汇报/已汇报
-if($forward < 0) { // 未来
-    $isReported = $allowPay = false;
-}else if($forward == 0) { // 今天
+
+// 是否已过汇报时间
+$reportTime = DiarySet::reportTime($diary);
+$dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
+$isReported = $allowPay = false;
+if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
     $isReported = DiaryReport::checkReport($diary, $type, $object);
-    if($isReported) {
-        $allowPay  = false;
-        $showCommit = true;
-    }else {
-        // 是否已过汇报时间
-        $reportTime = DiarySet::reportTime($diary);
-        $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
-        $allowPay = false;
-        if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-            $allowPay = $showCommit = true;
-        }
-    }
-}else{ // 过去
-    $isReported = DiaryReport::checkReport($diary, $type, $object);
-    $allowPay = $isReported ? false : true;
-    $showCommit = true;
+    $allowPay  = $isReported ? false : true;
+    $showCommit = $isReported;
 }
 ?>
 
-<?php include "views/layouts/header.php"; ?>
-<?php include "views/layouts/diary-header.php"; ?>
-<?php include "views/my/top.php"; ?>
-
+<?php include "views/my/mini-top.php"; ?>
+<style>
+.content {width: 300px; background: #fff; min-height: 0;}
+.diary-content {padding: 5px;}
+.c_c { padding:0px; border-radius: 0; width: 280px;}
+.daily-date { float: left !important; padding-left: 5px;}
+.all-tag-floor {right: 0; left: auto;}
+.tag-list { float: left !important; margin-bottom: 3px;}
+body{ background: #fff; overflow-x: hidden; }
+</style>
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
-        <h2 class="content_tit clearfix">
-            <p>今日工作：<em><?php echo $num;?> 项</em></p>
-            <?php if($allowPay):?>
-            <?php if($num):?>
-            <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
-            <?php else:?>
-            <a class="fr pay-disabled"></a>
-            <?php endif;?>
-            <?php endif;?>
-            <?php if(!$isReported):?>
-            <a href="javascript:" class="write-<?php echo $type?> fr"></a>
-            <?php endif;?>
-        </h2>
+        <div>
         <?php if(!$num):?>
         <div class="c_c mt10">
             <div class="c_c_c">
@@ -100,13 +67,13 @@ if($forward < 0) { // 未来
         <div class="c_c mt10">
             <div class="c_c_c">
                 <?php if($isReported):?>
-                <div>
+                <div class="diary-content">
                     <p><?php echo nl2br($daily['content']); ?></p>
                 </div>
                 <?php else:?>
-                <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary diary-content" style="cursor: pointer">
                     <p><?php echo nl2br($daily['content']); ?></p>
-<script type="text/string"><?php echo $daily['content'];?></script>
+                    <script type="text/string"><?php echo $daily['content'];?></script>
                 </div>
                 <?php endif;?>
                 <div class="clearfix diary-operation" >
@@ -135,6 +102,7 @@ if($forward < 0) { // 未来
                         </div>
                     </div>
                     <?php endif;?>
+                    <br/>
                     <span class="tag-list" id="tag-list-<?php echo $daily['id'];?>">
                         <?php foreach($userTags as $tag):?>
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
@@ -159,16 +127,15 @@ if($forward < 0) { // 未来
         </div>
         <?php endforeach;?>
         <?php endif;?>
+        </div>
     </div>
-    <!--今日工作结束-->
-    <?php if($showCommit):
-          include dirname(dirname(__FILE__))."/team/comment.php";
-    endif;?>
-</div>
 
-<?php include "views/layouts/footer.php"; ?>
+</div>
 <?php include "views/set/addTag.php"; ?>
-<?php include "views/my/createDaily.php"; ?>
+
+</div>
+</body>
+</html>
 
 <script>
     $(function() {
@@ -260,5 +227,25 @@ if($forward < 0) { // 未来
                 }
             });
         });
+
+        $('.js-edit_diary').click(function() {
+            var content = $(this).find("script").html();
+            var diary_id = $(this).closest('.diary-content').attr('data-daily_id');
+            var textarea = $('#content', window.parent.document);
+            var iframe = $('[name=mainDaily]', window.parent.document);
+            $('#daily_id', window.parent.document).val(diary_id);
+            textarea.val($.trim(content));
+
+            iframe.css('height', 280);
+            textarea.css('height', '140px').css('line-height', '22px');
+            textarea.next().show();
+            textarea.wordLimit();
+        });
+
+        var body = document.documentElement;
+        $(window).resize(function() {
+            $(".c_c").width(body.scrollHeight > body.clientHeight ? 265 : 280);
+        }).resize();
     });
+clickDoc = function() { $(document).click(); }
 </script>

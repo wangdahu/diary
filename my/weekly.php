@@ -211,8 +211,8 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
 
         // 编辑周报
         $(".js-edit_diary").click(function(){
-            var content = $(this).find("div").html();
-            $("#weekly_content").val(content);
+            var content = $(this).find("script").html();
+            $("#weekly_content").val($.trim(content));
             $("#weekly-dialog-form").find("#weekly_id").val($(this).attr('data-weekly_id'));
             $("#weekly-dialog-form").dialog("open");
         });

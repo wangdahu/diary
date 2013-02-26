@@ -59,7 +59,7 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
                 <?php else:?>
                 <div data-weekly_id="<?php echo $weeklys['id']; ?>" class="js-edit_diary" style="cursor: pointer">
                     <p><?php echo nl2br($weeklys['content']); ?></p>
-                    <div style="display:none;"><?php echo $weeklys['content'];?></div>
+                    <script type="text/string"><?php echo $weeklys['content'];?></script>
                 </div>
                 <?php endif;?>
             </div>

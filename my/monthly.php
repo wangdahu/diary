@@ -147,12 +147,11 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 
         // 编辑月报
         $(".js-edit_diary").click(function(){
-            var content = $(this).find("div").html();
-            $("#monthly_content").val(content);
+            var content = $(this).find("script").html();
+            $("#monthly_content").val($.trim(content));
             $("#monthly-dialog-form").find("#monthly_id").val($(this).attr('data-monthly_id'));
             $("#monthly-dialog-form").dialog("open");
         });
-
 
         var TA = {
             select: function(textarea, start, end){

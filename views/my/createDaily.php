@@ -52,8 +52,8 @@
         });
 
         $(".js-edit_diary").click(function(){
-            var content = $(this).find("div").html();
-            $("#daily_content").val(content);
+            var content = $(this).find("script").html();
+            $("#daily_content").val($.trim(content));
             $("#daily-dialog-form").find("#daily_id").val($(this).attr('data-daily_id'));
             $("#daily-dialog-form").dialog("open");
         });

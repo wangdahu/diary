@@ -1,28 +1,13 @@
 <?php
-$title = "我的日志";
+$title = "写日志";
 $type = 'daily';
+$mini = true;
 $weekarray = array("日","一","二","三","四","五","六");
 
 $uid = $diary->uid;
 $corpId = $diary->corpId;
 
-// 向前向后翻天
-$forward = isset($_GET['forward']) ? (int)$_GET['forward'] : 0;
-if(!$forward) {
-    $startTime = isset($_GET['startTime']) ? (int)$_GET['startTime'] : 0;
-    if($startTime) {
-        $forward = floor((strtotime('today') - $startTime)/86400);
-    }
-}
-if($forward){
-    $forwardDays = $forward + 1;
-    $backwardDays = $forward - 1;
-    $object = date('Y-m-d',time() - $forward*86400);
-}else{
-    $forwardDays = 1;
-    $backwardDays = -1;
-    $object = date('Y-m-d',time());
-}
+$object = date('Y-m-d',time());
 $startTime = strtotime($object);
 $endTime = $startTime + 86400 - 1;
 
@@ -38,55 +23,36 @@ $num = count($dailys);
 $userTags = DiaryDaily::getUserTags($diary);
 // 获取颜色列表
 $colorList = DiaryDaily::getColorList($diary);
+$tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
-$showCommit = false;
-// 判断是否为补交/未汇报/已汇报
-if($forward < 0) { // 未来
-    $isReported = $allowPay = false;
-}else if($forward == 0) { // 今天
+
+// 是否已过汇报时间
+$reportTime = DiarySet::reportTime($diary);
+$dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
+$isReported = $allowPay = false;
+if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
     $isReported = DiaryReport::checkReport($diary, $type, $object);
-    if($isReported) {
-        $allowPay  = false;
-        $showCommit = true;
-    }else {
-        // 是否已过汇报时间
-        $reportTime = DiarySet::reportTime($diary);
-        $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
-        $allowPay = false;
-        if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-            $allowPay = $showCommit = true;
-        }
-    }
-}else{ // 过去
-    $isReported = DiaryReport::checkReport($diary, $type, $object);
-    $allowPay = $isReported ? false : true;
-    $showCommit = true;
+    $allowPay  = $isReported ? false : true;
+    $showCommit = $isReported;
 }
 ?>
 
-<?php include "views/layouts/header.php"; ?>
-<?php include "views/layouts/diary-header.php"; ?>
-<?php include "views/my/top.php"; ?>
+<?php include "views/my/mini-top.php"; ?>
 
-<div class="content">
+<div class="content" style="width: 300px; height: 540px;">
     <!--今日工作开始-->
     <div class="content_bar mb25">
         <h2 class="content_tit clearfix">
-            <p>今日工作：<em><?php echo $num;?> 项</em></p>
-            <?php if($allowPay):?>
-            <?php if($num):?>
-            <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
-            <?php else:?>
-            <a class="fr pay-disabled"></a>
-            <?php endif;?>
-            <?php endif;?>
-            <?php if(!$isReported):?>
-            <a href="javascript:" class="write-<?php echo $type?> fr"></a>
-            <?php endif;?>
+            <div class="data fl clearfix">
+                <a href="index" class="<?php echo $type == 'daily' ? 'cur' : 'normal'?>">日报</a>
+                <a href="weekly" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
+                <a href="monthly" class="<?php echo $type == 'monthly' ? 'cur' : 'normal'?>">月报</a>
+            </div>
         </h2>
         <?php if(!$num):?>
-        <div class="c_c mt10">
+        <div class="c_t mt10"></div>
+        <div class="c_c" style="width: 280px; padding:0px;">
             <div class="c_c_c">
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
@@ -95,9 +61,11 @@ if($forward < 0) { // 未来
                 </div>
             </div>
         </div>
+        <div class="c_b"></div>
         <?php else:?>
         <?php foreach($dailys as $daily):?>
-        <div class="c_c mt10">
+        <div class="c_t mt10"></div>
+        <div class="c_c">
             <div class="c_c_c">
                 <?php if($isReported):?>
                 <div>
@@ -106,7 +74,7 @@ if($forward < 0) { // 未来
                 <?php else:?>
                 <div data-daily_id="<?php echo $daily['id']; ?>" class="js-edit_diary" style="cursor: pointer">
                     <p><?php echo nl2br($daily['content']); ?></p>
-<script type="text/string"><?php echo $daily['content'];?></script>
+                    <div style="display:none;"><?php echo $daily['content'];?></div>
                 </div>
                 <?php endif;?>
                 <div class="clearfix diary-operation" >
@@ -123,11 +91,13 @@ if($forward < 0) { // 未来
                         <div class="js-all-tag all-tag-floor" >
                             <?php foreach($userTags as $tag):?>
                             <div>
-                                <label class="clearfix" style="cursor:default;">
-                                    <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>" style="line-height:24px;height:24px;float: left;margin: 0 5px 0 10px;"/>
-                                    <div class="color-list" style="float: left; margin: 6px 10px 6px 5px; background-color: <?php echo $tag['color'];?>">
+                                <label>
+                                    <div style="float: left;margin: 5px 5px 5px 10px;">
+                                        <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>"/>
                                     </div>
-                                    <div class="ellipsis" title="<?php echo $tag['tag']?>" ><?php echo $tag['tag']?></div>
+                                    <div class="color-list" style="float: left; margin: 6px 3px; background-color: <?php echo $tag['color'];?>">
+                                    </div>
+                                    <div ><?php echo $tag['tag']?></div>
                                 </label>
                             </div>
                             <?php endforeach;?>
@@ -139,12 +109,9 @@ if($forward < 0) { // 未来
                         <?php foreach($userTags as $tag):?>
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
                             <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
-                                <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
-                                <a style="text-decoration: none;" href="<?php echo $url;?>">
                                 <span style="margin:4px;">
                                     <?php echo $tag['tag'];?>
                                 </span>
-                                </a>
                             </div>
                             <?php if(!$isReported):?>
                             <div class="js-del_tag" style="float: left; display:none;">
@@ -157,13 +124,20 @@ if($forward < 0) { // 未来
                 </div>
             </div>
         </div>
+        <div class="c_b"></div>
         <?php endforeach;?>
         <?php endif;?>
+        <div>
+            <textarea>斯蒂芬sdfsdf斯大方的四方</texterea>
+        </div>
+
     </div>
-    <!--今日工作结束-->
-    <?php if($showCommit):
-          include dirname(dirname(__FILE__))."/team/comment.php";
-    endif;?>
+
+</div>
+
+<div class="form-action">
+    <a class="a_01 fr" href="javascript:" onclick="$(this).closest('form')[0].reset()">撤消</a>
+    <a class="a_01 fr10" href="javascript:" onclick="$(this).closest('form').submit()">保存</a>
 </div>
 
 <?php include "views/layouts/footer.php"; ?>
@@ -188,14 +162,11 @@ if($forward < 0) { // 未来
 
         // 删除某日志的所有标签
         $(".js-del-all").click(function(){
-            var diary_id = $(this).attr('data-diary_id'),
-            all_tag = $(this).closest('.add-tag-wrapper').next(),
-            all_tag_floor = $(this).closest('.all-tag-floor');
-            if(confirm("确定要取消这条日志的所有标签？")){
+            var diary_id = $(this).attr('data-diary_id');
+            if(confirm("确定要删除这条日志的所有标签？")){
                 $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, action:'del-diary-all-tag'}, function(json){
                     if(json != 0){
-                        all_tag_floor.find('.js-operate_tag').prop('checked', false);
-                        all_tag.find('.js-tag').hide();
+                        location.reload();
                     }else{
                         return false;
                     }
@@ -206,18 +177,22 @@ if($forward < 0) { // 未来
 
         // 单个标签操作
         $(".js-tag").mouseover(function(){
-            $(this).find('.js-del_tag').show();
+            $(this).find('.js-del_tag').toggle();
         }).mouseout(function(){
-            $(this).find('.js-del_tag').hide();
+            $(this).find('.js-del_tag').toggle();
         });
 
-        // 标签操作，点击其他地方隐藏
+        // 操作标签
+        $('.js-opterate_tag').click(function(){
+            $(this).next().toggle();
+        });
+        // 点击其他地方隐藏
         $(document).click(function(e) {
             var target = $(e.target);
-            if(target.is('.js-opterate_tag')) {
-                target.next().toggle();
+            if(target && target.is('.js-opterate_tag')) {
+                return;
             }
-            $('.js-opterate_tag').not(target).next().hide();
+            $('.js-opterate_tag').next().hide();
         });
         $('.js-all-tag').click(function(e) {
             e.stopPropagation();
@@ -228,11 +203,11 @@ if($forward < 0) { // 未来
             var js_tag = $(this).closest('.js-tag'),
             diary_id = js_tag.attr('data-diary_id'),
             tag_id = js_tag.attr('data-tag_id');
-            var tag_input = js_tag.parent().prev().find("#tag_"+tag_id);
+            var tag_input = js_tag.parent().parent().next().find("#tag_"+tag_id);
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
                 if(json != 0) {
-                    tag_input.prop('checked', false);
-                    js_tag.toggle();
+                    tag_input.attr('checked', false);
+                    js_tag.remove();
                 }else {
                     alert('操作失败');
                     return false;
@@ -245,20 +220,25 @@ if($forward < 0) { // 未来
         $(".js-operate_tag").change(function(){
             var diary_id = $(this).attr('data-diary_id'),
             tag_id = $(this).attr('data-tag_id'),
-            action = !!$(this).prop('checked') ? 'add-diary-tag' : 'del-diary-tag';
+            action = !!$(this).attr('checked') ? 'add-diary-tag' : 'del-diary-tag';
             var len = $(this).closest('.js-all-tag').find(':checked').length;
             if(len > 5){
-                this.checked = false;
+                $(this).attr('checked', false);
                 alert('单个日志不能超过五个标签哦');
                 return false;
             }
+            var color = $(this).parent().next().css('background-color'),
+            tag = $(this).parent().next().next().html();
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:action}, function(json) {
                 if(json != 0) {
                     $('#tag-list-'+diary_id).find('#diary_tag_'+tag_id).toggle();
                 }else {
                     alert('操作失败');
+                    return false;
                 }
             });
+            return false;
         });
+
     });
 </script>

@@ -113,7 +113,7 @@ $workingDay = DiarySet::workingTime($diary, $uid);
                 <?php else:?>
                 <div data-monthly_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary" style="cursor: pointer">
                     <p><?php echo nl2br($monthlys['content']); ?></p>
-                    <div style="display:none;"><?php echo $monthlys['content'];?></div>
+                    <script type="text/string"><?php echo $monthlys['content'];?></script>
                 </div>
                 <?php endif;?>
             </div>
