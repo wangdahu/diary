@@ -261,10 +261,10 @@ if($forward < 0) { // 未来
             });
         });
 
-        $('.c_c').mouseenter(function() {
-            $(this).find('.add-tag-wrapper,.delete').css('visibility', 'visible');
-        }).mouseleave(function() {
-            $(this).find('.add-tag-wrapper,.delete').css('visibility', 'hidden');
-        });
+        // $('.c_c').mouseenter(function() {
+        //     $(this).find('.add-tag-wrapper,.delete').css('visibility', 'visible');
+        // }).mouseleave(function() {
+        //     $(this).find('.add-tag-wrapper,.delete').css('visibility', 'hidden');
+        // });
     });
 </script>
