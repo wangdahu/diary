@@ -48,7 +48,7 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
             <div class="ftextarea">
                 <input type="hidden" name="daily_id" id="daily_id" />
                 <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 270px;" class="textarea_comment" placeholder="来，随手记录您今天的工作" data-limit="300"></textarea>
-                <div style="display: none;">
+                <div id="button-list" style="display: none;">
                     <div class="form-action" style="margin-top: 10px;">
                         <a class="a_01 fr" href="javascript:" id="reset">取消</a>
                         <a class="a_01 fr10" href="javascript:" id="submit">确定</a>
@@ -59,7 +59,6 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
     </div>
 
 </div>
-<?php include "views/set/addTag.php"; ?>
 
 </div>
 </body>
@@ -77,8 +76,9 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
             var content = $('#content');
             $('[name=mainDaily]').css('height', 280);
             content.css('height', '140px').css('line-height', '22px');
-            content.next().show();
+            $('#button-list').show();
             content.wordLimit();
+            $('.word-limit').show();
         }
 
         $('#submit').click(function() {
@@ -99,7 +99,11 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
         });
 
         $('#reset').click(function() {
-            
+            var content = $('#content');
+            $('[name=mainDaily]').css('height', 420);
+            content.css('height', '40px').css('line-height', '40px');
+            $('.word-limit').hide();
+            $('#button-list').hide();
         });
     });
 </script>

@@ -4,8 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>写日志</title>
     <script src="../../../../diary/source/jqueryUI/js/jquery-1.9.0.min.js"></script>
-    <script src="../../../../diary/source/js/wordslimit.js"></script>
     <script src="../../../../diary/source/jqueryUI/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="../../../../diary/source/jqueryUI/js/jquery.ui.dialog.js"></script>
+    <script src="../../../../diary/source/js/wordslimit.js"></script>
     <link rel="stylesheet" href="../../../../diary/source/jqueryUI/css/smoothness/jquery-ui-1.10.0.custom.min.css">
     <link rel="stylesheet" href="../../../../diary/source/css/base.css">
     <link rel="stylesheet" href="../../../../diary/source/css/module.css">

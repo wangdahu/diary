@@ -238,8 +238,7 @@ body{ background: #fff; overflow-x: hidden; }
 
             iframe.css('height', 280);
             textarea.css('height', '140px').css('line-height', '22px');
-            textarea.next().show();
-            textarea.wordLimit();
+            $('#button-list', window.parent.document).show();
         });
 
         var body = document.documentElement;
