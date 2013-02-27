@@ -27,15 +27,7 @@ $tagList = DiaryDaily::getTagList($diary);
 
 $defaultColorId = rand(1,20);
 
-// 是否已过汇报时间
-$reportTime = DiarySet::reportTime($diary);
-$dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
-$isReported = $allowPay = false;
-if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-    $isReported = DiaryReport::checkReport($diary, $type, $object);
-    $allowPay  = $isReported ? false : true;
-    $showCommit = $isReported;
-}
+$isReported = DiaryReport::checkReport($diary, $type, $object);
 ?>
 
 <?php include "views/my/mini-top.php"; ?>
@@ -51,7 +43,6 @@ body{ background: #fff; overflow-x: hidden; }
 <div class="content">
     <!--今日工作开始-->
     <div class="content_bar mb25">
-        <div>
         <?php if(!$num):?>
         <div class="c_c mt10">
             <div class="c_c_c">
@@ -127,9 +118,7 @@ body{ background: #fff; overflow-x: hidden; }
         </div>
         <?php endforeach;?>
         <?php endif;?>
-        </div>
     </div>
-
 </div>
 <?php include "views/set/addTag.php"; ?>
 

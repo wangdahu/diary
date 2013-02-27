@@ -1,4 +1,5 @@
 <?php
+$title = "写日报";
 $object = date('Y-m-d',time());
 $startTime = strtotime($object);
 $type = 'daily';
