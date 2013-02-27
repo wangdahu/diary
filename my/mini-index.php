@@ -42,8 +42,10 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
             <span class="fl content_bar"><?php echo $showTitle;?></span><span class="fr content_bar" style="color: #006cff;"><?php if($isReported):?>已汇报 <?php elseif($allowPay):?>未汇报<?php else:?> 等待汇报<?php endif;?></span>
         </div>
         <div class="content_bar">
-        <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: 415px; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
+            <?php $height = $isReported ? '485px' : '415px';?>
+            <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
         </div>
+        <?php if(!$isReported):?>
         <div style="margin-top: 10px" class="content_bar" id="daily-form">
             <div class="ftextarea">
                 <input type="hidden" name="daily_id" id="daily_id" />
@@ -56,6 +58,7 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
                 </div>
             </div>
         </div>
+        <?php endif;?>
     </div>
 
 </div>
