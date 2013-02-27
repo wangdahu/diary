@@ -1,4 +1,5 @@
 <?php
+$title = "写周报";
 // 当前周的周一时间戳
 $startTime = date('w') == 1 ? strtotime("this Monday") : strtotime("-1 Monday");
 
