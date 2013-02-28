@@ -28,6 +28,8 @@ $tagList = DiaryDaily::getTagList($diary);
 $defaultColorId = rand(1,20);
 
 $isReported = DiaryReport::checkReport($diary, $type, $object);
+// js加载限制
+$dialogTrue = true;
 ?>
 
 <?php include "views/my/mini-top.php"; ?>
@@ -102,7 +104,7 @@ body{ background: #fff; overflow-x: hidden; }
                         <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
                             <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
                                 <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
-                                <a style="text-decoration: none;" href="<?php echo $url;?>">
+                                <a style="text-decoration: none;" href="javascript:">
                                 <span style="margin:4px;">
                                     <?php echo $tag['tag'];?>
                                 </span>
@@ -144,7 +146,9 @@ body{ background: #fff; overflow-x: hidden; }
                 });
             }
         });
-
+        $(".js-add-tag").click(function(){
+            clickDoc();
+        });
         // 删除某日志的所有标签
         $(".js-del-all").click(function(){
             var diary_id = $(this).attr('data-diary_id'),

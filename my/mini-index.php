@@ -17,7 +17,6 @@ if(!$isReported) {
         $allowPay = true;
     }
 }
-// 是否已过汇报时间
 ?>
 <?php include "views/my/mini-top.php"; ?>
 

@@ -1,4 +1,5 @@
 <?php
+$title = "写月报";
 $uid = $diary->uid;
 $user = DiaryUser::getInfo($uid);
 $corpId = $user['corp_id'];
