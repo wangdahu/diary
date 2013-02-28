@@ -36,10 +36,8 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 
 // 判断是否为补交/未汇报/已汇报
 $isReported = DiaryReport::checkReport($diary, $type, $object);
-if($isReported) {
-    $allowPay  = false;
-}else {
-    $allowPay = false;
+$allowPay  = false;
+if(!$isReported) {
     // 是否已过汇报时间
     $reportTime = DiarySet::reportTime($diary);
     $w = date('w') ? date('w') : 7; // 周日转换成7
@@ -53,12 +51,7 @@ if($isReported) {
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-.content {width: 300px; height: 540px;}
-.diary-content {padding: 5px;}
-.c_c { width: 280px; padding:0px; border-radius: 0; }
-.daily-date { float: left !important; padding-left: 5px;}
-.all-tag-floor {right: 0; left: auto;}
-.tag-list { float: left !important; margin-bottom: 3px;}
+.content {width: 300px; height: 495px;}
 </style>
 
 <div class="content">
@@ -79,7 +72,7 @@ if($isReported) {
         </div>
 
         <div class="content_bar">
-            <?php $height = $isReported ? '485px' : '415px';?>
+            <?php $height = $isReported ? '435px' : '370px';?>
             <iframe name="mainWeekly" src="/diary/index.php/my/main-weekly" style="height: <?php echo $height;?>; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
@@ -102,12 +95,12 @@ if($isReported) {
                  $allDate[] = $key;
              }
         ?>
-        <div style="margin-top: 10px" id="weekly-form">
+        <div id="weekly-form">
             <div class="ftextarea">
                 <textarea style="width: 270px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
             </div>
-            <div class="mt10" style="display: none;">插入：
+            <div class="mt10 insertDaily" style="display: none;">插入：
                 <?php foreach($weekarray as $k => $w):?>
                 <span class="mr5 p1 <?php echo in_array($allDate[$k], $date_keys) ? 'js-insert-daily' : ''?>" style="border:1px solid #ccc;"><?php echo '周'.$w?></span>
                 <?php if(in_array($allDate[$k], $date_keys)):?>
@@ -145,9 +138,10 @@ if($isReported) {
         $('#reset').click(function() {
             var content = $('#weekly_content');
             content.val('');
-            $('[name=mainWeekly]').css('height', 420);
+            $('[name=mainWeekly]').css('height', 370);
             content.css('height', '40px').css('line-height', '40px');
             $('.word-limit').hide();
+            $('.insertDaily').hide();
             $('#button-list').hide();
         });
 

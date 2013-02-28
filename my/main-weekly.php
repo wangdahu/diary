@@ -76,14 +76,16 @@ function editContent() {
     var weekly_id = $('.js-edit_diary').closest('.diary-content').attr('data-weekly_id');
     var textarea = $('#weekly_content', window.parent.document);
     var iframe = $('[name=mainWeekly]', window.parent.document);
+    var insertDaily = $('.insertDaily', window.parent.document);
     $('#weekly_id', window.parent.document).val(weekly_id);
     if(textarea.val() == '') {
         textarea.val($.trim(content));
     }
 
     textarea.wordLimit();
-    iframe.css('height', 280);
-    textarea.css('height', '140px').css('line-height', '22px');
+    iframe.css('height', 200);
+    textarea.css('height', '150px').css('line-height', '22px');
+    insertDaily.show();
     $('#button-list', window.parent.document).show();
 }
 

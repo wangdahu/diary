@@ -24,7 +24,7 @@ if($forward){
     $forwardMonths = 1;
     $backwardMonths = -1;
     $currentMonth = date('y年m月');
-    $startTime = mktime(0,0,0,date("m")-$forward,1,date("Y"));
+    $startTime = mktime(0,0,0,date("m"),1,date("Y"));
     $endTime = mktime(0,0,0,date("m")+1,1,date("Y")) - 1;
 }
 

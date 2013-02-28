@@ -47,7 +47,7 @@
 
         $(".write-daily").click(function(){
             $("#daily_content").val('');
-            $("#daily_id").val(0);
+            $("#daily-dialog-form").find("#daily_id").val('');
             $("#daily-dialog-form").dialog("open");
         });
 

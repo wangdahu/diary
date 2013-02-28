@@ -7,24 +7,22 @@ $weekarray = array("日","一","二","三","四","五","六");
 $w = date('w', time());
 $showTitle = date('y年m月d日',time()).' 周'.$weekarray[$w];
 
-// 是否已过汇报时间
-$reportTime = DiarySet::reportTime($diary);
-$dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
-$isReported = $allowPay = false;
-if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-    $isReported = DiaryReport::checkReport($diary, $type, $object);
-    $allowPay  = $isReported ? false : true;
+$isReported = DiaryReport::checkReport($diary, $type, $object);
+$allowPay = false;
+if(!$isReported) {
+    $reportTime = DiarySet::reportTime($diary);
+    $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
+    $isReported = $allowPay = false;
+    if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
+        $allowPay = true;
+    }
 }
+// 是否已过汇报时间
 ?>
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-    .content {width: 300px; height: 540px;}
-    .diary-content {padding: 5px;}
-    .c_c { width: 280px; padding:0px; border-radius: 0; }
-    .daily-date { float: left !important; padding-left: 5px;}
-    .all-tag-floor {right: 0; left: auto;}
-    .tag-list { float: left !important; margin-bottom: 3px;}
+.content {width: 300px; height: 495px;}
 </style>
 <div class="content">
     <!--今日工作开始-->
@@ -43,7 +41,7 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
             <span class="fl content_bar"><?php echo $showTitle;?></span><span class="fr content_bar" style="color: #006cff;"><?php if($isReported):?>已汇报 <?php elseif($allowPay):?>未汇报<?php else:?> 等待汇报<?php endif;?></span>
         </div>
         <div class="content_bar">
-            <?php $height = $isReported ? '485px' : '415px';?>
+            <?php $height = $isReported ? '455px' : '370px';?>
             <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
@@ -78,8 +76,8 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 
         function writeContent() {
             var content = $('#content');
-            $('[name=mainDaily]').css('height', 280);
-            content.css('height', '140px').css('line-height', '22px');
+            $('[name=mainDaily]').css('height', 260);
+            content.css('height', '120px').css('line-height', '22px');
             $('#button-list').show();
             content.wordLimit();
             $('.word-limit').show();
@@ -104,7 +102,9 @@ if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 
         $('#reset').click(function() {
             var content = $('#content');
-            $('[name=mainDaily]').css('height', 420);
+            content.val('');
+            $('#daily_id').val('');
+            $('[name=mainDaily]').css('height', 370);
             content.css('height', '40px').css('line-height', '40px');
             $('.word-limit').hide();
             $('#button-list').hide();

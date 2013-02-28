@@ -89,7 +89,10 @@ body{ background: #fff; overflow-x: hidden; }
                                 </label>
                             </div>
                             <?php endforeach;?>
-                            <?php include "tag.php"; ?>
+                            <div class="manage-tag" >
+                                <div style="border-top: 1px solid #ccc"></div>
+                                <div ><a href="javascript:;" class="js-add-tag" data-daily_id="<?php echo $daily['id']?>">新建标签并标记</a></div>
+                            </div>
                         </div>
                     </div>
                     <?php endif;?>
@@ -184,7 +187,7 @@ body{ background: #fff; overflow-x: hidden; }
             var js_tag = $(this).closest('.js-tag'),
             diary_id = js_tag.attr('data-diary_id'),
             tag_id = js_tag.attr('data-tag_id');
-            var tag_input = js_tag.parent().prev().find("#tag_"+tag_id);
+            var tag_input = js_tag.parent().prev().prev().find("#tag_"+tag_id);
             $.post('/diary/index.php/set/operateTag', {diary_id:diary_id, tag_id:tag_id, action:'del-diary-tag'}, function(json) {
                 if(json != 0) {
                     tag_input.prop('checked', false);
@@ -225,8 +228,8 @@ body{ background: #fff; overflow-x: hidden; }
             $('#daily_id', window.parent.document).val(diary_id);
             textarea.val($.trim(content));
 
-            iframe.css('height', 280);
-            textarea.css('height', '140px').css('line-height', '22px');
+            iframe.css('height', 260);
+            textarea.css('height', '120px').css('line-height', '22px');
             $('#button-list', window.parent.document).show();
         });
 
