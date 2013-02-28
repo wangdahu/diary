@@ -22,7 +22,7 @@ $isReported = DiaryReport::checkReport($diary, $type, $object);
 
 <style>
 .content {width: 300px; background: #fff; min-height: 0;}
-.weekly-content {padding: 5px;}
+.diary-content {padding: 5px;}
 .c_c { padding:0px; border-radius: 0; width: 280px;}
 .daily-date { float: left !important; padding-left: 5px;}
 .all-tag-floor {right: 0; left: auto;}
@@ -37,7 +37,7 @@ body{ background: #fff; overflow-x: hidden; }
         <div class="c_t mt10"></div>
         <div class="c_c">
             <div class="c_c_c">
-                <div>
+                <div class="diary-content">
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
                         <strong>还未填写任何日志内容</strong>
                     </p>
@@ -49,11 +49,11 @@ body{ background: #fff; overflow-x: hidden; }
         <div class="c_c">
             <div class="c_c_c">
                 <?php if($isReported):?>
-                <div>
+                <div class="diary-content">
                     <p><?php echo nl2br($monthlys['content']); ?></p>
                 </div>
                 <?php else:?>
-                <div data-monthly_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary" style="cursor: pointer">
+                <div data-monthly_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary diary-content" style="cursor: pointer">
                     <p><?php echo nl2br($monthlys['content']); ?></p>
                     <script type="text/string"><?php echo $monthlys['content'];?></script>
                 </div>
