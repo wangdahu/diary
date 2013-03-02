@@ -1,7 +1,7 @@
 <div id="tag-dialog-form" style="display:none;" title="添加标签">
     <form method="post">
         <fieldset>
-            <input id="tag" name="tag" maxlength="40" placeholder="输入标签名称" style="line-height: 24px; width: 240px;"/>
+            <input id="tag" name="tag" maxlength="40" autocomplete="off" placeholder="输入标签名称" style="line-height: 24px; width: 240px;"/>
             <div style="margin: 10px -3px ; ">
                 <div class="select-color" style="line-height: 30px;">
                     <div class="default-color" style="background-color: <?php echo $colorList[$defaultColorId];?>;"></div><span>选择颜色</span>
@@ -36,7 +36,7 @@
             buttons: {
                 "确定": function(){
                     var tag = $("#tag").val(),
-                    color_id = $("#color_id").val(),
+                    color_id = $("#color_id").val() ? $("#color_id").val() : 1,
                     id = $("#id").val();
                     var daily_id = $('#daily_id').val();
                     if(!tag.length){

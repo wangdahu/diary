@@ -28,7 +28,9 @@ $showTitle = $currentMonth = date('y年m月');
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-.content {width: 300px; height: 495px;}
+body { overflow-x: hidden; }
+html,body { padding: 0; margin: 0; }
+.content {width: auto; height: 485px;}
 </style>
 
 <div class="content">
@@ -49,8 +51,8 @@ $showTitle = $currentMonth = date('y年m月');
         </div>
 
         <div class="content_bar">
-            <?php $height = $isReported ? '435px' : '370px';?>
-            <iframe name="mainMonthly" src="/diary/index.php/my/main-monthly" style="height: <?php echo $height;?>; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
+            <?php $height = $isReported ? '435px' : '360px';?>
+            <iframe name="mainMonthly" src="/diary/index.php/my/main-monthly" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
         </div>
 
         <?php if(!$isReported):?>
@@ -101,11 +103,11 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
         }
 ?>
         <div id="monthly-form">
-            <div class="ftextarea">
-                <textarea style="width: 270px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
+            <div class="ftextarea" style="width: 100px;">
+                <textarea style="width: 260px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
             </div>
-            <div class="mt10 insertWeekly" style="display: none;">插入：
+            <div class="mt10 insertWeekly" style="display: none;">
                 <?php for($w = 0; $w < $maxWeek; $w++):?>
                       <?php
                            $key = date('Y-W', $firstTime + $w*7*86400);
@@ -144,7 +146,7 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
         $('#reset').click(function() {
             var content = $('#monthly_content');
             content.val('');
-            $('[name=mainMonthly]').css('height', 370);
+            $('[name=mainMonthly]').css('height', 360);
             content.css('height', '40px').css('line-height', '40px');
             $('.word-limit').hide();
             $('.insertWeekly').hide();

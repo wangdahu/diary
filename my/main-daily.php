@@ -34,13 +34,14 @@ $dialogTrue = true;
 
 <?php include "views/my/mini-top.php"; ?>
 <style>
-.content {width: 300px; background: #fff; min-height: 0;}
+.content {width: 280px; background: #fff; min-height: 0;}
 .diary-content {padding: 5px;}
-.c_c { padding:0px; border-radius: 0; width: 280px;}
+.c_c { padding:0px; border-radius: 0; width: 260px;}
 .daily-date { float: left !important; padding-left: 5px;}
 .all-tag-floor {right: 0; left: auto;}
 .tag-list { float: left !important; margin-bottom: 3px;}
 body{ background: #fff; overflow-x: hidden; }
+html,body { padding: 0; margin: 0; }
 </style>
 <div class="content">
     <!--今日工作开始-->
@@ -87,7 +88,7 @@ body{ background: #fff; overflow-x: hidden; }
                                     <input type="checkbox" <?php echo in_array($tag['id'], $tagIds) ? 'checked' : ''?> name="tag" class="js-operate_tag" id="tag_<?php echo $tag['id']?>" data-diary_id="<?php echo $daily['id'];?>" data-tag_id="<?php echo $tag['id'];?>" style="line-height:24px;height:24px;float: left;margin: 0 5px 0 10px;"/>
                                     <div class="color-list" style="float: left; margin: 6px 10px 6px 5px; background-color: <?php echo $tag['color'];?>">
                                     </div>
-                                    <div class="ellipsis" title="<?php echo $tag['tag']?>" ><?php echo $tag['tag']?></div>
+                                    <div title="<?php echo $tag['tag']?>" ><?php echo $tag['tag']?></div>
                                 </label>
                             </div>
                             <?php endforeach;?>
@@ -101,8 +102,8 @@ body{ background: #fff; overflow-x: hidden; }
                     <br/>
                     <span class="tag-list" id="tag-list-<?php echo $daily['id'];?>">
                         <?php foreach($userTags as $tag):?>
-                        <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 0 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
-                            <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" class="ellipsis" style="max-width: 120px; float: left; ">
+                        <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; margin: 2px 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
+                            <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" style="max-width: 120px; float: left; ">
                                 <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
                                 <a style="text-decoration: none;" href="javascript:">
                                 <span style="margin:4px;">
@@ -175,10 +176,14 @@ body{ background: #fff; overflow-x: hidden; }
         });
 
         // 标签操作，点击其他地方隐藏
+        var zIndex = 9;
         $(document).click(function(e) {
             var target = $(e.target);
             if(target.is('.js-opterate_tag')) {
                 target.next().toggle();
+                if(target.next().is(':visible')) {
+                    target.closest('.c_c').css('z-index', ++zIndex);
+                }
             }
             $('.js-opterate_tag').not(target).next().hide();
         });
@@ -232,14 +237,14 @@ body{ background: #fff; overflow-x: hidden; }
             $('#daily_id', window.parent.document).val(diary_id);
             textarea.val($.trim(content));
 
-            iframe.css('height', 260);
+            iframe.css('height', 250);
             textarea.css('height', '120px').css('line-height', '22px');
             $('#button-list', window.parent.document).show();
         });
 
         var body = document.documentElement;
         $(window).resize(function() {
-            $(".c_c").width(body.scrollHeight > body.clientHeight ? 265 : 280);
+            $(".c_c").width(body.scrollHeight > body.clientHeight ? 245 : 260);
         }).resize();
     });
 clickDoc = function() { $(document).click(); }

@@ -21,9 +21,9 @@ $isReported = DiaryReport::checkReport($diary, $type, $object);
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-.content {width: 300px; background: #fff; min-height: 0;}
+.content {width: 280px; background: #fff; min-height: 0;}
 .diary-content {padding: 5px;}
-.c_c { padding:0px; border-radius: 0; width: 280px;}
+.c_c { padding:0px; border-radius: 0; width: 260px;}
 .daily-date { float: left !important; padding-left: 5px;}
 .all-tag-floor {right: 0; left: auto;}
 .tag-list { float: left !important; margin-bottom: 3px;}
@@ -78,7 +78,7 @@ function editContent() {
     }
 
     textarea.wordLimit();
-    iframe.css('height', 200);
+    iframe.css('height', 190);
     textarea.css('height', '150px').css('line-height', '22px');
     insertDaily.show();
     $('#button-list', window.parent.document).show();

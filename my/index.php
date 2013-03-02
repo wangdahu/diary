@@ -212,10 +212,14 @@ if($forward < 0) { // 未来
         });
 
         // 标签操作，点击其他地方隐藏
+        var zIndex = 9;
         $(document).click(function(e) {
             var target = $(e.target);
             if(target.is('.js-opterate_tag')) {
                 target.next().toggle();
+                if(target.next().is(':visible')) {
+                    target.closest('.c_c').css('z-index', ++zIndex);
+                }
             }
             $('.js-opterate_tag').not(target).next().hide();
         });

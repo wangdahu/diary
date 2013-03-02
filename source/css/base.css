@@ -150,7 +150,7 @@ form .show-color-list .color-selected { border: 1px solid #939393; }
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 
 /* 选择标签浮动层 */
-.all-tag-floor { position:absolute; left: 0; top: 22px; border: 1px #ccc solid; width: 185px; line-height: 24px; z-index: 110; background: white; display: none; }
+.all-tag-floor { position:absolute; left: 0; top: 22px; border: 1px #ccc solid; width: 185px; line-height: 24px; background: white; display: none; z-index: 8; }
 
 .word-limit { position: absolute; bottom: 5px; color: #9B9B9B; font-size: 14px; font-family: Constantia, Georgia;}
 .word-exceed { color: #f00; }

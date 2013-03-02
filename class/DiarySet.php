@@ -409,7 +409,7 @@ class DiarySet{
     }
 
     public static function alert($msg, $url = null) {
-        $str = '<script type="text/javascript">';
+        $str = '<script>';
         $str.= "alert('".$msg."');";
 
         if ($url) {

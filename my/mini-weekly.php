@@ -51,7 +51,9 @@ if(!$isReported) {
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-.content {width: 300px; height: 495px;}
+body { overflow-x: hidden; }
+html,body { padding: 0; margin: 0; }
+.content {width: auto; height: 485px;}
 </style>
 
 <div class="content">
@@ -72,8 +74,8 @@ if(!$isReported) {
         </div>
 
         <div class="content_bar">
-            <?php $height = $isReported ? '435px' : '370px';?>
-            <iframe name="mainWeekly" src="/diary/index.php/my/main-weekly" style="height: <?php echo $height;?>; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
+            <?php $height = $isReported ? '435px' : '360px';?>
+            <iframe name="mainWeekly" src="/diary/index.php/my/main-weekly" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
         <div class="content_bar mt10">
@@ -96,11 +98,11 @@ if(!$isReported) {
              }
         ?>
         <div id="weekly-form">
-            <div class="ftextarea">
-                <textarea style="width: 270px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
+            <div class="ftextarea" style="width: 100px;">
+                <textarea style="width: 260px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
             </div>
-            <div class="mt10 insertDaily" style="display: none;">插入：
+            <div class="mt10 insertDaily" style="display: none;">
                 <?php foreach($weekarray as $k => $w):?>
                 <span class="mr5 p1 <?php echo in_array($allDate[$k], $date_keys) ? 'js-insert-daily' : ''?>" style="border:1px solid #ccc;"><?php echo '周'.$w?></span>
                 <?php if(in_array($allDate[$k], $date_keys)):?>
@@ -138,7 +140,7 @@ if(!$isReported) {
         $('#reset').click(function() {
             var content = $('#weekly_content');
             content.val('');
-            $('[name=mainWeekly]').css('height', 370);
+            $('[name=mainWeekly]').css('height', 360);
             content.css('height', '40px').css('line-height', '40px');
             $('.word-limit').hide();
             $('.insertDaily').hide();

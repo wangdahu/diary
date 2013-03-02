@@ -21,7 +21,9 @@ if(!$isReported) {
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-.content {width: 300px; height: 495px;}
+body { overflow-x: hidden; }
+html,body { padding: 0; margin: 0; }
+.content {width: auto; height: 485px;}
 </style>
 <div class="content">
     <!--今日工作开始-->
@@ -40,19 +42,19 @@ if(!$isReported) {
             <span class="fl content_bar"><?php echo $showTitle;?></span><span class="fr content_bar" style="color: #006cff;"><?php if($isReported):?>已汇报 <?php elseif($allowPay):?>未汇报<?php else:?> 等待汇报<?php endif;?></span>
         </div>
         <div class="content_bar">
-            <?php $height = $isReported ? '455px' : '370px';?>
-            <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 302px;" frameborder="0"></iframe>
+            <?php $height = $isReported ? '445px' : '360px';?>
+            <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
         <div style="margin-top: 10px" class="content_bar" id="daily-form">
-            <div class="ftextarea">
+            <div class="ftextarea" style="width:100px">
                 <input type="hidden" name="daily_id" id="daily_id" />
-                <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 270px;" class="textarea_comment" placeholder="来，随手记录您今天的工作" data-limit="300"></textarea>
-                <div id="button-list" style="display: none;">
-                    <div class="form-action" style="margin-top: 10px;">
-                        <a class="a_01 fr" href="javascript:" id="reset">取消</a>
-                        <a class="a_01 fr10" href="javascript:" id="submit">确定</a>
-                    </div>
+                <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 255px;" class="textarea_comment" placeholder="来，随手记录您今天的工作" data-limit="300"></textarea>
+            </div>
+            <div id="button-list" style="display: none;">
+                <div class="form-action clearfix" style="margin-top: 10px;">
+                    <a class="a_01 fr" href="javascript:" id="reset">取消</a>
+                    <a class="a_01 fr10" href="javascript:" id="submit">确定</a>
                 </div>
             </div>
         </div>
@@ -75,7 +77,7 @@ if(!$isReported) {
 
         function writeContent() {
             var content = $('#content');
-            $('[name=mainDaily]').css('height', 260);
+            $('[name=mainDaily]').css('height', 250);
             content.css('height', '120px').css('line-height', '22px');
             $('#button-list').show();
             content.wordLimit();
@@ -103,7 +105,7 @@ if(!$isReported) {
             var content = $('#content');
             content.val('');
             $('#daily_id').val('');
-            $('[name=mainDaily]').css('height', 370);
+            $('[name=mainDaily]').css('height', 360);
             content.css('height', '40px').css('line-height', '40px');
             $('.word-limit').hide();
             $('#button-list').hide();
