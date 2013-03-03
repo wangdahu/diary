@@ -104,7 +104,8 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 ?>
         <div id="monthly-form">
             <div class="ftextarea" style="width: 100px;">
-                <textarea style="width: 260px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
+                <label id="placeholder" style="left: 15px; width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本月的工作</label>
+                <textarea style="width: 260px; height: 40px; line-height: 40px;" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
             </div>
             <div class="mt10 insertWeekly" style="display: none;">
@@ -137,9 +138,9 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 
 <script>
     $(function() {
-
-        $('#monthly_content').click(function() {
+        $('#monthly_content, #placeholder').click(function() {
             window.frames['mainMonthly'].editContent();
+            $('#placeholder').hide();
             $('.word-limit').show();
         });
 
@@ -151,6 +152,7 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
             $('.word-limit').hide();
             $('.insertWeekly').hide();
             $('#button-list').hide();
+            $('#placeholder').show();
         });
 
         $('#submit').click(function() {

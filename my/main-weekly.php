@@ -86,6 +86,7 @@ function editContent() {
     iframe.css('height', 190);
     textarea.css('height', '150px').css('line-height', '22px');
     insertDaily.show();
+    textarea.focus();
     $('#button-list', window.parent.document).show();
 }
 

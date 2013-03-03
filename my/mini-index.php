@@ -46,10 +46,12 @@ html,body { padding: 0; margin: 0; }
             <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
-        <div style="margin-top: 10px" class="content_bar" id="daily-form">
-            <div class="ftextarea" style="width:100px">
+    <div class="content_bar">
+        <div id="daily-form">
+            <div class="ftextarea" style="width: 100px;">
+                <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您今天的工作</label>
                 <input type="hidden" name="daily_id" id="daily_id" />
-                <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 255px;" class="textarea_comment" placeholder="来，随手记录您今天的工作" data-limit="300"></textarea>
+                <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 260px;" class="textarea_comment" data-limit="300"></textarea>
             </div>
             <div id="button-list" style="display: none;">
                 <div class="form-action clearfix" style="margin-top: 10px;">
@@ -58,6 +60,7 @@ html,body { padding: 0; margin: 0; }
                 </div>
             </div>
         </div>
+    </div>
         <?php endif;?>
     </div>
 
@@ -71,7 +74,8 @@ html,body { padding: 0; margin: 0; }
     });
 
     $(function() {
-        $('#content').click(function() {
+        $('#content, #placeholder').click(function() {
+            $('#placeholder').hide();
             writeContent();
         });
 
@@ -81,6 +85,7 @@ html,body { padding: 0; margin: 0; }
             content.css('height', '120px').css('line-height', '22px');
             $('#button-list').show();
             content.wordLimit();
+            content.focus();
             $('.word-limit').show();
         }
 
@@ -109,6 +114,7 @@ html,body { padding: 0; margin: 0; }
             content.css('height', '40px').css('line-height', '40px');
             $('.word-limit').hide();
             $('#button-list').hide();
+            $('#placeholder').show();
         });
     });
 </script>
