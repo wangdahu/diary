@@ -99,8 +99,8 @@ html,body { padding: 0; margin: 0; }
         ?>
         <div id="weekly-form">
             <div class="ftextarea" style="width: 100px;">
-                <label id="placeholder" style="left: 15px; width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本周的工作</label>
-                <textarea style="width: 260px; height: 40px; line-height: 40px;" placeholder="来，随手记录您本周的工作" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
+                <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本周的工作</label>
+                <textarea style="width: 260px; height: 40px; line-height: 40px;" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
             </div>
             <div class="mt10 insertDaily" style="display: none;">

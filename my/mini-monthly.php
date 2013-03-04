@@ -104,7 +104,7 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 ?>
         <div id="monthly-form">
             <div class="ftextarea" style="width: 100px;">
-                <label id="placeholder" style="left: 15px; width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本月的工作</label>
+                <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本月的工作</label>
                 <textarea style="width: 260px; height: 40px; line-height: 40px;" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
             </div>

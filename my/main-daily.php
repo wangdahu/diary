@@ -48,7 +48,7 @@ html,body { padding: 0; margin: 0; }
     <div class="content_bar mb25">
         <?php if(!$num):?>
         <div class="c_c mt10">
-            <div class="c_c_c">
+            <div class="c_c_c no-content-daily" style="cursor: pointer;">
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
                         <strong>还未填写任何日志内容</strong>
@@ -227,6 +227,19 @@ html,body { padding: 0; margin: 0; }
                     alert('操作失败');
                 }
             });
+        });
+
+        $('.no-content-daily').click(function() {
+            var textarea = $('#content', window.parent.document);
+            var placeholder = $('#placeholder', window.parent.document);
+            var iframe = $('[name=mainDaily]', window.parent.document);
+            textarea.val('');
+            placeholder.hide();
+
+            iframe.css('height', 250);
+            textarea.css('height', '120px').css('line-height', '22px');
+            textarea.focus();
+            $('#button-list', window.parent.document).show();
         });
 
         $('.js-edit_diary').click(function() {

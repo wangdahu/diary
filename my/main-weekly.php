@@ -40,7 +40,7 @@ body{ background: #fff; overflow-x: hidden; }
         <?php if(!$weeklys):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
-            <div class="c_c_c">
+            <div class="c_c_c no-content-daily" style="cursor: pointer;">
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
                         <strong>还未填写任何日志内容</strong>
@@ -77,6 +77,7 @@ function editContent() {
     var textarea = $('#weekly_content', window.parent.document);
     var iframe = $('[name=mainWeekly]', window.parent.document);
     var insertDaily = $('.insertDaily', window.parent.document);
+    var placeholder = $('#placeholder', window.parent.document);
     $('#weekly_id', window.parent.document).val(weekly_id);
     if(textarea.val() == '') {
         textarea.val($.trim(content));
@@ -86,12 +87,17 @@ function editContent() {
     iframe.css('height', 190);
     textarea.css('height', '150px').css('line-height', '22px');
     insertDaily.show();
+    placeholder.hide();
     textarea.focus();
     $('#button-list', window.parent.document).show();
 }
 
 $(function() {
     $('.js-edit_diary').click(function() {
+        editContent();
+    });
+
+    $('.no-content-daily').click(function() {
         editContent();
     });
 });

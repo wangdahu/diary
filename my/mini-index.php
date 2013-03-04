@@ -46,7 +46,7 @@ html,body { padding: 0; margin: 0; }
             <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
-    <div class="content_bar">
+    <div class="content_bar mt10">
         <div id="daily-form">
             <div class="ftextarea" style="width: 100px;">
                 <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您今天的工作</label>
