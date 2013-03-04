@@ -135,7 +135,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
         });
 
         // 新增和编辑月报
-        $(".write-monthly").click(function(){
+        $(".write-monthly, .no-content-daily").click(function(){
             if($('.js-edit_diary').length){
                 $(".js-edit_diary").click();
             }else{

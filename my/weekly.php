@@ -162,7 +162,7 @@ for($i = $startTime; $i < $endTime; $i+=86400) {
         });
 
         // 新增和编辑周报
-        $(".write-weekly").click(function(){
+        $(".write-weekly, .no-content-daily").click(function(){
             if($('.js-edit_diary').length){
                 $(".js-edit_diary").click();
             }else{

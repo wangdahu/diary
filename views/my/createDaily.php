@@ -45,7 +45,7 @@
             }
         });
 
-        $(".write-daily").click(function(){
+        $(".write-daily, .no-content-daily").click(function(){
             $("#daily_content").val('');
             $("#daily-dialog-form").find("#daily_id").val('');
             $("#daily-dialog-form").dialog("open");

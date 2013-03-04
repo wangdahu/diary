@@ -39,7 +39,11 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
         <?php if(!$weeklys || (isset($from) && !$isReported)):?>
         <div class="c_t mt10"></div>
         <div class="c_c">
+            <?php if(isset($from) && !$isReported):?>
             <div class="c_c_c">
+            <?php else:?>
+            <div class="c_c_c no-content-daily" style="cursor: pointer;">
+            <?php endif;?>
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
                         <strong>还未填写任何日志内容</strong>

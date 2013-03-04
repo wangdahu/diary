@@ -87,7 +87,7 @@ if($forward < 0) { // 未来
         </h2>
         <?php if(!$num):?>
         <div class="c_c mt10">
-            <div class="c_c_c">
+            <div class="c_c_c no-content-daily" style="cursor: pointer;">
                 <div>
                     <p style="font-size: 16px;color: red; text-align: center; line-height: 100px;">
                         <strong>还未填写任何日志内容</strong>
