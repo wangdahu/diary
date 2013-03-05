@@ -33,7 +33,7 @@ class Method {
             if($isReported) {
                 return self::output(0, "日志已汇报！", '501', true);
             }else {
-                if(self::saveDaily($diary, $content)){
+                if(self::saveDaily($diary, $content, $uid, $corpId)){
                     return self::output(1, "操作成功！", '500', true);
                 }
                 return self::output(0, '日志插入失败！', '501', true);
@@ -43,10 +43,8 @@ class Method {
         }
     }
 
-    protected function saveDaily($diary, $content) {
+    protected function saveDaily($diary, $content, $uid, $corpId) {
         $currentTime = strtotime(date('Y-m-d'));
-        $corpId = $diary->corpId;
-        $uid = $diary->uid;
         // 该用户设置的汇报时间
         $reportTime = $fillTime = time();
         $sql = "insert into `diary_info` (`id`, `corp_id`, `content`, `uid`, `show_time`, `report_time`, `fill_time`) values(null, $corpId, '".$content."', $uid, $currentTime, $reportTime, $fillTime)";

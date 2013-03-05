@@ -104,11 +104,14 @@ class DiaryLoop{
         }
     }
 
-    public function testCreateDaily($diary) {
+    public static function testCreateDaily($diary) {
         $content = 'test create daily';
         $uid = $diary->uid;
-        $AccountId = $diary->corpId;
-        $args = json_encode(base64_encode(compact('content', 'uid', 'AccountID')));
+        $AccountID = $diary->corpId;
+        $args = compact('content', 'uid', 'AccountID');
+        $args = base64_encode(json_encode($args));
+        $config = Diary::getConfig(); // 网站的基本配置
+        $keyCode = $config['keyCode'];
         $host = "http://".$config['host']."/diary/soap/stdserver.php?wsdl";;
         $soap = new soapClient($host);
         try {

@@ -1,2 +1,2 @@
 <?php
-Diary::testCreateDaily($diary);
+DiaryLoop::testCreateDaily($diary);
