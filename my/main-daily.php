@@ -102,13 +102,10 @@ html,body { padding: 0; margin: 0; }
                     <br/>
                     <span class="tag-list" id="tag-list-<?php echo $daily['id'];?>">
                         <?php foreach($userTags as $tag):?>
-                        <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; height:20px; margin: 2px 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
-                            <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" style="max-width: 120px; min-width: 30px; float: left; ">
-                                <?php $url = "/diary/index.php/my/tagDaily?tag=".$tag['id']; ?>
+                        <div class="js-tag" id="diary_tag_<?php echo $tag['id'];?>" data-tag_id="<?php echo $tag['id'];?>" data-diary_id="<?php echo $daily['id'];?>" style="float: left; white-space: nowrap; margin: 2px 4px; background-color: <?php echo $tag['color']?>; <?php echo in_array($tag['id'], $tagIds) ? '' : 'display: none;'?>">
+                            <div title="<?php echo $tag['tag'];?>" id="tag-<?php echo $tag['id'];?>" style="float: left; ">
                                 <a style="text-decoration: none;" href="javascript:">
-                                <span style="margin:4px;">
-                                    <?php echo $tag['tag'];?>
-                                </span>
+                                <span style="margin:4px;"><?php echo $tag['tag'];?></span>
                                 </a>
                             </div>
                             <?php if(!$isReported):?>
@@ -253,7 +250,7 @@ html,body { padding: 0; margin: 0; }
             placeholder.hide();
 
             iframe.css('height', 250);
-            textarea.css('height', '120px').css('line-height', '22px');
+            textarea.css({ height: 120, lineHeight: 1.8 });
             textarea.focus();
             $('#button-list', window.parent.document).show();
         });

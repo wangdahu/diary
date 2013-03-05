@@ -53,7 +53,7 @@ body{ background: #fff; overflow-x: hidden; }
                     <p><?php echo nl2br($monthlys['content']); ?></p>
                 </div>
                 <?php else:?>
-                <div data-monthly_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary diary-content" style="cursor: pointer">
+                <div data-monthly_id="<?php echo $monthlys['id']; ?>" class="js-edit_diary diary-content" style="cursor: pointer;width:100%;">
                     <p><?php echo nl2br($monthlys['content']); ?></p>
                     <script type="text/string"><?php echo $monthlys['content'];?></script>
                 </div>
@@ -78,19 +78,15 @@ function editContent() {
         textarea.val($.trim(content));
     }
 
-    textarea.wordLimit();
     iframe.css('height', 190);
-    textarea.css('height', '150px').css('line-height', '22px');
+    textarea.css({ height: 150, lineHeight: 1.8 });
     insertDaily.show();
-    placeholder.hide();
     textarea.focus();
+    window.parent.TA.setCursorPosition(textarea[0], textarea.val().length);
     $('#button-list', window.parent.document).show();
 }
 
 $(function() {
-    $('.js-edit_diary, .no-content-daily').click(function() {
-        editContent();
-    });
-
+    $('.js-edit_diary, .no-content-daily').click(editContent);
 });
 </script>

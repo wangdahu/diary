@@ -1,0 +1,2 @@
+<?php
+Diary::testCreateDaily($diary);

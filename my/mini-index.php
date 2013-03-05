@@ -35,7 +35,6 @@ html,body { padding: 0; margin: 0; }
                     <a href="/diary/index.php/my/mini-weekly" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
                     <a href="/diary/index.php/my/mini-monthly" class="<?php echo $type == 'monthly' ? 'cur' : 'normal'?>">月报</a>
                 </div>
-                <div> <a href="/diary/index.php/my/index" target="_blank" class="enter-daily fr" style="margin-top: 0;"></a> </div>
             </h2>
         </div>
         <div style="background: #E3FFCA; height: 25px; line-height: 25px; text-align: center; font-size: 14px; font-family: 宋体; margin-bottom: 5px; border-top: 1px solid #dadada; border-bottom: 1px solid #dadada;">

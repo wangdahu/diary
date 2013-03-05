@@ -103,4 +103,23 @@ class DiaryLoop{
             }
         }
     }
+
+    public function testCreateDaily($diary) {
+        $content = 'test create daily';
+        $uid = $diary->uid;
+        $AccountId = $diary->corpId;
+        $args = json_encode(base64_encode(compact('content', 'uid', 'AccountID')));
+        $host = "http://".$config['host']."/diary/soap/stdserver.php?wsdl";;
+        $soap = new soapClient($host);
+        try {
+            $msg = $soap->doAct('writeDaily', $args);
+            echo "<pre>"; var_dump($msg);
+            $_msg = json_decode($msg, true);
+            echo "<pre>"; var_dump($_msg);exit;
+            $_msg_arr = json_decode($_msg['msg'], true);
+        } catch(Exception $e) {
+            echo "<pre>"; var_dump(2222);
+            var_dump($e);exit();
+        }
+    }
 }

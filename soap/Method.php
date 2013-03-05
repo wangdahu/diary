@@ -4,7 +4,7 @@ class Method {
     /*
     *返回值函数
     */
-    public static function output($_flag,$_msg,$_stats_tag,$_is_json = false) {
+    protected static function output($_flag,$_msg,$_stats_tag,$_is_json = false) {
         $_arr = array(
             'flag' => $_flag,
             'msg' => $_msg,
@@ -17,6 +17,44 @@ class Method {
         }
     }
 
+    /**
+     * 写日报
+     */
+    public static function writeDaily($params) {
+        try {
+            $diary = classdb::getdb();
+            $args = json_decode(base64_decode($params), true);
+            $content = addslashes($args['content']);
+            $uid = $args['uid'];
+            $corpId = $args['AccountID'];
+            $type = 'daily';
+            $currentDate = date('Y-m-d');
+            $isReported = self::checkReport($diary, $type, $currentDate, $uid);
+            if($isReported) {
+                return self::output(0, "日志已汇报！", '501', true);
+            }else {
+                if(self::saveDaily($diary, $content)){
+                    return self::output(1, "操作成功！", '500', true);
+                }
+                return self::output(0, '日志插入失败！', '501', true);
+            }
+        }catch(Exception $e) {
+            return self::output(0, $e->getMessage(), '501', true);
+        }
+    }
+
+    protected function saveDaily($diary, $content) {
+        $currentTime = strtotime(date('Y-m-d'));
+        $corpId = $diary->corpId;
+        $uid = $diary->uid;
+        // 该用户设置的汇报时间
+        $reportTime = $fillTime = time();
+        $sql = "insert into `diary_info` (`id`, `corp_id`, `content`, `uid`, `show_time`, `report_time`, `fill_time`) values(null, $corpId, '".$content."', $uid, $currentTime, $reportTime, $fillTime)";
+        if($diary->db->query($sql)) {
+            return true;
+        }
+        return false;
+    }
     /**
      * 发送汇报
      */
@@ -80,7 +118,7 @@ class Method {
                         // 发送提醒
                         $_send_status = self::send($host, $keycode, $loginName, $loginNameArr, $title, $content, $url, 'views');
                         if(!$_send_status) {
-                            return method::output(1, "消息推送失败！", '501', true);
+                            return self::output(0, "消息推送失败！", '501', true);
                         }
                     }
 
@@ -91,17 +129,17 @@ class Method {
             // 插入下次提醒
             $_insert_status = self::insertPolling($diary, $args);
             if($_insert_status) {
-                return method::output(1, "操作成功！", '500', true);
+                return self::output(1, "操作成功！", '500', true);
             }
-            return method::output(0, "操作失败！", '502', true);
+            return self::output(0, "操作失败！", '502', true);
 
         }catch(Exception $e) {
-            return method::output(0, $e->getMessage(), '501', true);
+            return self::output(0, $e->getMessage(), '501', true);
         }
 
     }
 
-    public static function existsContent($diary, $uid, $startTime, $endTime, $type) {
+    protected static function existsContent($diary, $uid, $startTime, $endTime, $type) {
         $sql = "select * from `diary_info` where `uid` = $uid and `type` = $type and `show_time` between $startTime and $endTime limit 1";
         if($result = $diary->db->query($sql)){
             if($result->fetch_array(MYSQLI_ASSOC)) {
@@ -157,24 +195,24 @@ class Method {
                 $_send_status = self::send($host, $keycode, $loginName, array($loginName), $title, $content, $url, $opttype);
                 // by HJ
                 if(!$_send_status) {
-                    return method::output(0, "消息推送失败！", '501', true);
+                    return self::output(0, "消息推送失败！", '501', true);
                 }
             }
             // 插入下次提醒
             $_insert_status = self::insertPolling($diary, $args);
 
             if($_insert_status) {
-                return method::output(1, "操作成功！", '500', true);
+                return self::output(1, "操作成功！", '500', true);
             }
 
-            return method::output(0, "操作失败！", '502', true);
+            return self::output(0, "操作失败！", '502', true);
         }catch(Exception $e) {
-            return method::output(0, $e->getMessage(), '503', true);
+            return self::output(0, $e->getMessage(), '503', true);
         }
 
     }
 
-    public static function insertPolling($diary, $args) {
+    protected static function insertPolling($diary, $args) {
         try{
             $uid = $args['uid'];
             $loginName = $args['loginName'];
@@ -227,7 +265,7 @@ class Method {
     /**
      * 获取下次汇报/提醒时间
      */
-    public static function nextTime($diary, $uid, $corpId, $type) {
+    protected static function nextTime($diary, $uid, $corpId, $type) {
         $now = time();
         $func = $type.'Time';
         $type = ucwords($type);
@@ -272,7 +310,7 @@ class Method {
     /**
      * 查询汇报设置时间
      */
-    public static function reportTime($diary, $uid){
+    protected static function reportTime($diary, $uid){
         $sql = "select * from `diary_report_set` where `uid` = $uid";
         $reportSet = array();
         if($result = $diary->db->query($sql)){
@@ -293,7 +331,7 @@ class Method {
     /**
      * 查询提醒时间设置
      */
-    public static function remindTime($diary, $uid, $corpId){
+    protected static function remindTime($diary, $uid, $corpId){
         $sql = "select * from `diary_remind_set` where `uid` = $uid";
         $remindSet = array();
         if($result = $diary->db->query($sql)){
@@ -314,7 +352,7 @@ class Method {
     /**
      * 获取当前日是否为用户工作日
      */
-    public static function isWorkingDay($diary, $uid, $w) {
+    protected static function isWorkingDay($diary, $uid, $w) {
         $sql = "select * from `diary_set` where `uid` = $uid";
         $workingArr = array(1, 2, 3, 4, 5);
         if($result = $diary->db->query($sql)){
@@ -332,7 +370,7 @@ class Method {
     /**
      * 获取要汇报和已订阅我的所有对象
      */
-    public static function getAllObject($diary, $uid, $deptId, $type) {
+    protected static function getAllObject($diary, $uid, $deptId, $type) {
         $reportObject = self::reportObject($diary, $uid); // 我汇报的对象
         if(!$reportObject) {
             return false;
@@ -347,7 +385,7 @@ class Method {
     /**
      * 获取汇报对象
      */
-    public static function reportObject($diary, $uid){
+    protected static function reportObject($diary, $uid){
         $sql = "select * from `diary_report_object` where `uid` = $uid";
         $result = $diary->db->query($sql);
 
@@ -385,7 +423,7 @@ class Method {
     /**
      * 获取订阅我的日志的所有对象
      */
-    public static function subscribeMy($diary, $uid, $deptId, $type) {
+    protected static function subscribeMy($diary, $uid, $deptId, $type) {
         $from_uid = $uid;
         $from_dept = $deptId;
         $diaryType = 1;
@@ -404,7 +442,7 @@ class Method {
     }
 
 
-    public static function send($host, $keycode, $loginName, $userLoginNames, $title, $content, $url, $opttype) {
+    protected static function send($host, $keycode, $loginName, $userLoginNames, $title, $content, $url, $opttype) {
         try{
             $soap = new soapClient($host);
             $msg = array(
@@ -432,7 +470,7 @@ class Method {
         }
     }
 
-    public static function users($host, $keycode, $corpId, $ids, $type=0){
+    protected static function users($host, $keycode, $corpId, $ids, $type=0){
         $soap = new soapClient($host);
         $_arr = array(
             'AccountID' => $corpId, // 企业id
@@ -457,7 +495,7 @@ class Method {
     /**
      * 是否汇报
      */
-    public static function checkReport($diary, $type, $currentDate, $uid){
+    protected static function checkReport($diary, $type, $currentDate, $uid){
         $sql = "select * from `diary_report_record` where `uid` = $uid and `type` = '$type' and `date` = '$currentDate' limit 1";
         $result = $diary->db->query($sql);
         while($row = $result->fetch_assoc()){
@@ -465,4 +503,5 @@ class Method {
         }
         return false;
     }
+
 }

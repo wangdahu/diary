@@ -47,7 +47,6 @@ if(!$isReported) {
     }
 }
 ?>
-
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
@@ -66,7 +65,6 @@ html,body { padding: 0; margin: 0; }
                     <a href="/diary/index.php/my/mini-weekly" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
                     <a href="/diary/index.php/my/mini-monthly" class="<?php echo $type == 'monthly' ? 'cur' : 'normal'?>">月报</a>
                 </div>
-                <div> <a href="/diary/index.php/my/index" target="_blank" class="enter-daily fr" style="margin-top: 0;"></a> </div>
             </h2>
         </div>
         <div style="background: #E3FFCA; height: 25px; line-height: 25px; text-align: center; font-size: 14px; font-family: 宋体; margin-bottom: 5px; border-top: 1px solid #dadada; border-bottom: 1px solid #dadada;">
@@ -132,12 +130,45 @@ html,body { padding: 0; margin: 0; }
 </body>
 
 <script>
-    $(function() {
-        $('#weekly_content, #placeholder').click(function() {
+var TA = {
+    select: function(textarea, start, end){
+        if(document.selection){
+            var range = textarea.createTextRange();
+            range.moveEnd('character', -textarea.value.length);
+            range.moveEnd('character', end);
+            range.moveStart('character', start);
+            range.select();
+        }else{
+            textarea.setSelectionRange(start, end);
+            textarea.focus();
+        }
+
+    },
+    setCursorPosition: function(textarea, position) {
+        this.select(textarea, position, position);
+    },
+    insertAtPoint: function(textarea, txt) {
+        var val = textarea.value;
+        if(document.selection){
+            textarea.focus()
+            document.selection.createRange().text = txt;
+        } else {
+            var curPosition = textarea.selectionStart,
+            oldLength = textarea.value.length;
+            textarea.value = textarea.value.substring(0, curPosition) + txt + textarea.value.substring(curPosition, oldLength);
+            this.setCursorPosition(textarea, curPosition + txt.length);
+        }
+    }
+};
+ $(function() {
+        function edit() {
             window.frames['mainWeekly'].editContent();
             $('#placeholder').hide();
+            $('#weekly_content').wordLimit();
             $('.word-limit').show();
-        });
+        };
+        $('#weekly_content').focus(edit);
+        $('#placeholder').click(edit);
 
         $('#reset').click(function() {
             var content = $('#weekly_content');
@@ -166,37 +197,6 @@ html,body { padding: 0; margin: 0; }
                 location.reload();
             }), 'json';
         });
-
-        var TA = {
-            select: function(textarea, start, end){
-                if(document.selection){
-                    var range = textarea.createTextRange();
-                    range.moveEnd('character', -textarea.value.length);
-                    range.moveEnd('character', end);
-                    range.moveStart('character', start);
-                    range.select();
-                }else{
-                    textarea.setSelectionRange(start, end);
-                    textarea.focus();
-                }
-
-            },
-            setCursorPosition: function(textarea, position) {
-                this.select(textarea, position, position);
-            },
-            insertAtPoint: function(textarea, txt) {
-                var val = textarea.value;
-                if(document.selection){
-                    textarea.focus()
-                    document.selection.createRange().text = txt;
-                } else {
-                    var curPosition = textarea.selectionStart,
-                    oldLength = textarea.value.length;
-                    textarea.value = textarea.value.substring(0, curPosition) + txt + textarea.value.substring(curPosition, oldLength);
-                    this.setCursorPosition(textarea, curPosition + txt.length);
-                }
-            }
-        }
 
         // 插入日报
         $('.js-insert-daily').click(function(){
