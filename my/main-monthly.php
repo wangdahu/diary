@@ -21,13 +21,14 @@ $isReported = DiaryReport::checkReport($diary, $type, $object);
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-.content {width: 280px; background: #fff; min-height: 0;}
+.content {width: 300px; background: #fff; min-height: 0;}
 .diary-content {padding: 5px;}
-.c_c { padding:0px; border-radius: 0; width: 260px;}
+.c_c { padding:0px; border-radius: 0; width: 277px;}
 .daily-date { float: left !important; padding-left: 5px;}
 .all-tag-floor {right: 0; left: auto;}
 .tag-list { float: left !important; margin-bottom: 3px;}
-body{ background: #fff; overflow-x: hidden; }
+body{ background: #fff; overflow-x: hidden; _overflow-x: hidden; }
+.content_bar {padding: 0 8px;}
 </style>
 
 <div class="content">
@@ -88,5 +89,10 @@ function editContent() {
 
 $(function() {
     $('.js-edit_diary, .no-content-daily').click(editContent);
+
+    var body = document.documentElement;
+    $(window).resize(function() {
+        $(".c_c").width(body.scrollHeight > body.clientHeight ? 262 : 277);
+    }).resize();
 });
 </script>

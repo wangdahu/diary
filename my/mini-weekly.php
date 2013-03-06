@@ -50,8 +50,8 @@ if(!$isReported) {
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-body { overflow-x: hidden; }
-html,body { padding: 0; margin: 0; }
+body { overflow-x: hidden; _overflow-x: hidden; }
+html,body { padding: 0; margin: 0;overflow-y: hidden; _overflow-y: hidden; overflow-x: hidden; _overflow-x: hidden;}
 .content {width: auto; height: 485px;}
 </style>
 
@@ -73,7 +73,7 @@ html,body { padding: 0; margin: 0; }
 
         <div class="content_bar">
             <?php $height = $isReported ? '435px' : '360px';?>
-            <iframe name="mainWeekly" src="/diary/index.php/my/main-weekly" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
+            <iframe name="mainWeekly" src="/diary/index.php/my/main-weekly" style="height: <?php echo $height;?>; margin-left: -10px; width: 300px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
         <div class="content_bar mt10">
@@ -98,7 +98,7 @@ html,body { padding: 0; margin: 0; }
         <div id="weekly-form">
             <div class="ftextarea" style="width: 100px;">
                 <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本周的工作</label>
-                <textarea style="width: 260px; height: 40px; line-height: 40px;" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
+                <textarea style="width: 280px; height: 40px; line-height: 40px;" contenteditable="true" id="weekly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="weekly_id" name="weekly_id"/>
             </div>
             <div class="mt10 insertDaily" style="display: none;">

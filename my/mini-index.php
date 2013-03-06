@@ -21,8 +21,8 @@ if(!$isReported) {
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-body { overflow-x: hidden; }
-html,body { padding: 0; margin: 0; }
+body { overflow-x: hidden; _overflow-x: hidden; }
+html,body { padding: 0; margin: 0;overflow-y: hidden; _overflow-y: hidden; overflow-x: hidden; _overflow-x: hidden;}
 .content {width: auto; height: 485px;}
 </style>
 <div class="content">
@@ -37,12 +37,12 @@ html,body { padding: 0; margin: 0; }
                 </div>
             </h2>
         </div>
-        <div style="background: #E3FFCA; height: 25px; line-height: 25px; text-align: center; font-size: 14px; font-family: 宋体; margin-bottom: 5px; border-top: 1px solid #dadada; border-bottom: 1px solid #dadada;">
+        <div style="background: #E3FFCA; height: 25px; line-height: 25px; text-align: center; font-size: 14px; font-family: 宋体; margin-bottom: 5px; border-top: 1px solid #dadada; border-bottom: 1px solid #dadada;overflow-x: hidden; _overflow-x: hidden;">
             <span class="fl content_bar"><?php echo $showTitle;?></span><span class="fr content_bar" style="color: #006cff;"><?php if($isReported):?>已汇报 <?php elseif($allowPay):?>未汇报<?php else:?> 等待汇报<?php endif;?></span>
         </div>
         <div class="content_bar">
             <?php $height = $isReported ? '445px' : '360px';?>
-            <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 285px;" frameborder="0"></iframe>
+            <iframe name="mainDaily" src="/diary/index.php/my/main-daily" style="height: <?php echo $height;?>; margin-left: -10px; width: 300px;" frameborder="0"></iframe>
         </div>
         <?php if(!$isReported):?>
     <div class="content_bar mt10">
@@ -50,7 +50,7 @@ html,body { padding: 0; margin: 0; }
             <div class="ftextarea" style="width: 100px;">
                 <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您今天的工作</label>
                 <input type="hidden" name="daily_id" id="daily_id" />
-                <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 260px;" class="textarea_comment" data-limit="300"></textarea>
+                <textarea contenteditable="true" id="content" name="content" style="height: 40px; background: #fff; line-height: 40px; width: 280px;" class="textarea_comment" data-limit="300"></textarea>
             </div>
             <div id="button-list" style="display: none;">
                 <div class="form-action clearfix" style="margin-top: 10px;">
