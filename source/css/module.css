@@ -28,6 +28,7 @@ body{background:#bfc0c5; font-family: Microsoft YaHei,Lucida Grande,Verdana;}
 /*----------- 功能操作 ----------*/
 #wrapper {width:902px;margin:0 auto;position: relative;top: 58px;}
 .content{width:898px; min-height: 400px;margin:0 auto;padding:0 2px 20px;background:url(../images/bg_02.png) repeat-y;}
+.mini-content{width:898px; min-height: 400px;margin:0 auto;padding:0 2px 20px;background:url(../images/bg_mini.png) repeat-y;}
 .todo{height:37px;background:url(../images/subnav_bg.png)  0 0 no-repeat;padding:11px 10px 0;line-height:25px; }
 .todo p { font-size: 16px; color: #000;}
 .todo .status{ border-left: 1px solid #E7E8EA; padding-left: 42px; line-height: 24px; }

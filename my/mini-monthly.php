@@ -28,12 +28,11 @@ $showTitle = $currentMonth = date('y年m月');
 <?php include "views/my/mini-top.php"; ?>
 
 <style>
-body { overflow-x: hidden; _overflow-x: hidden; }
-html,body { padding: 0; margin: 0;overflow-y: hidden; _overflow-y: hidden; overflow-x: hidden; _overflow-x: hidden;}
-.content {width: auto; height: 485px;}
+html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overflow-y: hidden; overflow-x: hidden; _overflow-x: hidden; border: none;}
+.mini-content {width: auto; height: 487px; }
 </style>
 
-<div class="content">
+<div class="mini-content">
     <!--今日工作开始-->
     <div class=" mb25">
         <div class="content_bar">
@@ -45,12 +44,12 @@ html,body { padding: 0; margin: 0;overflow-y: hidden; _overflow-y: hidden; overf
                 </div>
             </h2>
         </div>
-        <div style="background: #E3FFCA; height: 25px; line-height: 25px; text-align: center; font-size: 14px; font-family: 宋体; margin-bottom: 5px; border-top: 1px solid #dadada; border-bottom: 1px solid #dadada;">
+        <div style="background: #E3FFCA; height: 25px; line-height: 25px; text-align: center; font-size: 14px; font-family: 宋体; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede;">
             <span class="fl content_bar"><?php echo $showTitle;?></span><span class="fr content_bar" style="color: #006cff;"><?php if($isReported):?>已汇报 <?php elseif($allowPay):?>未汇报<?php else:?> 等待汇报<?php endif;?></span>
         </div>
 
-        <div class="content_bar">
-            <?php $height = $isReported ? '435px' : '360px';?>
+        <div class="content_bar" style="border-bottom: 1px solid #dedede;">
+            <?php $height = $isReported ? '435px' : '370px';?>
             <iframe name="mainMonthly" src="/diary/index.php/my/main-monthly" style="height: <?php echo $height;?>; margin-left: -10px; width: 300px;" frameborder="0"></iframe>
         </div>
 
@@ -103,8 +102,8 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
 ?>
         <div id="monthly-form">
             <div class="ftextarea" style="width: 100px;">
-                <label id="placeholder" style="width: 147px; height: 50px; line-height: 50px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本月的工作</label>
-                <textarea style="width: 280px; height: 40px; line-height: 40px;" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
+                <label id="placeholder" style="width: 247px; height: 40px; line-height: 40px; padding-left: 5px; color: rgb(186, 186, 186); position: absolute;">来，随手记录您本月的工作！</label>
+                <textarea style="width: 280px; height: 30px; line-height: 30px;" contenteditable="true" id="monthly_content" class="textarea_comment" data-limit="1000"></textarea>
                 <input type="hidden" value="" id="monthly_id" name="monthly_id"/>
             </div>
             <div class="mt10 insertWeekly" style="display: none;">
@@ -179,8 +178,8 @@ $lastTime = $firstTime + $maxWeek*7*86400 - 1;
         $('#reset').click(function() {
             var content = $('#monthly_content');
             content.val('');
-            $('[name=mainMonthly]').css('height', 360);
-            content.css('height', '40px').css('line-height', '40px');
+            $('[name=mainMonthly]').css('height', 370);
+            content.css('height', '30px').css('line-height', '30px');
             $('.word-limit').hide();
             $('.insertWeekly').hide();
             $('#button-list').hide();
