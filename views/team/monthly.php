@@ -67,6 +67,10 @@ $hasContentWeeks = DiaryDaily::getHasContentDates($diary, $firstTime, $lastTime,
 $today = date('Y-m-d');
 
 $workingDay = DiarySet::workingTime($diary, $uid);
+
+// 日报汇报给我的和我订阅的用户
+$teamShowObject = DiarySet::teamShowObject($diary, 3);
+$showUsers = DiaryUser::getUsers($teamShowObject);
 ?>
 <div class="content">
     <!--本月总结开始-->
@@ -75,6 +79,13 @@ $workingDay = DiarySet::workingTime($diary, $uid);
         <a href="<?php echo $backUrl; ?>" class="fl btn_back mr10"></a>
         <h2 class="content_tit clearfix user-info">
             <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."-".$user['Title']."）";?>
+            <select class="js-viewOther">
+                <option data-href="javascript:">请选择</option>
+                <?php foreach($showUsers as $sid => $u):?>
+                <?php $url = "monthly?forward=".$forward."&uid=".$sid;?>
+                <option data-href="<?php echo $url;?>"><?php echo $u['UserName']." (".$u['dept_name']."-".$u['Title'].")"?></option>
+                <?php endforeach;?>
+            </select>
         </h2>
         <?php endif;?>
         <h2 class="content_tit clearfix">

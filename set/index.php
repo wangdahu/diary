@@ -67,7 +67,7 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="dailyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['dailyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="dailyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['dailyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" disabled>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -117,7 +117,7 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="weeklyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="weeklyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['weeklyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" disabled>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -168,7 +168,7 @@ $reportStr = DiarySet::getNameAndDeptStr($reportObject);
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="monthlyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['monthlyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="monthlyReport[way][]" class="checkall" <?php echo in_array($key, $reportSet['monthlyReport']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" disabled>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>

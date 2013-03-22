@@ -13,6 +13,10 @@ while($row = $result->fetch_assoc()){
 $myselfLogin = URLEncode(Base64_encode($diary->LoginName));
 $userLogin = URLEncode(Base64_encode($user['LoginName']));
 $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
+
+// 日报汇报给我的和我订阅的用户
+$teamShowObject = DiarySet::teamShowObject($diary, 2);
+$showUsers = DiaryUser::getUsers($teamShowObject);
 ?>
 <div class="content">
     <!--今日工作开始-->
@@ -20,6 +24,13 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
         <?php if(isset($from)):?>
         <a href="<?php echo $backUrl; ?>" class="fl btn_back mr10"></a>
         <h2 class="content_tit clearfix user-info">  <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."-".$user['Title']."）";?>
+            <select class="js-viewOther">
+                <option data-href="javascript:">请选择</option>
+                <?php foreach($showUsers as $sid => $u):?>
+                <?php $url = "weekly?forward=".$forward."&uid=".$sid;?>
+                <option data-href="<?php echo $url;?>"><?php echo $u['UserName']." (".$u['dept_name']."-".$u['Title'].")"?></option>
+                <?php endforeach;?>
+            </select>
         </h2>
         <?php endif;?>
         <h2 class="content_tit clearfix">
@@ -71,7 +82,7 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
         <div class="c_b"></div>
         <?php endif;?>
 
-        <?php if(!isset($from) && $weekDate): ?>
+        <?php if($weekDate): ?>
         <h2 class="content_tit clearfix">
             <p>本周工作：<?php echo $dailyNum; ?>项</p>
         </h2>
@@ -115,14 +126,17 @@ if($date < $today) {
                         <?php
                              $dateForward = DiaryDaily::getForward($dateForwards[$v]);
                              $url = "/diary/index.php/my/index?forward=".$dateForward;
+                             if(isset($from)) {
+                                 $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
+                             }
                         ?>
                         <a href="<?php echo $url;?>" class="a_01 fr">进入</a>
-                        <strong><?php echo "周".$k." ".$v; ?></strong>
+                        <strong><a href="javascript:" class="js-hide" title="点击收起" style="text-decoration: none; display:none;"> ^ </a><a href="javascript:" class="js-show" title="点击展开" style="text-decoration: none;"> > </a><?php echo "周".$k." ".$v; ?></strong>
                         <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
                         <span style="padding: 5px 0 5px 43px;"  class="status <?php echo $cls?>"><?php echo $clsTitle; ?></span>
                     </p>
                 </div>
-
+                <div class="js-daily" style="display: none;">
                 <?php if(isset($dailys[$v])): foreach($dailys[$v] as $date => $daily):?>
                 <?php
                      $tagList = array();
@@ -150,6 +164,7 @@ if($date < $today) {
                     </div>
                 </div>
                 <?php endforeach; endif;?>
+                </div>
             </div>
             <div class="c_b"></div>
         </div>
@@ -161,3 +176,12 @@ if($date < $today) {
           include dirname(dirname(dirname(__FILE__)))."/team/comment.php";
     endif;?>
 </div>
+<script>
+    $(function() {
+        $('.js-show, .js-hide').click(function() {
+            $(this).parent().find('.js-show').toggle();
+            $(this).parent().find('.js-hide').toggle();
+            $(this).closest('.c_c').find('.js-daily').toggle();
+        });
+    });
+</script>

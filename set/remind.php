@@ -54,7 +54,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="dailyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['dailyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="dailyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['dailyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" disabled>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -96,7 +96,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="weeklyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['weeklyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="weeklyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['weeklyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" disabled>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>
@@ -139,7 +139,7 @@ $weeks = array('1' => '周一', '2' => '周二', '3' => '周三', '4' => '周四
                     <p>
                         <?php foreach($ways as $key => $val):?>
                         <label>
-                            <input type="checkbox" name="monthlyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['monthlyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" <?php echo $key == 'remind' ? 'disabled' : ''?>>
+                            <input type="checkbox" name="monthlyRemind[way][]" class="checkall" <?php echo in_array($key, $remindSet['monthlyRemind']['way']) ? 'checked' : ''; ?> value="<?php echo $key;?>" disabled>
                             <?php echo $val; ?>
                         </label>
                         <?php endforeach;?>

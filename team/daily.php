@@ -46,7 +46,6 @@ if($forward == 0) { // 本日
     $showCommit = true;
 }
 $forwardTitle = '日报';
-// echo "<pre>"; var_dump($isReported);
 ?>
 
 <?php include "views/layouts/header.php"; ?>
@@ -74,6 +73,10 @@ if($isReported) {
 $myselfLogin = URLEncode(Base64_encode($diary->LoginName));
 $userLogin = URLEncode(Base64_encode($user['LoginName']));
 $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
+
+// 日报汇报给我的和我订阅的用户
+$teamShowObject = DiarySet::teamShowObject($diary, 1);
+$showUsers = DiaryUser::getUsers($teamShowObject);
 ?>
 
 <div class="content">
@@ -82,6 +85,13 @@ $wiseucUrl = "wisetong://message/?uid=".$userLogin."&myid=".$myselfLogin;
     <a href="<?php echo $backUrl; ?>" class="fl btn_back mr10"></a>
         <h2 class="content_tit clearfix user-info">
             <a href="<?php echo $wiseucUrl;?>"><?php echo $user['UserName'];?></a><?php echo "（".$user['dept_name']."-".$user['Title']."）";?>
+            <select class="js-viewOther">
+                <option data-href="javascript:">请选择</option>
+                <?php foreach($showUsers as $sid => $u):?>
+                <?php $url = "daily?forward=".$forward."&uid=".$sid;?>
+                <option data-href="<?php echo $url;?>"><?php echo $u['UserName']." (".$u['dept_name']."-".$u['Title'].")"?></option>
+                <?php endforeach;?>
+            </select>
         </h2>
        <h2 class="content_tit clearfix">
             <p>今日工作：<em><?php echo $num;?> 项</em></p>

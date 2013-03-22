@@ -23,10 +23,37 @@ if($forward){
     $startTime = $mondayTime;
 }
 $endTime = $startTime + 7*86400 - 1;
-// 查看的年份和月份
-$object = date('Y-W', $startTime);
+
 $showDiary = $forward < 0 ? false : true;
 $uid = (int) $_GET['uid'];
+
+// 当前时间为 当前年的多少周
+$object = date('Y-W', $startTime);
+$weekDate = array();
+// 用户设置的工作时间
+$selected = DiarySet::workingTime($diary, $uid);
+$weekarray = array("一","二","三","四","五","六","日");
+
+// 当前周的所有工作天
+for($i = 6; $i >= 0; $i--){
+    $time = $startTime + 86400*$i;
+    $weekDate[$weekarray[$i]] = date('y.m.d', $time);
+    $dateForwards[date('y.m.d', $time)] = $time;
+}
+
+// 该企业该用户在选择时间内的日报
+$dailySql = "select * from `diary_info` where `uid` = $uid and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
+$result = $diary->db->query($dailySql);
+
+$dailys = array();
+$dailyNum = 0;
+while($row = $result->fetch_array(MYSQLI_ASSOC)){
+    // 是否汇报
+    if(DiaryReport::checkReport($diary, 'daily', date('Y-m-d', $row['show_time']))) {
+        $dailyNum ++;
+        $dailys[date('y.m.d', $row['show_time'])][] = $row;
+    }
+};
 
 $showCommit = false;
 $allowPay = false;

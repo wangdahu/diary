@@ -67,5 +67,9 @@ if($isReported){
         }).mouseout(function() {
             $(this).removeClass('data-hover');
         });
+
+        $('.js-viewOther').change(function(){
+            location.href = $(this.options[this.selectedIndex]).data('href')
+        });
     });
 </script>
