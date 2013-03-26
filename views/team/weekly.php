@@ -131,9 +131,11 @@ if($date < $today) {
                              }
                         ?>
                         <a href="<?php echo $url;?>" class="a_01 fr">进入</a>
-                        <strong><a href="javascript:" class="js-hide" title="点击收起" style="text-decoration: none; display:none;"> ^ </a><a href="javascript:" class="js-show" title="点击展开" style="text-decoration: none;"> > </a><?php echo "周".$k." ".$v; ?></strong>
-                        <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
-                        <span style="padding: 5px 0 5px 43px;"  class="status <?php echo $cls?>"><?php echo $clsTitle; ?></span>
+                        <a class="js-unfold" href="javascript:" style="text-decoration: none; color: #3f3f3f;">
+                            <strong><span class="js-hide" title="点击收起" style="display: none;"> ^ </span><span class="js-show" title="点击展开" > > </span><?php echo "周".$k." ".$v; ?></strong>
+                            <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
+                            <span style="padding: 5px 0 5px 43px;"  class="status <?php echo $cls?>"><?php echo $clsTitle; ?></span>
+                        </a>
                     </p>
                 </div>
                 <div class="js-daily" style="display: none;">
@@ -178,9 +180,9 @@ if($date < $today) {
 </div>
 <script>
     $(function() {
-        $('.js-show, .js-hide').click(function() {
-            $(this).parent().find('.js-show').toggle();
-            $(this).parent().find('.js-hide').toggle();
+        $('.js-unfold').click(function() {
+            $(this).find('.js-show').toggle();
+            $(this).find('.js-hide').toggle();
             $(this).closest('.c_c').find('.js-daily').toggle();
         });
     });

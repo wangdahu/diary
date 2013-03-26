@@ -24,11 +24,16 @@ if(!$isReported) {
 html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overflow-y: hidden; overflow-x: hidden; _overflow-x: hidden; border: none;}
 .mini-content {width: auto; height: 487px; }
 </style>
+
 <div class="mini-content">
     <!--今日工作开始-->
     <div class=" mb25">
         <div class="content_bar">
             <h2 class="content_tit clearfix" style="border: none;">
+                <?php if($allowPay):?>
+                <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
+                <p class="fl showObject" style="display: none;"><?php echo date('Y年m月d日', $startTime);?> 周<?php echo $weekarray[date("w", $startTime)];?></p>
+                <?php endif;?>
                 <div class="data fl clearfix">
                     <a href="/diary/index.php/my/mini-index" class="<?php echo $type == 'daily' ? 'cur' : 'normal'?>">日报</a>
                     <a href="/diary/index.php/my/mini-weekly" class="<?php echo $type == 'weekly' ? 'cur' : 'normal'?>">周报</a>
@@ -70,6 +75,7 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
     $(document).click(function() {
         window.frames['mainDaily'].clickDoc();
     });
+
 
     $(function() {
         $('#content, #placeholder').click(function() {
@@ -113,6 +119,22 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
             $('.word-limit').hide();
             $('#button-list').hide();
             $('#placeholder').show();
+        });
+
+        // 补交
+        $('.js-pay_diary').click(function() {
+            var type = '<?php echo $type;?>',
+            currentDate = '<?php echo $object; ?>',
+            startTime = '<?php echo $startTime; ?>',
+            showObject = $('.showObject').html();
+            console.log(showObject, startTime, currentDate, type);
+            $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject, startTime: startTime}, function(json) {
+                if(json == 0) {
+                    alert('补交失败，请设置汇报对象');
+                }else {
+                    location.reload();
+                }
+            });
         });
     });
 </script>
