@@ -38,7 +38,7 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
         <div class="content_bar">
             <h2 class="content_tit clearfix" style="border: none;">
                 <?php if($allowPay):?>
-                <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
+                <a href="javascript:" class="fr pay-diary js-pay_diary" style="margin-top: -2px;"></a>
                 <p class="fl showObject" style="display: none;"><?php echo $currentMonth;?></p>
                 <?php endif;?>
                 <div class="data fl clearfix">

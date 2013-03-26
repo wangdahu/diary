@@ -31,7 +31,7 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
         <div class="content_bar">
             <h2 class="content_tit clearfix" style="border: none;">
                 <?php if($allowPay):?>
-                <a href="javascript:" class="fr pay-diary js-pay_diary"></a>
+                <a href="javascript:" class="fr pay-diary js-pay_diary" style="margin-top: -2px;"></a>
                 <p class="fl showObject" style="display: none;"><?php echo date('Y年m月d日', $startTime);?> 周<?php echo $weekarray[date("w", $startTime)];?></p>
                 <?php endif;?>
                 <div class="data fl clearfix">
@@ -127,7 +127,6 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
             currentDate = '<?php echo $object; ?>',
             startTime = '<?php echo $startTime; ?>',
             showObject = $('.showObject').html();
-            console.log(showObject, startTime, currentDate, type);
             $.post('/diary/index.php/my/payDiary', {currentDate:currentDate, type:type, showObject:showObject, startTime: startTime}, function(json) {
                 if(json == 0) {
                     alert('补交失败，请设置汇报对象');
