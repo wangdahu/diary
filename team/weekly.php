@@ -44,17 +44,15 @@ for($i = 6; $i >= 0; $i--){
 // 该企业该用户在选择时间内的日报
 $dailySql = "select * from `diary_info` where `uid` = $uid and `type` = 1 and `show_time` between $startTime and $endTime order by id desc";
 $result = $diary->db->query($dailySql);
-
 $dailys = array();
 $dailyNum = 0;
 while($row = $result->fetch_array(MYSQLI_ASSOC)){
     // 是否汇报
-    if(DiaryReport::checkReport($diary, 'daily', date('Y-m-d', $row['show_time']))) {
+    if(DiaryReport::checkReport($diary, 'daily', date('Y-m-d', $row['show_time']), $uid)) {
         $dailyNum ++;
         $dailys[date('y.m.d', $row['show_time'])][] = $row;
     }
 };
-
 $showCommit = false;
 $allowPay = false;
 $isReported = true;

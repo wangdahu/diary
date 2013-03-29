@@ -87,7 +87,7 @@ $showUsers = DiaryUser::getUsers($teamShowObject);
             <p>本周工作：<?php echo $dailyNum; ?>项</p>
         </h2>
         <?php
-            $reportDailys = DiaryDaily::getReportDailys($diary, date('Y-m-d', $startTime), date('Y-m-d', $endTime));
+            $reportDailys = DiaryDaily::getReportDailys($diary, date('Y-m-d', $startTime), date('Y-m-d', $endTime), $uid);
             foreach($weekDate as $k => $v):
 $date = date('Y-m-d', $dateForwards[$v]);
 $today = date('Y-m-d');
@@ -130,12 +130,12 @@ if($date < $today) {
                                  $url = "/diary/index.php/team/daily?forward=".$dateForward."&uid=".$uid;
                              }
                         ?>
+                        <div class="js-unfold" href="javascript:" style=" line-height: 30px; cursor: pointer; text-decoration: none; color: #3f3f3f;">
                         <a href="<?php echo $url;?>" class="a_01 fr">进入</a>
-                        <a class="js-unfold" href="javascript:" style="text-decoration: none; color: #3f3f3f;">
                             <strong><span class="js-hide" title="点击收起" style="display: none;"> ^ </span><span class="js-show" title="点击展开" > > </span><?php echo "周".$k." ".$v; ?></strong>
                             <span>工作：<?php echo isset($dailys[$v]) ? count($dailys[$v]) : 0;?>项</span>
                             <span style="padding: 5px 0 5px 43px;"  class="status <?php echo $cls?>"><?php echo $clsTitle; ?></span>
-                        </a>
+                        </div>
                     </p>
                 </div>
                 <div class="js-daily" style="display: none;">
