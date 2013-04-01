@@ -2,6 +2,7 @@
 $title = "写日报";
 $object = date('Y-m-d',time());
 $startTime = strtotime($object);
+$endTime = $startTime + 86400 - 1;
 $type = 'daily';
 $weekarray = array("日","一","二","三","四","五","六");
 $w = date('w', time());
@@ -14,7 +15,8 @@ if(!$isReported) {
     $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
     $isReported = $allowPay = false;
     if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
-        $allowPay = true;
+		$existsContent = DiaryDaily::existsContent($diary, $startTime, $endTime, 1);
+        $allowPay = $existsContent;
     }
 }
 ?>

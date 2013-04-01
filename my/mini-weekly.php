@@ -43,7 +43,8 @@ if(!$isReported) {
     $w = date('w') ? date('w') : 7; // 周日转换成7
     $weeklyTime = $reportTime['weeklyReport']['hour'].":".$reportTime['weeklyReport']['minute'];
     if($w > $reportTime['weeklyReport']['w'] || ($w == $reportTime['weeklyReport']['w'] && time() > strtotime(date('Y-m-d')." ".$weeklyTime))) { // 已过汇报时间
-        $allowPay  = true;
+		$existsContent = DiaryDaily::existsContent($diary, $startTime, $endTime, 2);
+        $allowPay = $existsContent;
     }
 }
 ?>

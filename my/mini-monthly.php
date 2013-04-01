@@ -19,7 +19,8 @@ if(!$isReported) {
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
     if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
-        $allowPay = true;
+		$existsContent = DiaryDaily::existsContent($diary, $startTime, $endTime, 3);
+        $allowPay = $existsContent;
     }
 }
 $showTitle = $currentMonth = date('y年m月');

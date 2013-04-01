@@ -139,4 +139,16 @@ class DiaryDaily{
         $forward = floor(($now - $time)/($type == 1 ? 86400 : 86400*7));
         return $forward;
     }
+    public static function existsContent($diary, $startTime, $endTime, $type, $uid = null) {
+		$uid = $uid ? $uid : $diary->uid;
+        $sql = "select * from `diary_info` where `uid` = $uid and `type` = $type and `show_time` between $startTime and $endTime limit 1";
+        if($result = $diary->db->query($sql)){
+            if($result->fetch_array(MYSQLI_ASSOC)) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
+	
 }
