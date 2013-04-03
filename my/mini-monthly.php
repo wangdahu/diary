@@ -13,14 +13,14 @@ $corpId = $diary->corpId;
 // 判断是否为补交/未汇报/已汇报
 $isReported = DiaryReport::checkReport($diary, $type, $object);
 
-$allowPay  = false;
+$allowPay  = $existsContent = false;
 if(!$isReported) {
     // 是否已过汇报时间
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['monthlyReport']['date']." ".$reportTime['monthlyReport']['hour'].":".$reportTime['monthlyReport']['minute'];
     if(time() > strtotime($object."-".$dailyTime)) { // 已过汇报时间
 		$existsContent = DiaryDaily::existsContent($diary, $startTime, $endTime, 3);
-        $allowPay = $existsContent;
+        $allowPay = true;
     }
 }
 $showTitle = $currentMonth = date('y年m月');
@@ -38,7 +38,7 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
     <div class=" mb25">
         <div class="content_bar">
             <h2 class="content_tit clearfix" style="border: none;">
-                <?php if($allowPay):?>
+                <?php if($allowPay && $existsContent):?>
                 <a href="javascript:" class="fr pay-diary js-pay_diary" style="margin-top: -2px;"></a>
                 <p class="fl showObject" style="display: none;"><?php echo $currentMonth;?></p>
                 <?php endif;?>

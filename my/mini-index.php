@@ -9,14 +9,14 @@ $w = date('w', time());
 $showTitle = date('y年m月d日',time()).' 周'.$weekarray[$w];
 
 $isReported = DiaryReport::checkReport($diary, $type, $object);
-$allowPay = false;
+$allowPay = $existsContent = false;
 if(!$isReported) {
     $reportTime = DiarySet::reportTime($diary);
     $dailyTime = $reportTime['dailyReport']['hour'].":".$reportTime['dailyReport']['minute'];
     $isReported = $allowPay = false;
     if(time() > strtotime($object." ".$dailyTime)){ // 已过汇报时间
 		$existsContent = DiaryDaily::existsContent($diary, $startTime, $endTime, 1);
-        $allowPay = $existsContent;
+        $allowPay = true;
     }
 }
 ?>
@@ -32,7 +32,7 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
     <div class=" mb25">
         <div class="content_bar">
             <h2 class="content_tit clearfix" style="border: none;">
-                <?php if($allowPay):?>
+                <?php if($allowPay && $existsContent):?>
                 <a href="javascript:" class="fr pay-diary js-pay_diary" style="margin-top: -2px;"></a>
                 <p class="fl showObject" style="display: none;"><?php echo date('Y年m月d日', $startTime);?> 周<?php echo $weekarray[date("w", $startTime)];?></p>
                 <?php endif;?>

@@ -36,7 +36,7 @@ while($row = $result->fetch_array(MYSQLI_ASSOC)){
 
 // 判断是否为补交/未汇报/已汇报
 $isReported = DiaryReport::checkReport($diary, $type, $object);
-$allowPay  = false;
+$allowPay  = $existsContent = false;
 if(!$isReported) {
     // 是否已过汇报时间
     $reportTime = DiarySet::reportTime($diary);
@@ -44,7 +44,7 @@ if(!$isReported) {
     $weeklyTime = $reportTime['weeklyReport']['hour'].":".$reportTime['weeklyReport']['minute'];
     if($w > $reportTime['weeklyReport']['w'] || ($w == $reportTime['weeklyReport']['w'] && time() > strtotime(date('Y-m-d')." ".$weeklyTime))) { // 已过汇报时间
 		$existsContent = DiaryDaily::existsContent($diary, $startTime, $endTime, 2);
-        $allowPay = $existsContent;
+        $allowPay = true;
     }
 }
 ?>
@@ -60,7 +60,7 @@ html,body {background: #bfc0c5; padding: 0; margin: 0;overflow-y: hidden; _overf
     <div class=" mb25">
         <div class="content_bar">
             <h2 class="content_tit clearfix" style="border: none;">
-                <?php if($allowPay):?>
+                <?php if($allowPay && $existsContent):?>
                 <a href="javascript:" class="fr pay-diary js-pay_diary" style="margin-top: -2px;"></a>
                 <p class="fl showObject" style="display: none;"><?php echo date('Y年m月d日', $startTime);?>--<?php echo date('Y年m月d日', $endTime);?></p>
                 <?php endif;?>

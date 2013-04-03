@@ -150,7 +150,9 @@ $showUsers = DiaryUser::getUsers($teamShowObject);
         <?php endif;?>
     </div>
     <!--今日工作结束-->
+	<?php if($showCommit):?>
     <?php include "comment.php"; ?>
+	<?php endif;?>
 </div>
 <?php else:?>
 <?php include "views/team/forward.php"; ?>
